@@ -1,0 +1,13 @@
+pyproject.toml
+src/evaleng/__init__.py
+src/evaleng.egg-info/PKG-INFO
+src/evaleng.egg-info/SOURCES.txt
+src/evaleng.egg-info/dependency_links.txt
+src/evaleng.egg-info/top_level.txt
+src/evaleng/aggregate/__init__.py
+src/evaleng/align/__init__.py
+src/evaleng/cli/__init__.py
+src/evaleng/feedback/__init__.py
+src/evaleng/ingest/__init__.py
+src/evaleng/match/__init__.py
+src/evaleng/schema/__init__.py

@@ -1,0 +1,16 @@
+name: evaleng
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pydantic>=2
+  - pyyaml
+  - stanza
+  - spacy
+  - rapidfuzz
+  - jellyfish
+  - fasttext
+  - pytest
+  - pip
+  - pip:
+      - wn
