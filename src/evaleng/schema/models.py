@@ -4,12 +4,16 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class UnitType(str, Enum):
-    LEXICAL_TERM = "lexical_term"
+    GRAMMAR = "grammar"
+    FALSE_COGNATE = "false_cognate"
+    GENERAL_VOCABULARY = "general_vocabulary"
+    LEGAL_VOCABULARY = "legal_vocabulary"
+    IDIOM = "idiom"
     NUMBER = "number"
-    DATE = "date"
-    NAME = "name"
-    GRAMMATICAL = "grammatical"
+    MODIFIER = "modifier"
     REGISTER = "register"
+    POSITION = "position"
+    SLANG = "slang"
 
 
 class MatchingPolicy(BaseModel):
@@ -56,7 +60,7 @@ class Fixture(BaseModel):
     source_text: str
     reference_rendering: str
     units: list[Unit]
-    pass_threshold: int = Field(ge=0)
+    pass_ratio: float = Field(0.7, ge=0.0, le=1.0)
 
     @model_validator(mode="after")
     def coherence(self) -> "Fixture":
@@ -66,8 +70,4 @@ class Fixture(BaseModel):
         dupes = sorted({i for i in ids if ids.count(i) > 1})
         if dupes:
             raise ValueError(f"duplicate unit ids: {dupes}")
-        if self.pass_threshold > len(self.units):
-            raise ValueError(
-                f"pass_threshold {self.pass_threshold} exceeds unit count {len(self.units)}"
-            )
         return self
