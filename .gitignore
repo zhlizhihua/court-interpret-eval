@@ -3,3 +3,5 @@ __pycache__/
 *.bin
 stanza_resources/
 .env
+.DS_Store
+*.egg-info/
