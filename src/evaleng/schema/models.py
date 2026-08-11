@@ -18,7 +18,7 @@ class UnitType(str, Enum):
 
 class MatchingPolicy(BaseModel):
     method: str
-    fuzzy_threshold: float = Field(0.85, ge=0.0, le=1.0)
+    fuzzy_threshold: float = Field(ge=0.0, le=1.0)
     embedding_backup: bool = False
 
     @field_validator("method")
@@ -34,7 +34,7 @@ class Unit(BaseModel):
     type: UnitType
     source_span: str
     acceptable_renderings: list[str] = Field(default_factory=list)
-    matching_policy: MatchingPolicy
+    matching_policy: MatchingPolicy | None = Field(default=None)
     weight: int = Field(1, ge=1)
 
     @field_validator("id", "source_span")
@@ -60,7 +60,7 @@ class Fixture(BaseModel):
     source_text: str
     reference_rendering: str
     units: list[Unit]
-    pass_ratio: float = Field(0.7, ge=0.0, le=1.0)
+    pass_ratio: float = Field(0.7, ge=0.0, le=1.0) # fixture inherits schema default (0.70). To override, set it in individual fixtures.
 
     @model_validator(mode="after")
     def coherence(self) -> "Fixture":

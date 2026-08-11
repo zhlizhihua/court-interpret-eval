@@ -1,0 +1,91 @@
+id: "st_en_es_001_draft"
+source_lang: "en"
+target_lang: "es"
+source_text: >
+  On the morning of March 3, 2024, the defendant, Mr. Garcia, was arrested and
+  charged with two counts of aggravated assault. According to the victim, Garcia
+  struck him with a loaded handgun and was caught red-handed at the scene. A
+  witness testified that the defendant was 'wasted' at the time. The prosecutor
+  will introduce the evidence at trial, and if the jury convicts him, the
+  defendant will be sentenced. You have the right to remain silent.
+reference_rendering: >
+  En la mañana del 3 de marzo de 2024, el acusado, el señor García, fue arrestado
+  y acusado de dos cargos de agresión con agravantes. Según la víctima, García lo
+  golpeó con una pistola cargada y fue atrapado con las manos en la masa en el
+  lugar de los hechos. Un testigo declaró que el acusado estaba 'borracho perdido'
+  en ese momento. El fiscal presentará las pruebas en el juicio y, si el jurado lo
+  condena, el acusado será sentenciado. Tiene derecho a guardar silencio.
+
+units:
+  - id: "u001"
+    type: "grammar"
+    source_span: "the defendant will be sentenced"
+    acceptable_renderings:
+      - "el acusado será sentenciado"
+      - "el acusado será condenado"
+
+  - id: "u002"
+    type: "false_cognate"
+    source_span: "the evidence"
+    acceptable_renderings:
+      - "las pruebas"
+      - "la prueba"
+
+  - id: "u003"
+    type: "general_vocabulary"
+    source_span: "the morning"
+    acceptable_renderings:
+      - "la mañana"
+      - "por la mañana"
+
+  - id: "u004"
+    type: "legal_vocabulary"
+    source_span: "aggravated assault"
+    acceptable_renderings:
+      - "agresión con agravantes"
+      - "agresión agravada"
+      - "lesiones agravadas"
+
+  - id: "u005"
+    type: "idiom"
+    source_span: "caught red-handed"
+    acceptable_renderings:
+      - "con las manos en la masa"
+      - "in fraganti"
+      - "en flagrante"
+
+  - id: "u006"
+    type: "number"
+    source_span: "two counts"
+    acceptable_renderings:
+      - "dos cargos"
+      - "dos"
+
+  - id: "u007"
+    type: "modifier"
+    source_span: "loaded handgun"
+    acceptable_renderings:
+      - "pistola cargada"
+      - "arma cargada"
+
+  - id: "u008"
+    type: "register"
+    source_span: "You have the right to remain silent"
+    acceptable_renderings:
+      - "Tiene derecho a guardar silencio"
+      - "Usted tiene derecho a guardar silencio"
+
+  - id: "u009"
+    type: "position"
+    source_span: "According to the victim"
+    acceptable_renderings:
+      - "según la víctima"
+      - "de acuerdo con la víctima"
+
+  - id: "u010"
+    type: "slang"
+    source_span: "wasted"
+    acceptable_renderings:
+      - "borracho perdido"
+      - "pedo"
+      - "hasta atrás"
