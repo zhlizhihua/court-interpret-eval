@@ -9,8 +9,8 @@ dependencies:
   - spacy
   - rapidfuzz
   - jellyfish
-  - fasttext
   - pytest
   - pip
   - pip:
       - wn
+      - text2num==3.*
