@@ -5,8 +5,8 @@ from evaleng.schema.models import Fixture, UnitType
 from evaleng.interfaces import CandidateInput, UnitVerdict, ScoreResult, FeedbackReport
 from evaleng.dispatch import matcher_for, resolve_policy, MatcherKind, DISPATCH
 from evaleng.localize import localize
-from evaleng.match_number import match_number
-from evaleng.match_lexical import match_lexical
+from evaleng.match.number import match_number
+from evaleng.match.lexical import match_lexical
 
 
 def _unscored_verdict(unit) -> UnitVerdict:
