@@ -9,6 +9,7 @@ from evaleng.schema.models import UnitType, Unit, MatchingPolicy
 class MatcherKind(str, Enum):
     NUMBER = "number"
     LEXICAL = "lexical"
+    GRAMMAR = "grammar"
     DEFERRED = "deferred"
 
 
@@ -39,8 +40,8 @@ DISPATCH: dict[UnitType, DispatchRule] = {
                                               default_policy=_LEXICAL_POLICY,
                                               note="W1 scores this by set-membership; "
                                                    "flip to DEFERRED to align with the W3 register track"),
-    UnitType.GRAMMAR:            DispatchRule(matcher=MatcherKind.DEFERRED,
-                                              note="deferred to W2 (UD-feature checks)"),
+    UnitType.GRAMMAR:            DispatchRule(matcher=MatcherKind.GRAMMAR,
+                                              notes="each unit carries its own feature_spec policy"),
     UnitType.REGISTER:           DispatchRule(matcher=MatcherKind.DEFERRED,
                                               note="deferred to W3 (register classifier)"),
     UnitType.POSITION:           DispatchRule(matcher=MatcherKind.DEFERRED,
@@ -63,9 +64,15 @@ def resolve_policy(unit: Unit) -> MatchingPolicy:
     if unit.matching_policy is not None:
         return unit.matching_policy
     rule = DISPATCH[unit.type]
-    if rule.default_policy is None:
+    if rule.default_policy is not None:
+        return rule.default_policy
+    if rule.matcher is MatcherKind.DEFERRED:
         raise ValueError(
             f"unit {unit.id!r} is type {unit.type.value!r}, which is deferred "
-            f"({rule.note}); it has no matching policy in W1"
+            f"({rule.note}); it has no matching policy yet"
         )
-    return rule.default_policy
+    raise ValueError(
+        f"unit {unit.id!r} is type {unit.type.value!r} and has no default policy; "
+        f"units of this type must carry their own matching_policy — "
+        f"grammar units need a feature_spec. ({rule.note})"
+    )

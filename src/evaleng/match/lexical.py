@@ -62,9 +62,11 @@ def match_lexical(unit: Unit, candidate: CandidateInput,
 
     passed = best_ratio >= policy.fuzzy_threshold
     return UnitVerdict(
-        unit_id=unit.id, unit_type=unit.type,
+        unit_id=unit.id,
+        unit_type=unit.type,
         status="pass" if passed else "fail",
-        candidate_text=region, method="fuzzy",
+        candidate_text=region,
+        method="fuzzy",
         reason=(f"fuzzy {'match' if passed else 'miss'} to {best_rendering!r} "
                 f"(ratio {best_ratio:.2f} {'≥' if passed else '<'} {policy.fuzzy_threshold})"),
         score=round(best_ratio, 3),

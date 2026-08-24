@@ -16,10 +16,17 @@ class UnitType(str, Enum):
     SLANG = "slang"
 
 
+class FeatureSpec(BaseModel):
+    upos: str | None = None                               # part of speech, e.g. "AUX"
+    feats: dict[str, str] = Field(default_factory=dict)   # e.g. {"Tense": "Fut"}
+    dep_relation_to_head: str | None = None               # e.g. how a word attaches to another
+
+
 class MatchingPolicy(BaseModel):
     method: str
-    fuzzy_threshold: float = Field(ge=0.0, le=1.0)
+    fuzzy_threshold: float | None = Field(default=None, ge=0.0, le=1.0)
     embedding_backup: bool = False
+    feature_spec: FeatureSpec | None = None
 
     @field_validator("method")
     @classmethod
@@ -27,6 +34,14 @@ class MatchingPolicy(BaseModel):
         if not v.strip():
             raise ValueError("matching_policy.method must be non-empty")
         return v
+
+    # A grammar unit checks features, not fuzzy overlap, so it needs no threshold.
+    # Every other unit still must state one.
+    @model_validator(mode="after")
+    def threshold_required_unless_grammar(self) -> "MatchingPolicy":
+        if self.feature_spec is None and self.fuzzy_threshold is None:
+            raise ValueError("fuzzy_threshold is required unless a feature_spec is provided")
+        return self
 
 
 class Unit(BaseModel):

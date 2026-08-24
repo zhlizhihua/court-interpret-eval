@@ -23,6 +23,12 @@ units:
     acceptable_renderings:
       - "el acusado será sentenciado"
       - "el acusado será condenado"
+    matching_policy:
+      method: "grammar_feature"
+      feature_spec:
+        upos: "AUX"           # targets "será" (the auxiliary verb)
+        feats: {Tense: "Fut"}
+    
 
   - id: "u002"
     type: "false_cognate"
