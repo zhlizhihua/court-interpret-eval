@@ -10,3 +10,8 @@ dependencies = []   # intentionally empty — conda owns the dependency list
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: loads Stanza; deselect with -m 'not slow'",
+]
