@@ -41,7 +41,7 @@ DISPATCH: dict[UnitType, DispatchRule] = {
                                               note="W1 scores this by set-membership; "
                                                    "flip to DEFERRED to align with the W3 register track"),
     UnitType.GRAMMAR:            DispatchRule(matcher=MatcherKind.GRAMMAR,
-                                              notes="each unit carries its own feature_spec policy"),
+                                              note="each unit carries its own feature_spec policy"),
     UnitType.REGISTER:           DispatchRule(matcher=MatcherKind.DEFERRED,
                                               note="deferred to W3 (register classifier)"),
     UnitType.POSITION:           DispatchRule(matcher=MatcherKind.DEFERRED,
