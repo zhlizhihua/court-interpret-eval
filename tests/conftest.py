@@ -5,11 +5,11 @@ The exam fixture (reference_draft.yaml) is loaded by the `exam_fixture` fixture.
 """
 from pathlib import Path
 
-import yaml
 import pytest
 
 from evaleng.schema.models import Fixture
 from evaleng.interfaces import CandidateInput, UnitLocation
+from evaleng.ingest.loader import load_fixture
 
 FIXTURE_PATH = Path(__file__).parent.parent / "fixtures" / "reference_draft.yaml"
 
@@ -17,8 +17,8 @@ FIXTURE_PATH = Path(__file__).parent.parent / "fixtures" / "reference_draft.yaml
 @pytest.fixture(scope="session")
 def exam_fixture() -> Fixture:
     """The draft exemplar, parsed once and shared across the whole test run."""
-    data = yaml.safe_load(FIXTURE_PATH.read_text(encoding="utf-8"))
-    return Fixture(**data)
+    return load_fixture(FIXTURE_PATH)
+
 
 
 @pytest.fixture

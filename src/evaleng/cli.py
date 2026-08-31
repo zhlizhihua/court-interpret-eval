@@ -3,9 +3,7 @@ from __future__ import annotations
 import argparse
 import sys
 
-import yaml
-
-from evaleng.schema.models import Fixture
+from evaleng.ingest.loader import load_fixture, FixtureError
 from evaleng.interfaces import CandidateInput
 from evaleng.pipeline import score
 
@@ -19,9 +17,9 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
 
     try:
-        fixture = Fixture(**yaml.safe_load(open(args.fixture, encoding="utf-8")))
-    except Exception as e:
-        print(f"error: could not load fixture {args.fixture!r}: {e}", file=sys.stderr)
+        fixture = load_fixture(args.fixture)
+    except FixtureError as e:
+        print(f"error: {e}", file=sys.stderr)
         return 2
 
     text = open(args.transcript, encoding="utf-8").read().strip()

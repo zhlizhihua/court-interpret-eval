@@ -7,12 +7,12 @@ method, with every other unit unchanged from the clean run.
 from __future__ import annotations
 from pathlib import Path
 
-import yaml
 import pytest
 
 from evaleng.schema.models import Fixture
 from evaleng.interfaces import CandidateInput
 from evaleng.pipeline import score
+from evaleng.ingest.loader import load_fixture
 
 # Adjust if your Week 1 freezes locate the fixture differently (conftest, etc.).
 FIXTURE_PATH = Path(__file__).resolve().parent.parent / "fixtures" / "reference_draft.yaml"
@@ -22,7 +22,7 @@ pytestmark = pytest.mark.slow
 
 
 def _load_fixture() -> Fixture:
-    return Fixture(**yaml.safe_load(FIXTURE_PATH.read_text(encoding="utf-8")))
+    return load_fixture(FIXTURE_PATH)
 
 
 def _candidate(text: str) -> CandidateInput:
