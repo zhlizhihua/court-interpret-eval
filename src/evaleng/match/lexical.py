@@ -2,25 +2,16 @@
 from __future__ import annotations
 import functools
 
-import stanza
 from rapidfuzz import fuzz
 
 from evaleng.schema.models import Unit, MatchingPolicy
 from evaleng.interfaces import CandidateInput, UnitLocation, UnitVerdict
-
-_PIPELINE = None
-
-
-def _pipeline() -> stanza.Pipeline:
-    global _PIPELINE
-    if _PIPELINE is None:
-        _PIPELINE = stanza.Pipeline("es", processors="tokenize,pos,lemma", verbose=False)
-    return _PIPELINE
+from evaleng.analysis import pipeline
 
 
 @functools.lru_cache(maxsize=4096)
 def _lemmas(text: str) -> tuple[str, ...]:
-    doc = _pipeline()(text)
+    doc = pipeline()(text)
     return tuple(w.lemma.lower() for s in doc.sentences for w in s.words
                  if w.lemma and w.upos != "PUNCT")
 

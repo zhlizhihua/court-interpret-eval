@@ -2,20 +2,9 @@
 from __future__ import annotations
 import functools
 
-import stanza
-
 from evaleng.schema.models import Unit, MatchingPolicy, FeatureSpec
 from evaleng.interfaces import CandidateInput, UnitLocation, UnitVerdict
-
-_PIPELINE = None
-
-
-def _pipeline() -> stanza.Pipeline:
-    global _PIPELINE
-    if _PIPELINE is None:
-        _PIPELINE = stanza.Pipeline("es", processors="tokenize,pos,lemma,depparse",
-                                    verbose=False)
-    return _PIPELINE
+from evaleng.analysis import pipeline
 
 
 def _region_text(candidate: CandidateInput, location: UnitLocation) -> str | None:
@@ -40,7 +29,7 @@ def _check(region: str, spec_key: tuple) -> tuple[bool, str]:
     """
     upos, feats_items, deprel = spec_key
     feats_required = dict(feats_items)
-    doc = _pipeline()(region)
+    doc = pipeline()(region)
     for sent in doc.sentences:
         for w in sent.words:
             if upos and w.upos != upos:
