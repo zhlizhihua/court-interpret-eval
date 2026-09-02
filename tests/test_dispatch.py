@@ -17,7 +17,7 @@ def test_every_unit_type_is_routed():
     (UnitType.LEGAL_VOCABULARY,   MatcherKind.LEXICAL),
     (UnitType.IDIOM,              MatcherKind.LEXICAL),
     (UnitType.GRAMMAR,            MatcherKind.GRAMMAR),
-    (UnitType.REGISTER,           MatcherKind.DEFERRED),
+    (UnitType.REGISTER,           MatcherKind.REGISTER),
     (UnitType.POSITION,           MatcherKind.DEFERRED),
 ])
 def test_matcher_routing(unit_type, expected_matcher):
@@ -34,7 +34,7 @@ def test_policy_raises_for_deferred_unit():
     """A still-deferred type with no policy of its own must fail loudly."""
     unit = Unit(
         id="x_deferred",
-        type=UnitType.POSITION,          # still deferred (W4); swap to REGISTER if you prefer
+        type=UnitType.POSITION,          # still deferred (W4)
         source_span="according to the victim",
         acceptable_renderings=["según la víctima"],
         matching_policy=None,
