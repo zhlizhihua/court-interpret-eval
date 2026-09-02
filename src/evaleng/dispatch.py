@@ -10,6 +10,7 @@ class MatcherKind(str, Enum):
     NUMBER = "number"
     LEXICAL = "lexical"
     GRAMMAR = "grammar"
+    REGISTER = "register"
     DEFERRED = "deferred"
 
 
@@ -38,12 +39,11 @@ DISPATCH: dict[UnitType, DispatchRule] = {
                                               default_policy=_LEXICAL_POLICY),
     UnitType.SLANG:              DispatchRule(matcher=MatcherKind.LEXICAL,
                                               default_policy=_LEXICAL_POLICY,
-                                              note="W1 scores this by set-membership; "
-                                                   "flip to DEFERRED to align with the W3 register track"),
+                                              note="W1 scores this by set-membership"),
     UnitType.GRAMMAR:            DispatchRule(matcher=MatcherKind.GRAMMAR,
                                               note="each unit carries its own feature_spec policy"),
-    UnitType.REGISTER:           DispatchRule(matcher=MatcherKind.DEFERRED,
-                                              note="deferred to W3 (register classifier)"),
+    UnitType.REGISTER:           DispatchRule(matcher=MatcherKind.REGISTER,
+                                              note="each unit carries its own register_spec policy"),
     UnitType.POSITION:           DispatchRule(matcher=MatcherKind.DEFERRED,
                                               note="deferred to W4 (needs real alignment)"),
 }
