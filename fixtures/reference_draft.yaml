@@ -80,6 +80,10 @@ units:
     acceptable_renderings:
       - "Tiene derecho a guardar silencio"
       - "Usted tiene derecho a guardar silencio"
+    matching_policy:
+      method: "register_stanza"
+      register_spec:
+        required: "formal"
 
   - id: "u009"
     type: "position"

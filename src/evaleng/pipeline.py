@@ -8,6 +8,7 @@ from evaleng.localize import localize
 from evaleng.match.number import match_number
 from evaleng.match.lexical import match_lexical
 from evaleng.match.grammar import match_grammar
+from evaleng.match.register import match_register
 
 
 def _unscored_verdict(unit) -> UnitVerdict:
@@ -27,6 +28,8 @@ def run_matchers(candidate: CandidateInput, fixture: Fixture, alignment) -> list
             verdict = match_lexical(unit, candidate, location, resolve_policy(unit))
         elif kind is MatcherKind.GRAMMAR:
             verdict = match_grammar(unit, candidate, location, resolve_policy(unit))
+        elif kind is MatcherKind.REGISTER:
+            verdict = match_register(unit, candidate, location, resolve_policy(unit))
         else:
             verdict = _unscored_verdict(unit)
         verdicts.append(verdict)

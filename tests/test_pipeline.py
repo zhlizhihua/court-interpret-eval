@@ -16,8 +16,8 @@ def test_clean_transcript_passes(exam_fixture):
     report = score(_candidate(exam_fixture.reference_rendering), exam_fixture)
     r = report.result
     assert r.overall_pass is True
-    assert r.coverage == (8, 10)                      # 8 scored, 2 deferred
-    assert (r.weighted_passed, r.weighted_scored) == (8, 8)
+    assert r.coverage == (9, 10)                      # 9 scored, 1 deferred
+    assert (r.weighted_passed, r.weighted_scored) == (9, 9)
 
 
 def test_degraded_transcript_fails_on_the_right_units(exam_fixture):

@@ -5,4 +5,4 @@ stanza_resources/
 .env
 .DS_Store
 *.egg-info/
-*.txt
+docs/
