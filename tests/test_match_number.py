@@ -24,9 +24,6 @@ def test_number_fails_when_not_located(unit_by_id, make_candidate):
     assert verdict.status == "fail"
 
 
-@pytest.mark.xfail(strict=True,
-                   reason="number matcher over-reaches to a stray number elsewhere; "
-                          "expected fixed by W4 reference-projected localization")
 def test_number_ignores_stray_number_elsewhere(exam_fixture, unit_by_id):
     """DESIRED behavior: a wrong count must fail even if '2' appears elsewhere.
     """
