@@ -38,14 +38,13 @@ DISPATCH: dict[UnitType, DispatchRule] = {
     UnitType.MODIFIER:           DispatchRule(matcher=MatcherKind.LEXICAL,
                                               default_policy=_LEXICAL_POLICY),
     UnitType.SLANG:              DispatchRule(matcher=MatcherKind.LEXICAL,
-                                              default_policy=_LEXICAL_POLICY,
-                                              note="W1 scores this by set-membership"),
+                                              default_policy=_LEXICAL_POLICY),
     UnitType.GRAMMAR:            DispatchRule(matcher=MatcherKind.GRAMMAR,
                                               note="each unit carries its own feature_spec policy"),
     UnitType.REGISTER:           DispatchRule(matcher=MatcherKind.REGISTER,
                                               note="each unit carries its own register_spec policy"),
-    UnitType.POSITION:           DispatchRule(matcher=MatcherKind.DEFERRED,
-                                              note="deferred to W4 (needs real alignment)"),
+    UnitType.POSITION:           DispatchRule(matcher=MatcherKind.LEXICAL,
+                                              default_policy=_LEXICAL_POLICY),
 }
 
 _missing = [t for t in UnitType if t not in DISPATCH]

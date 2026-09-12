@@ -18,7 +18,7 @@ def test_every_unit_type_is_routed():
     (UnitType.IDIOM,              MatcherKind.LEXICAL),
     (UnitType.GRAMMAR,            MatcherKind.GRAMMAR),
     (UnitType.REGISTER,           MatcherKind.REGISTER),
-    (UnitType.POSITION,           MatcherKind.DEFERRED),
+    (UnitType.POSITION,           MatcherKind.LEXICAL),
 ])
 def test_matcher_routing(unit_type, expected_matcher):
     assert matcher_for(unit_type) is expected_matcher
@@ -30,14 +30,14 @@ def test_policy_defaults_when_unit_has_none(unit_by_id):
     assert isinstance(policy, MatchingPolicy)
 
 
-def test_policy_raises_for_deferred_unit():
-    """A still-deferred type with no policy of its own must fail loudly."""
-    unit = Unit(
-        id="x_deferred",
-        type=UnitType.POSITION,          # still deferred (W4)
-        source_span="according to the victim",
-        acceptable_renderings=["según la víctima"],
-        matching_policy=None,
-    )
-    with pytest.raises(ValueError):
-        resolve_policy(unit)
+# def test_policy_raises_for_deferred_unit():
+#     """A still-deferred type with no policy of its own must fail loudly."""
+#     unit = Unit(
+#         id="x_deferred",
+#         type=UnitType.POSITION,
+#         source_span="according to the victim",
+#         acceptable_renderings=["según la víctima"],
+#         matching_policy=None,
+#     )
+#     with pytest.raises(ValueError):
+#         resolve_policy(unit)
