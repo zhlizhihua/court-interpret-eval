@@ -14,3 +14,4 @@ dependencies:
   - pip:
       - wn
       - text2num==3.*
+      - faster-whisper
