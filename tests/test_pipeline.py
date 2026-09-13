@@ -16,15 +16,16 @@ def test_clean_transcript_passes(exam_fixture):
     report = score(_candidate(exam_fixture.reference_rendering), exam_fixture)
     r = report.result
     assert r.overall_pass is True
-    assert r.coverage == (9, 10)                      # 9 scored, 1 deferred
-    assert (r.weighted_passed, r.weighted_scored) == (9, 9)
+    assert r.coverage == (10, 10)
+    assert (r.weighted_passed, r.weighted_scored) == (10, 10)
 
 
 def test_degraded_transcript_fails_on_the_right_units(exam_fixture):
     ref = " ".join(exam_fixture.reference_rendering.split())
     bad = (ref.replace("las pruebas", "la evidencia")
               .replace("dos cargos", "tres cargos")
-              .replace("agresión con agravantes", "asalto agravado"))
+              .replace("agresión con agravantes", "asalto agravado")
+              .replace("será sentenciado", "es sentenciado"))   # break grammar (u001)
     report = score(_candidate(bad), exam_fixture)
     r = report.result
     v = {verdict.unit_id: verdict.status for verdict in r.verdicts}
@@ -33,8 +34,8 @@ def test_degraded_transcript_fails_on_the_right_units(exam_fixture):
     assert v["u002"] == "fail"      # false cognate (planted)
     assert v["u004"] == "fail"      # legal vocab (planted)
     assert v["u006"] == "fail"      # number (planted)
+    assert v["u001"] == "fail"      # grammar (planted)   ← was "pass"
     assert v["u003"] == "pass"      # untouched — must stay passing
-    assert v["u001"] == "pass"      # grammar
 
 
 def test_report_has_one_line_per_unit(exam_fixture):

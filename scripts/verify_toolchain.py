@@ -58,6 +58,11 @@ def _fasttext():
     v = fasttext.load_model("cc.es.300.bin").get_word_vector("intérprete")
     return f"vector dim={len(v)}"
 
+def _faster_whisper():
+    from faster_whisper import WhisperModel
+    WhisperModel("tiny", device="cpu", compute_type="int8")
+    return "faster-whisper tiny model loaded"
+
 
 check("stanza(es)", _stanza)
 check("spacy(es_core_news_md)", _spacy)
@@ -66,6 +71,7 @@ check("jellyfish", _jellyfish)
 check("text2num(es)", _text2num)
 check("wn(omw-es)", _wn)
 # check("fasttext(cc.es.300)", _fasttext)
+# check("faster-whisper", _faster_whisper)
 
 print(f"\nSmoke test on: {SENT!r}\n")
 ok = all(passed for _, passed, _ in results)
