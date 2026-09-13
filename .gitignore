@@ -6,3 +6,4 @@ stanza_resources/
 .DS_Store
 *.egg-info/
 docs/
+audio_samples/
