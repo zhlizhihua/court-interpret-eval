@@ -9,6 +9,7 @@ from evaleng.match.number import match_number
 from evaleng.match.lexical import match_lexical
 from evaleng.match.grammar import match_grammar
 from evaleng.match.register import match_register
+from evaleng.delivery import delivery_metrics, delivery_lines
 
 
 def _unscored_verdict(unit) -> UnitVerdict:
@@ -87,7 +88,12 @@ def score(candidate: CandidateInput, fixture: Fixture) -> FeedbackReport:
     verdicts = run_matchers(candidate, fixture, alignment)
     verdicts = _rescue_with_nbest(verdicts, candidate, fixture)
     result = aggregate(verdicts, fixture)
-    return build_feedback(result, fixture)
+    report = build_feedback(result, fixture)
+
+    metrics = delivery_metrics(candidate)             # None on a typed transcript (no timings)
+    if metrics:
+        report.lines.extend(delivery_lines(metrics))  # append the non-scored block
+    return report
 
 
 def _rescue_with_nbest(verdicts, candidate, fixture) -> list[UnitVerdict]:
