@@ -17,23 +17,22 @@ def _unscored_verdict(unit) -> UnitVerdict:
                        candidate_text=None, method="deferred", reason=note, score=None)
 
 
-def run_matchers(candidate: CandidateInput, fixture: Fixture, alignment) -> list[UnitVerdict]:
-    verdicts = []
-    for unit in fixture.units:
-        location = alignment.locations[unit.id]
-        kind = matcher_for(unit.type)
-        if kind is MatcherKind.NUMBER:
-            verdict = match_number(unit, candidate, location)
-        elif kind is MatcherKind.LEXICAL:
-            verdict = match_lexical(unit, candidate, location, resolve_policy(unit))
-        elif kind is MatcherKind.GRAMMAR:
-            verdict = match_grammar(unit, candidate, location, resolve_policy(unit))
-        elif kind is MatcherKind.REGISTER:
-            verdict = match_register(unit, candidate, location, resolve_policy(unit))
-        else:
-            verdict = _unscored_verdict(unit)
-        verdicts.append(verdict)
-    return verdicts
+def _judge(unit, candidate, location) -> UnitVerdict:
+    """Run the matcher for one unit against one candidate+location."""
+    kind = matcher_for(unit.type)
+    if kind is MatcherKind.NUMBER:
+        return match_number(unit, candidate, location)
+    if kind is MatcherKind.LEXICAL:
+        return match_lexical(unit, candidate, location, resolve_policy(unit))
+    if kind is MatcherKind.GRAMMAR:
+        return match_grammar(unit, candidate, location, resolve_policy(unit))
+    if kind is MatcherKind.REGISTER:
+        return match_register(unit, candidate, location, resolve_policy(unit))
+    return _unscored_verdict(unit)
+
+def run_matchers(candidate, fixture, alignment) -> list[UnitVerdict]:
+    return [_judge(unit, candidate, alignment.locations[unit.id])
+            for unit in fixture.units]
 
 
 def aggregate(verdicts: list[UnitVerdict], fixture: Fixture) -> ScoreResult:
@@ -86,5 +85,32 @@ def build_feedback(result: ScoreResult, fixture: Fixture) -> FeedbackReport:
 def score(candidate: CandidateInput, fixture: Fixture) -> FeedbackReport:
     alignment = localize(candidate, fixture)
     verdicts = run_matchers(candidate, fixture, alignment)
+    verdicts = _rescue_with_nbest(verdicts, candidate, fixture)
     result = aggregate(verdicts, fixture)
     return build_feedback(result, fixture)
+
+
+def _rescue_with_nbest(verdicts, candidate, fixture) -> list[UnitVerdict]:
+    """Turn a 1-best fail into a pass if an ASR alternative supports it. Never the reverse."""
+    if not candidate.nbest:
+        return verdicts
+    by_id = {v.unit_id: v for v in verdicts}
+    unit_by_id = {u.id: u for u in fixture.units}
+    failing = {v.unit_id for v in verdicts if v.status == "fail"}
+
+    for k, alt_text in enumerate(candidate.nbest, start=1):
+        if not failing:
+            break
+        alt = CandidateInput(text=alt_text, tokens=alt_text.split())
+        alt_align = localize(alt, fixture)
+        for uid in list(failing):
+            v = _judge(unit_by_id[uid], alt, alt_align.locations[uid])
+            if v.status == "pass":
+                v = v.model_copy(update={
+                    "method": f"{v.method}+nbest",
+                    "reason": f"{v.reason} [rescued via ASR alternative #{k}]",
+                })
+                by_id[uid] = v
+                failing.discard(uid)
+
+    return [by_id[u.id] for u in fixture.units]   # preserve fixture order

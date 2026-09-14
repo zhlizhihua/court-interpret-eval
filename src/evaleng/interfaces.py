@@ -12,6 +12,7 @@ class CandidateInput(BaseModel):
     tokens: list[str]
     timings: list[tuple[float, float]] | None = None
     nbest: list[str] | None = None
+    audio_duration: float | None = None
 
 
 class UnitLocation(BaseModel):
