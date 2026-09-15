@@ -35,7 +35,7 @@ python -m evaleng.cli \
     --transcript path/to/candidate.txt
 ```
 
-Score directly from audio, sampling extra ASR hypotheses for n-best rescue:
+Score directly from audio, specifying ASR model size, sampling extra ASR hypotheses for n-best alternatives:
 
 ```bash
 python -m evaleng.cli \
@@ -55,7 +55,7 @@ pytest -m "not slow"   # skip Stanza-dependent tests
 
 ---
 
-## Layout
+## Repo Structure
 
 ```
 src/evaleng/
