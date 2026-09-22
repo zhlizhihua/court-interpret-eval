@@ -7,15 +7,18 @@ from evaleng.interfaces import CandidateInput
 
 log = logging.getLogger("evaleng.asr")
 _MODEL = None
+_MODEL_SIZE = None
 
 
 def _model(size: str = "small"):
-    """Load the Whisper model once, reuse it (like analysis.pipeline())."""
-    global _MODEL
-    if _MODEL is None:
+    """Load the Whisper model and reuse it across calls; reload when the requested
+    size changes so the caller's model choice always takes effect."""
+    global _MODEL, _MODEL_SIZE
+    if _MODEL is None or size != _MODEL_SIZE:
         log.info("loading Whisper '%s' model…", size)
         from faster_whisper import WhisperModel
         _MODEL = WhisperModel(size, device="cpu", compute_type="int8")
+        _MODEL_SIZE = size
     return _MODEL
 
 

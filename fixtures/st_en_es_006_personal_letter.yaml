@@ -1,0 +1,98 @@
+id: "st_en_es_006"
+source_lang: "en"
+target_lang: "es"
+# Genre: personal letter entered as evidence (inmate to family). Register: LOW (colloquial, tú).
+source_text: >
+  Hey bro, I know it's been a while since I wrote you. This place is a total
+  nightmare, but I'm hanging in there. I realize now that I messed everything up,
+  and I swear I'm gonna turn over a new leaf when I get out. Tell mom not to worry
+  about me — I've only got about eight months left. My homies on the outside keep
+  asking about me, but you know how it is. I'm actually doing okay, so don't
+  stress. From now on, I'm gonna keep my head down and stay out of trouble. Write
+  me back when you can. Take care of yourself, and give my little sister a hug for
+  me.
+reference_rendering: >
+  Oye hermano, sé que ha pasado un buen rato desde que te escribí. Este lugar es
+  una pesadilla total, pero ahí la voy llevando. Ahora me doy cuenta de que lo
+  eché todo a perder, y te juro que voy a hacer borrón y cuenta nueva cuando
+  salga. Dile a mamá que no se preocupe por mí; solo me quedan unos ocho meses.
+  Mis carnales de afuera siguen preguntando por mí, pero ya sabes cómo es la cosa.
+  En realidad estoy bien, así que no te estreses. De ahora en adelante, voy a
+  mantenerme al margen y no meterme en problemas. Escríbeme cuando puedas. Cuídate
+  mucho, y dale un abrazo de mi parte a mi hermanita.
+
+units:
+  - id: "u001"
+    type: "grammar"
+    source_span: "when I get out"
+    acceptable_renderings:
+      - "cuando salga"
+      - "cuando salga de aquí"
+      - "cuando salga en libertad"
+    matching_policy:
+      method: grammar_feature
+      feature_spec:
+        feats:
+          Mood: Sub
+
+  - id: "u002"
+    type: "false_cognate"
+    source_span: "I realize now"
+    acceptable_renderings:
+      - "ahora me doy cuenta"
+      - "me doy cuenta ahora"
+
+  - id: "u003"
+    type: "general_vocabulary"
+    source_span: "a hug"
+    acceptable_renderings:
+      - "un abrazo"
+
+  - id: "u004"
+    type: "idiom"
+    source_span: "turn over a new leaf"
+    acceptable_renderings:
+      - "hacer borrón y cuenta nueva"
+      - "empezar de nuevo"
+      - "pasar página"
+
+  - id: "u005"
+    type: "number"
+    source_span: "about eight months"
+    acceptable_renderings:
+      - "unos ocho meses"
+      - "como ocho meses"
+      - "ocho meses"
+
+  - id: "u006"
+    type: "modifier"
+    source_span: "a total nightmare"
+    acceptable_renderings:
+      - "una pesadilla total"
+      - "una verdadera pesadilla"
+
+  - id: "u007"
+    type: "register"
+    source_span: "Take care of yourself"
+    acceptable_renderings:
+      - "cuídate"
+      - "cuídate mucho"
+    matching_policy:
+      method: register_stanza
+      register_spec:
+        required: informal
+
+  - id: "u008"
+    type: "position"
+    source_span: "From now on"
+    acceptable_renderings:
+      - "de ahora en adelante"
+      - "a partir de ahora"
+
+  - id: "u009"
+    type: "slang"
+    source_span: "My homies"
+    acceptable_renderings:
+      - "mis carnales"
+      - "mis compas"
+      - "mis panas"

@@ -1,0 +1,82 @@
+id: "st_en_es_004"
+source_lang: "en"
+target_lang: "es"
+# Genre: conditions of probation / sentencing order. Register: HIGH (formal instrument).
+source_text: >
+  As a condition of your probation, you must comply with the following terms. You
+  shall report to your probation officer within forty-eight hours of your
+  release. You must maintain gainful employment and may not leave the county
+  without prior written permission. You shall not possess or consume any
+  controlled substance, and you must submit to random drug testing. You are
+  further ordered to attend weekly counseling sessions and to pay restitution in
+  the amount of two thousand dollars to the victim. Failure to comply with any of
+  these conditions will result in the revocation of your probation.
+reference_rendering: >
+  Como condición de su libertad condicional, usted debe cumplir con los
+  siguientes términos. Deberá presentarse ante su oficial de libertad condicional
+  dentro de las cuarenta y ocho horas siguientes a su liberación. Debe mantener
+  un empleo remunerado y no podrá salir del condado sin permiso previo por
+  escrito. No deberá poseer ni consumir ninguna sustancia controlada, y deberá
+  someterse a pruebas de drogas aleatorias. Además, se le ordena asistir a
+  sesiones semanales de consejería y pagar una restitución por la cantidad de dos
+  mil dólares a la víctima. El incumplimiento de cualquiera de estas condiciones
+  resultará en la revocación de su libertad condicional.
+
+units:
+  - id: "u001"
+    type: "grammar"
+    source_span: "may not leave the county"
+    acceptable_renderings:
+      - "no podrá salir del condado"
+      - "no puede salir del condado"
+      - "no deberá salir del condado"
+    matching_policy:
+      method: grammar_feature
+      feature_spec:
+        feats:
+          Mood: Ind
+
+  - id: "u002"
+    type: "legal_vocabulary"
+    source_span: "controlled substance"
+    acceptable_renderings:
+      - "sustancia controlada"
+      - "sustancias controladas"
+      - "sustancia fiscalizada"
+
+  - id: "u003"
+    type: "number"
+    source_span: "two thousand dollars"
+    acceptable_renderings:
+      - "dos mil dólares"
+      - "$2,000"
+      - "2000 dólares"
+
+  - id: "u004"
+    type: "modifier"
+    source_span: "gainful employment"
+    acceptable_renderings:
+      - "empleo remunerado"
+      - "trabajo remunerado"
+
+  - id: "u005"
+    type: "false_cognate"
+    source_span: "attend weekly counseling sessions"
+    acceptable_renderings:
+      - "asistir a sesiones semanales de consejería"
+      - "acudir a sesiones semanales de consejería"
+      - "asistir a sesiones semanales de asesoramiento"
+
+  - id: "u006"
+    type: "general_vocabulary"
+    source_span: "your release"
+    acceptable_renderings:
+      - "su liberación"
+      - "su puesta en libertad"
+
+  - id: "u007"
+    type: "position"
+    source_span: "You are further ordered to"
+    acceptable_renderings:
+      - "además, se le ordena"
+      - "asimismo, se le ordena"

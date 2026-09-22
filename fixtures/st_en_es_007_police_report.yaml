@@ -1,0 +1,89 @@
+id: "st_en_es_007"
+source_lang: "en"
+target_lang: "es"
+# Genre: police incident report. Register: MID (semi-formal bureaucratic; idiom in a quote).
+source_text: >
+  On the above date, at approximately 22:45 hours, officers responded to a report
+  of a disturbance at the listed address. Upon arrival, the officers observed the
+  suspect, who appeared to be visibly intoxicated, arguing with the complainant. A
+  witness stated that the suspect had 'gone ballistic' and thrown a bottle. During
+  a pat-down, the officers recovered a concealed weapon and two grams of a
+  controlled substance. The suspect was placed under arrest and advised of his
+  Miranda rights. He was subsequently transported to the county jail. The
+  complainant declined medical treatment at the scene.
+reference_rendering: >
+  En la fecha indicada, aproximadamente a las 22:45 horas, los agentes acudieron a
+  un reporte de disturbio en la dirección señalada. Al llegar, los agentes
+  observaron al sospechoso, quien parecía estar visiblemente ebrio, discutiendo
+  con el denunciante. Un testigo declaró que el sospechoso se había puesto como
+  loco y había arrojado una botella. Durante un cacheo, los agentes recuperaron un
+  arma oculta y dos gramos de una sustancia controlada. El sospechoso fue puesto
+  bajo arresto y se le informó de sus derechos Miranda. Posteriormente fue
+  trasladado a la cárcel del condado. El denunciante rechazó tratamiento médico en
+  el lugar de los hechos.
+
+units:
+  - id: "u001"
+    type: "grammar"
+    source_span: "The suspect was placed under arrest"
+    acceptable_renderings:
+      - "el sospechoso fue puesto bajo arresto"
+      - "se detuvo al sospechoso"
+      - "el sospechoso quedó bajo arresto"
+    matching_policy:
+      method: grammar_feature
+      feature_spec:
+        feats:
+          Tense: Past
+
+  - id: "u002"
+    type: "legal_vocabulary"
+    source_span: "his Miranda rights"
+    acceptable_renderings:
+      - "sus derechos Miranda"
+      - "sus derechos constitucionales"
+      - "la advertencia Miranda"
+
+  - id: "u003"
+    type: "number"
+    source_span: "two grams"
+    acceptable_renderings:
+      - "dos gramos"
+      - "2 gramos"
+
+  - id: "u004"
+    type: "modifier"
+    source_span: "a concealed weapon"
+    acceptable_renderings:
+      - "un arma oculta"
+      - "un arma escondida"
+
+  - id: "u005"
+    type: "false_cognate"
+    source_span: "visibly intoxicated"
+    acceptable_renderings:
+      - "visiblemente ebrio"
+      - "visiblemente borracho"
+      - "en evidente estado de ebriedad"
+
+  - id: "u006"
+    type: "general_vocabulary"
+    source_span: "a bottle"
+    acceptable_renderings:
+      - "una botella"
+
+  - id: "u007"
+    type: "idiom"
+    source_span: "gone ballistic"
+    acceptable_renderings:
+      - "se había puesto como loco"
+      - "había explotado"
+      - "se había puesto hecho una furia"
+
+  - id: "u008"
+    type: "position"
+    source_span: "Upon arrival"
+    acceptable_renderings:
+      - "al llegar"
+      - "a su llegada"
+      - "al arribar"

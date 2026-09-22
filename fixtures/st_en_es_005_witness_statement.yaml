@@ -1,0 +1,100 @@
+id: "st_en_es_005"
+source_lang: "en"
+target_lang: "es"
+# Genre: witness statement (first-person narrative). Register: LOW (colloquial lay document).
+source_text: >
+  I was walking home from work around eleven at night when I saw the whole thing.
+  This guy comes out of the bar, totally wasted, and starts yelling 'I'm gonna
+  kick your ass' at another dude. Out of nowhere, he flew off the handle and threw
+  a punch. I was so embarrassed that I froze and didn't do anything. There were
+  maybe four or five people watching. The big guy pulled out a knife, and
+  everybody scattered. I called the cops right away, but by the time they showed
+  up, the jerk had already taken off. I swear that's exactly what happened.
+reference_rendering: >
+  Iba caminando a casa desde el trabajo como a las once de la noche cuando vi
+  todo. Este tipo sale del bar, bien borracho, y empieza a gritarle 'te voy a
+  partir la cara' a otro sujeto. De la nada, perdió los estribos y soltó un
+  puñetazo. Estaba tan avergonzado que me quedé congelado y no hice nada. Había
+  como cuatro o cinco personas mirando. El tipo grande sacó un cuchillo y todos se
+  dispersaron. Llamé a la poli de inmediato, pero para cuando llegaron, el tipo ya
+  se había largado. Juro que eso fue exactamente lo que pasó.
+
+units:
+  - id: "u001"
+    type: "grammar"
+    source_span: "the jerk had already taken off"
+    acceptable_renderings:
+      - "ya se había largado"
+      - "ya se había ido"
+      - "ya se había escapado"
+    matching_policy:
+      method: grammar_feature
+      feature_spec:
+        feats:
+          VerbForm: Part
+
+  - id: "u002"
+    type: "false_cognate"
+    source_span: "I was so embarrassed"
+    acceptable_renderings:
+      - "estaba tan avergonzado"
+      - "estaba tan avergonzada"
+      - "me dio tanta vergüenza"
+
+  - id: "u003"
+    type: "general_vocabulary"
+    source_span: "a knife"
+    acceptable_renderings:
+      - "un cuchillo"
+      - "una navaja"
+
+  - id: "u004"
+    type: "idiom"
+    source_span: "he flew off the handle"
+    acceptable_renderings:
+      - "perdió los estribos"
+      - "se salió de sus casillas"
+      - "explotó"
+
+  - id: "u005"
+    type: "number"
+    source_span: "four or five people"
+    acceptable_renderings:
+      - "cuatro o cinco personas"
+      - "unas cuatro o cinco personas"
+
+  - id: "u006"
+    type: "modifier"
+    source_span: "the big guy"
+    acceptable_renderings:
+      - "el tipo grande"
+      - "el hombre grande"
+      - "el grandote"
+
+  - id: "u007"
+    type: "register"
+    source_span: "I'm gonna kick your ass"
+    acceptable_renderings:
+      - "te voy a partir la cara"
+      - "te voy a dar una paliza"
+      - "te voy a romper la cara"
+    matching_policy:
+      method: register_stanza
+      register_spec:
+        required: informal
+
+  - id: "u008"
+    type: "position"
+    source_span: "right away"
+    acceptable_renderings:
+      - "de inmediato"
+      - "enseguida"
+      - "de una vez"
+
+  - id: "u009"
+    type: "slang"
+    source_span: "the cops"
+    acceptable_renderings:
+      - "la poli"
+      - "los polis"
+      - "la chota"

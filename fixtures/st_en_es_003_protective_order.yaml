@@ -1,0 +1,79 @@
+id: "st_en_es_003"
+source_lang: "en"
+target_lang: "es"
+# Genre: domestic-violence protective / restraining order. Register: HIGH (formal instrument).
+source_text: >
+  The Court, having reviewed the petition, hereby issues this restraining order
+  against the respondent. You are ordered to stay at least one hundred yards away
+  from the protected party and her immediate family. You shall not contact the
+  protected party by any means, whether in person, by telephone, or through a
+  third party. You must surrender any firearm in your possession within
+  twenty-four hours. This order remains in effect for a period of one year. You have
+  received
+  formal notice of these terms. Any violation of this order constitutes contempt
+  of court and may result in your immediate arrest.
+reference_rendering: >
+  El Tribunal, tras haber examinado la petición, por la presente emite esta orden
+  de restricción contra la parte demandada. Se le ordena mantenerse al menos cien
+  yardas alejado de la parte protegida y de su familia inmediata. No deberá
+  comunicarse con la parte protegida por ningún medio, ya sea en persona, por
+  teléfono o a través de un tercero. Deberá entregar cualquier arma de fuego que
+  tenga en su poder dentro de veinticuatro horas. Esta orden permanecerá en vigor
+  por un período de un año. Ha recibido notificación formal de estos términos. Todo
+  incumplimiento de esta orden constituye desacato
+  al tribunal y podrá resultar en su arresto inmediato.
+
+units:
+  - id: "u001"
+    type: "grammar"
+    source_span: "You shall not contact the protected party"
+    acceptable_renderings:
+      - "no deberá comunicarse con la parte protegida"
+      - "no podrá comunicarse con la parte protegida"
+      - "no deberá ponerse en contacto con la parte protegida"
+    matching_policy:
+      method: grammar_feature
+      feature_spec:
+        feats:
+          Tense: Fut
+
+  - id: "u002"
+    type: "legal_vocabulary"
+    source_span: "contempt of court"
+    acceptable_renderings:
+      - "desacato al tribunal"
+      - "desacato a la corte"
+
+  - id: "u003"
+    type: "number"
+    source_span: "one hundred yards"
+    acceptable_renderings:
+      - "cien yardas"
+      - "100 yardas"
+
+  - id: "u004"
+    type: "modifier"
+    source_span: "her immediate family"
+    acceptable_renderings:
+      - "su familia inmediata"
+      - "sus familiares inmediatos"
+
+  - id: "u005"
+    type: "position"
+    source_span: "hereby"
+    acceptable_renderings:
+      - "por la presente"
+      - "mediante la presente"
+
+  - id: "u006"
+    type: "false_cognate"
+    source_span: "formal notice"
+    acceptable_renderings:
+      - "notificación formal"
+      - "aviso formal"
+
+  - id: "u007"
+    type: "general_vocabulary"
+    source_span: "by telephone"
+    acceptable_renderings:
+      - "por teléfono"

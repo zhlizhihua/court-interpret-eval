@@ -1,0 +1,89 @@
+id: "st_en_es_002"
+source_lang: "en"
+target_lang: "es"
+# Genre: felony plea / rights advisement. Register: HIGH (formal legal instrument, usted).
+source_text: >
+  Before this Court accepts your plea of guilty, you must understand the
+  following. By pleading guilty, you waive your right to a jury trial and to
+  confront the witnesses against you. The maximum penalty for this offense is up
+  to five years in state prison and a fine of $10,000. Pursuant to the agreement,
+  the prosecutor will recommend probation. You may consult with your attorney
+  before answering. If you fail to appear at the sentencing hearing, a warrant
+  will be issued for your arrest.
+reference_rendering: >
+  Antes de que este Tribunal acepte su declaración de culpabilidad, usted debe
+  entender lo siguiente. Al declararse culpable, renuncia a su derecho a un
+  juicio por jurado y a carearse con los testigos en su contra. La pena máxima
+  por este delito es de hasta cinco años en prisión estatal y una multa de diez
+  mil dólares. Conforme al acuerdo, el fiscal recomendará libertad condicional.
+  Puede consultar con su abogado antes de responder. Si usted no comparece a la
+  audiencia de sentencia, se emitirá una orden de arresto.
+
+units:
+  - id: "u001"
+    type: "grammar"
+    source_span: "a warrant will be issued for your arrest"
+    acceptable_renderings:
+      - "se emitirá una orden de arresto"
+      - "se expedirá una orden de detención"
+      - "se librará una orden de arresto"
+    matching_policy:
+      method: grammar_feature
+      feature_spec:
+        feats:
+          Tense: Fut
+
+  - id: "u002"
+    type: "false_cognate"
+    source_span: "this offense"
+    acceptable_renderings:
+      - "este delito"
+      - "esta infracción"
+
+  - id: "u003"
+    type: "general_vocabulary"
+    source_span: "a fine"
+    acceptable_renderings:
+      - "una multa"
+
+  - id: "u004"
+    type: "legal_vocabulary"
+    source_span: "you waive your right to a jury trial"
+    acceptable_renderings:
+      - "renuncia a su derecho a un juicio por jurado"
+      - "usted renuncia a su derecho a un juicio por jurado"
+
+  - id: "u005"
+    type: "number"
+    source_span: "up to five years"
+    acceptable_renderings:
+      - "hasta cinco años"
+      - "hasta 5 años"
+
+  - id: "u006"
+    type: "modifier"
+    source_span: "maximum penalty"
+    acceptable_renderings:
+      - "la pena máxima"
+      - "pena máxima"
+      - "la sanción máxima"
+
+  - id: "u007"
+    type: "register"
+    source_span: "You may consult with your attorney"
+    acceptable_renderings:
+      - "puede consultar con su abogado"
+      - "usted puede consultar con su abogado"
+      - "puede consultar con su abogado defensor"
+    matching_policy:
+      method: register_stanza
+      register_spec:
+        required: formal
+
+  - id: "u008"
+    type: "position"
+    source_span: "Pursuant to the agreement"
+    acceptable_renderings:
+      - "conforme al acuerdo"
+      - "de conformidad con el acuerdo"
+      - "con arreglo al acuerdo"
