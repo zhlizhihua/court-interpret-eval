@@ -2,7 +2,7 @@
 
 **An automated evaluation engine for court-interpreter sight translation.**
 
-`evaleng` scores a candidate interpreter's rendering like a certification exam. It evaluates against a fixed inventory of **scoring units**: specific terms, numbers, grammatical features, and register. The engine combines classical, statistical, neural NLP techniques and generates a deterministic span-level feedback with rule-based scoring logic and no LLM.. It is the evaluation core of a larger web-based court-interpreter training tool.
+`evaleng` scores a candidate interpreter's rendering like a certification exam. It evaluates against a fixed inventory of **scoring units**: specific terms, numbers, grammatical features, and register. The engine combines classical, statistical, neural NLP techniques and generates a deterministic span-level feedback with rule-based scoring logic and no LLM. It is the evaluation core of a larger web-based court-interpreter training tool.
 
 ---
 
@@ -52,6 +52,7 @@ python -m evaleng.cli \
   <img src="docs/demo.png" alt="Court Interpreter Sight-Translation Scorer — demo screenshot" width="800">
 </p>
 
+#### To use the web UI:
 ```bash
 conda activate evaleng
 pip install gradio          # one-time, if not already installed

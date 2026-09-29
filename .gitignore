@@ -8,3 +8,4 @@ stanza_resources/
 docs_local/
 audio_samples/
 .gradio/
+.pytest_cache/
