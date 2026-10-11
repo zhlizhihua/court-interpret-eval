@@ -1,0 +1,375 @@
+engine_version,candidate_id,fixture_id,unit_id,unit_type,engine,method,score,reason,region,loc_confidence,candidate_overall_pass
+464ae1c,st_en_es_001_c01,st_en_es_001,u001,grammar,pass,grammar_feature,1.0,'será' carries Tense=Fut,"lo condena, el acusado será sentenciado.",1.0,True
+464ae1c,st_en_es_001_c01,st_en_es_001,u002,false_cognate,pass,lemma_set,1.0,lemma match to 'las pruebas',fiscal presentará las pruebas en el,1.0,True
+464ae1c,st_en_es_001_c01,st_en_es_001,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'la mañana',Por la mañana del 3,1.0,True
+464ae1c,st_en_es_001_c01,st_en_es_001,u004,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'agresión con agravantes',imputaciones de agresión con agravantes. Según la,1.0,True
+464ae1c,st_en_es_001_c01,st_en_es_001,u005,idiom,pass,lemma_set,1.0,lemma match to 'con las manos en la masa',fue atrapado con las manos en la masa en el,1.0,True
+464ae1c,st_en_es_001_c01,st_en_es_001,u006,number,pass,number_exact,1.0,required number present (found ['2']),acusado de dos imputaciones de agresión,1.0,True
+464ae1c,st_en_es_001_c01,st_en_es_001,u007,modifier,pass,lemma_set,1.0,lemma match to 'pistola cargada',con una pistola cargada y fue,1.0,True
+464ae1c,st_en_es_001_c01,st_en_es_001,u008,register,fail,register_stanza,0.0,"register informal, required formal — obscenity: 'puta'","de 2024, el imputado, el señor García, fue arrestado",1.0,True
+464ae1c,st_en_es_001_c01,st_en_es_001,u009,position,pass,lemma_set,1.0,lemma match to 'según la víctima',"con agravantes. Según la víctima, García lo",1.0,True
+464ae1c,st_en_es_001_c01,st_en_es_001,u010,slang,pass,lemma_set,1.0,lemma match to 'borracho perdido',acusado estaba 'borracho perdido' en ese,1.0,True
+464ae1c,st_en_es_001_c02,st_en_es_001,u001,grammar,pass,grammar_feature,1.0,'impondrá' carries Tense=Fut,"lo condena, al acusado se le impondrá una pena.",1.0,False
+464ae1c,st_en_es_001_c02,st_en_es_001,u002,false_cognate,fail,fuzzy,0.364,fuzzy miss to 'la prueba' (ratio 0.36 < 0.85),fiscal presentará la evidencia en el,1.0,False
+464ae1c,st_en_es_001_c02,st_en_es_001,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'la mañana',horas de la mañana del 3,1.0,False
+464ae1c,st_en_es_001_c02,st_en_es_001,u004,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'agresión agravada',cargos de agresión agravada. De acuerdo con lo que declaró la,1.0,False
+464ae1c,st_en_es_001_c02,st_en_es_001,u005,idiom,pass,lemma_set,1.0,lemma match to 'in fraganti',fue atrapado in fraganti en el lugar,0.5,False
+464ae1c,st_en_es_001_c02,st_en_es_001,u006,number,fail,number_exact,0.0,"expected ['2'], candidate produced ['3']",acusado de tres cargos de agresión,1.0,False
+464ae1c,st_en_es_001_c02,st_en_es_001,u007,modifier,fail,fuzzy,0.5,fuzzy miss to 'arma cargada' (ratio 0.50 < 0.85),arma corta con munición y fue,1.0,False
+464ae1c,st_en_es_001_c02,st_en_es_001,u008,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found","de 2024, el acusado, don García, fue arrestado",0.8,False
+464ae1c,st_en_es_001_c02,st_en_es_001,u009,position,fail,fuzzy,0.655,fuzzy miss to 'de acuerdo con la víctima' (ratio 0.66 < 0.85),"lo que declaró la víctima, García lo",1.0,False
+464ae1c,st_en_es_001_c02,st_en_es_001,u010,slang,pass,lemma_set,1.0,lemma match to 'pedo',acusado estaba 'pedo' en ese,0.5,False
+464ae1c,st_en_es_001_c03,st_en_es_001,u001,grammar,fail,grammar_feature,0.0,required Tense=Fut not found in the rendered span,sentencia contra el acusado.,0.5,False
+464ae1c,st_en_es_001_c03,st_en_es_001,u002,false_cognate,fail,fuzzy,0.34,fuzzy miss to 'las pruebas' (ratio 0.34 < 0.85),presentará los elementos probatorios en el,1.0,False
+464ae1c,st_en_es_001_c03,st_en_es_001,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'la mañana',transcurso de la mañana del 3,1.0,False
+464ae1c,st_en_es_001_c03,st_en_es_001,u004,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'lesiones agravadas',lesiones agravadas. Conforme al relato de la,1.0,False
+464ae1c,st_en_es_001_c03,st_en_es_001,u005,idiom,fail,fuzzy,0.8,fuzzy miss to 'con las manos en la masa' (ratio 0.80 < 0.85),fue atrapado con las manos rojas en el,0.667,False
+464ae1c,st_en_es_001_c03,st_en_es_001,u006,number,fail,number_exact,0.0,"expected ['2'], candidate produced ['1']",un par de cargos de lesiones,1.0,False
+464ae1c,st_en_es_001_c03,st_en_es_001,u007,modifier,fail,fuzzy,0.636,fuzzy miss to 'pistola cargada' (ratio 0.64 < 0.85),con una pistola y fue,0.5,False
+464ae1c,st_en_es_001_c03,st_en_es_001,u008,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found","de 2024, el señor García, acusado en esta causa, fue arrestado",1.0,False
+464ae1c,st_en_es_001_c03,st_en_es_001,u009,position,fail,fuzzy,0.644,fuzzy miss to 'de acuerdo con la víctima' (ratio 0.64 < 0.85),"al relato de la víctima, García lo",1.0,False
+464ae1c,st_en_es_001_c03,st_en_es_001,u010,slang,pass,lemma_set,1.0,lemma match to 'hasta atrás',acusado estaba 'hasta atrás' en ese,1.0,False
+464ae1c,st_en_es_001_c04,st_en_es_001,u001,grammar,fail,grammar_feature,0.0,required Tense=Fut not found in the rendered span,"lo condena, el acusado va a recibir su condena.",1.0,False
+464ae1c,st_en_es_001_c04,st_en_es_001,u002,false_cognate,fail,fuzzy,0.356,fuzzy miss to 'la prueba' (ratio 0.36 < 0.85),presentará el material probatorio en el,1.0,False
+464ae1c,st_en_es_001_c04,st_en_es_001,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'la mañana',En la mañana del 3,1.0,False
+464ae1c,st_en_es_001_c04,st_en_es_001,u004,legal_vocabulary,fail,fuzzy,0.484,fuzzy miss to 'lesiones agravadas' (ratio 0.48 < 0.85),penales de asalto agravado. Según declaró la,1.0,False
+464ae1c,st_en_es_001_c04,st_en_es_001,u005,idiom,pass,lemma_set,1.0,lemma match to 'en flagrante',fue atrapado en flagrante delito en el,0.5,False
+464ae1c,st_en_es_001_c04,st_en_es_001,u006,number,pass,number_exact,1.0,required number present (found ['2']),acusado de dos cargos penales de,1.0,False
+464ae1c,st_en_es_001_c04,st_en_es_001,u007,modifier,fail,fuzzy,0.636,fuzzy miss to 'pistola cargada' (ratio 0.64 < 0.85),con una pistola con balas y fue,1.0,False
+464ae1c,st_en_es_001_c04,st_en_es_001,u008,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found","de 2024, el tipo ese, García, fue arrestado",0.8,False
+464ae1c,st_en_es_001_c04,st_en_es_001,u009,position,fail,fuzzy,0.38,fuzzy miss to 'de acuerdo con la víctima' (ratio 0.38 < 0.85),"agravado. Según declaró la persona agredida, García lo",1.0,False
+464ae1c,st_en_es_001_c04,st_en_es_001,u010,slang,fail,fuzzy,0.311,fuzzy miss to 'borracho perdido' (ratio 0.31 < 0.85),acusado estaba 'ebrio' en ese,0.5,False
+464ae1c,st_en_es_001_c05,st_en_es_001,u001,grammar,fail,grammar_feature,0.0,required Tense=Fut not found in the rendered span,"lo condena, el acusado sería sentenciado.",1.0,False
+464ae1c,st_en_es_001_c05,st_en_es_001,u002,false_cognate,fail,fuzzy,0.429,fuzzy miss to 'las pruebas' (ratio 0.43 < 0.85),fiscal presentará las probanzas en el,1.0,False
+464ae1c,st_en_es_001_c05,st_en_es_001,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'la mañana',Por la mañana del 3,1.0,False
+464ae1c,st_en_es_001_c05,st_en_es_001,u004,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'agresión con agravantes',acusaciones de agresión con circunstancias agravantes. Según el,1.0,False
+464ae1c,st_en_es_001_c05,st_en_es_001,u005,idiom,fail,fuzzy,0.424,fuzzy miss to 'con las manos en la masa' (ratio 0.42 < 0.85),fue atrapado mientras cometía el delito en el,0.667,False
+464ae1c,st_en_es_001_c05,st_en_es_001,u006,number,pass,number_exact,1.0,required number present (found ['2']),le formularon dos acusaciones de agresión,1.0,False
+464ae1c,st_en_es_001_c05,st_en_es_001,u007,modifier,pass,lemma_set,1.0,lemma match to 'arma cargada',arma de mano cargada y fue,1.0,False
+464ae1c,st_en_es_001_c05,st_en_es_001,u008,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found","de 2024, el procesado, el señor García, fue arrestado",1.0,False
+464ae1c,st_en_es_001_c05,st_en_es_001,u009,position,fail,fuzzy,0.329,fuzzy miss to 'según la víctima' (ratio 0.33 < 0.85),"circunstancias agravantes. Según el propio García, García",1.0,False
+464ae1c,st_en_es_001_c05,st_en_es_001,u010,slang,fail,fuzzy,0.356,fuzzy miss to 'hasta atrás' (ratio 0.36 < 0.85),estaba 'hasta las chanclas' en ese,1.0,False
+464ae1c,st_en_es_001_c06,st_en_es_001,u001,grammar,fail,grammar_feature,0.0,required Tense=Fut not found in the rendered span,"lo condena, el acusado ya fue condenado.",1.0,False
+464ae1c,st_en_es_001_c06,st_en_es_001,u002,false_cognate,fail,fuzzy,0.34,fuzzy miss to 'las pruebas' (ratio 0.34 < 0.85),fiscal presentará los indicios en el,1.0,False
+464ae1c,st_en_es_001_c06,st_en_es_001,u003,general_vocabulary,fail,fuzzy,0.467,fuzzy miss to 'la mañana' (ratio 0.47 < 0.85),En la madrugada del 3,1.0,False
+464ae1c,st_en_es_001_c06,st_en_es_001,u004,legal_vocabulary,fail,fuzzy,0.567,fuzzy miss to 'agresión con agravantes' (ratio 0.57 < 0.85),delitos de ataque con agravantes. La víctima,1.0,False
+464ae1c,st_en_es_001_c06,st_en_es_001,u005,idiom,fail,fuzzy,0.436,fuzzy miss to 'con las manos en la masa' (ratio 0.44 < 0.85),fue atrapado en plena acción en el,0.5,False
+464ae1c,st_en_es_001_c06,st_en_es_001,u006,number,pass,number_exact,1.0,required number present (found ['2']),acusado de dos delitos de ataque,1.0,False
+464ae1c,st_en_es_001_c06,st_en_es_001,u007,modifier,fail,fuzzy,0.638,fuzzy miss to 'pistola cargada' (ratio 0.64 < 0.85),con una pistola descargada y fue,1.0,False
+464ae1c,st_en_es_001_c06,st_en_es_001,u008,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found","de 2024, el encausado, el señor García, fue arrestado",1.0,False
+464ae1c,st_en_es_001_c06,st_en_es_001,u009,position,fail,fuzzy,0.611,fuzzy miss to 'de acuerdo con la víctima' (ratio 0.61 < 0.85),con agravantes. La víctima contó que,0.667,False
+464ae1c,st_en_es_001_c06,st_en_es_001,u010,slang,fail,fuzzy,0.341,fuzzy miss to 'hasta atrás' (ratio 0.34 < 0.85),estaba 'hasta el gorro' en ese,1.0,False
+464ae1c,st_en_es_001_c07,st_en_es_001,u001,grammar,pass,grammar_feature,1.0,'tendrá' carries Tense=Fut,"lo condena, el acusado tendrá que cumplir una pena.",1.0,False
+464ae1c,st_en_es_001_c07,st_en_es_001,u002,false_cognate,fail,fuzzy,0.356,fuzzy miss to 'las pruebas' (ratio 0.36 < 0.85),fiscal presentará el testimonio en el,1.0,False
+464ae1c,st_en_es_001_c07,st_en_es_001,u003,general_vocabulary,fail,fuzzy,0.4,fuzzy miss to 'por la mañana' (ratio 0.40 < 0.85),En la noche del 3,1.0,False
+464ae1c,st_en_es_001_c07,st_en_es_001,u004,legal_vocabulary,fail,fuzzy,0.686,fuzzy miss to 'agresión con agravantes' (ratio 0.69 < 0.85),cargos de agresión simple. De acuerdo con el,1.0,False
+464ae1c,st_en_es_001_c07,st_en_es_001,u005,idiom,fail,fuzzy,0.8,fuzzy miss to 'con las manos en la masa' (ratio 0.80 < 0.85),fue atrapado con las manos ensangrentadas en el,0.667,False
+464ae1c,st_en_es_001_c07,st_en_es_001,u006,number,fail,number_exact,0.0,"expected ['2'], candidate produced ['12']",acusado de doce cargos de agresión,1.0,False
+464ae1c,st_en_es_001_c07,st_en_es_001,u007,modifier,fail,fuzzy,0.409,fuzzy miss to 'pistola cargada' (ratio 0.41 < 0.85),con un revólver cargado y fue,1.0,False
+464ae1c,st_en_es_001_c07,st_en_es_001,u008,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found","de 2024, el sospechoso García, fue arrestado",0.6,False
+464ae1c,st_en_es_001_c07,st_en_es_001,u009,position,fail,fuzzy,0.611,fuzzy miss to 'de acuerdo con la víctima' (ratio 0.61 < 0.85),"De acuerdo con el testigo, García lo",1.0,False
+464ae1c,st_en_es_001_c07,st_en_es_001,u010,slang,fail,fuzzy,0.333,fuzzy miss to 'hasta atrás' (ratio 0.33 < 0.85),acusado estaba 'agotado' en ese,0.5,False
+464ae1c,st_en_es_001_c08,st_en_es_001,u001,grammar,pass,grammar_feature,1.0,'declarará' carries Tense=Fut,"condena, se declarará culpable al acusado.",1.0,False
+464ae1c,st_en_es_001_c08,st_en_es_001,u002,false_cognate,fail,fuzzy,0.429,fuzzy miss to 'las pruebas' (ratio 0.43 < 0.85),fiscal presentará las evidencias en el,1.0,False
+464ae1c,st_en_es_001_c08,st_en_es_001,u003,general_vocabulary,fail,fuzzy,0.4,fuzzy miss to 'por la mañana' (ratio 0.40 < 0.85),En la tarde del 3,1.0,False
+464ae1c,st_en_es_001_c08,st_en_es_001,u004,legal_vocabulary,fail,fuzzy,0.467,fuzzy miss to 'agresión con agravantes' (ratio 0.47 < 0.85),cargo de intento de agresión. La víctima,1.0,False
+464ae1c,st_en_es_001_c08,st_en_es_001,u005,idiom,fail,fuzzy,0.324,fuzzy miss to 'con las manos en la masa' (ratio 0.32 < 0.85),fue atrapado después de cometer el delito en el,0.833,False
+464ae1c,st_en_es_001_c08,st_en_es_001,u006,number,fail,number_exact,0.0,"expected ['2'], candidate produced ['1']",de un solo cargo de intento,1.0,False
+464ae1c,st_en_es_001_c08,st_en_es_001,u007,modifier,fail,fuzzy,0.5,fuzzy miss to 'arma cargada' (ratio 0.50 < 0.85),un arma de fuego y fue,1.0,False
+464ae1c,st_en_es_001_c08,st_en_es_001,u008,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found","de 2024, García, fue arrestado",0.2,False
+464ae1c,st_en_es_001_c08,st_en_es_001,u009,position,fail,fuzzy,0.609,fuzzy miss to 'según la víctima' (ratio 0.61 < 0.85),de agresión. La víctima afirmó que,0.667,False
+464ae1c,st_en_es_001_c08,st_en_es_001,u010,slang,fail,fuzzy,0.286,fuzzy miss to 'hasta atrás' (ratio 0.29 < 0.85),acusado estaba 'drogado' en ese,0.5,False
+464ae1c,st_en_es_002_c01,st_en_es_002,u001,grammar,pass,grammar_feature,1.0,'emitirá' carries Tense=Fut,"de sentencia, se emitirá una orden de arresto.",1.0,True
+464ae1c,st_en_es_002_c01,st_en_es_002,u002,false_cognate,pass,lemma_set,1.0,lemma match to 'este delito',máxima por este delito es de,1.0,True
+464ae1c,st_en_es_002_c01,st_en_es_002,u003,general_vocabulary,fail,fuzzy,0.5,fuzzy miss to 'una multa' (ratio 0.50 < 0.85),estatal y una sanción pecuniaria de diez,1.0,True
+464ae1c,st_en_es_002_c01,st_en_es_002,u004,legal_vocabulary,pass,fuzzy,0.95,fuzzy match to 'renuncia a su derecho a un juicio por jurado' (ratio 0.95 ≥ 0.85),"declararse culpable, renuncia a su derecho a un juicio con jurado y a",1.0,True
+464ae1c,st_en_es_002_c01,st_en_es_002,u005,number,pass,number_exact,1.0,required number present (found ['5']),es de hasta cinco años en prisión,1.0,True
+464ae1c,st_en_es_002_c01,st_en_es_002,u006,modifier,pass,lemma_set,1.0,lemma match to 'la pena máxima',su contra. La pena máxima por este,1.0,True
+464ae1c,st_en_es_002_c01,st_en_es_002,u007,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found",libertad condicional. Puede consultar con su abogado antes de,1.0,True
+464ae1c,st_en_es_002_c01,st_en_es_002,u008,position,fail,fuzzy,0.523,fuzzy miss to 'con arreglo al acuerdo' (ratio 0.52 < 0.85),"mil dólares. Conforme al acuerdo, el fiscal",1.0,True
+464ae1c,st_en_es_002_c02,st_en_es_002,u001,grammar,pass,grammar_feature,1.0,'expedirá' carries Tense=Fut,"de sentencia, se expedirá una orden de detención.",1.0,False
+464ae1c,st_en_es_002_c02,st_en_es_002,u002,false_cognate,fail,fuzzy,0.421,fuzzy miss to 'esta infracción' (ratio 0.42 < 0.85),pena por esta ofensa es de,1.0,False
+464ae1c,st_en_es_002_c02,st_en_es_002,u003,general_vocabulary,fail,fuzzy,0.5,fuzzy miss to 'una multa' (ratio 0.50 < 0.85),estatal y una sanción económica de diez,1.0,False
+464ae1c,st_en_es_002_c02,st_en_es_002,u004,legal_vocabulary,fail,fuzzy,0.623,fuzzy miss to 'renuncia a su derecho a un juicio por jurado' (ratio 0.62 < 0.85),"declararse culpable, deja de tener derecho a que un jurado lo juzgue y a",1.0,False
+464ae1c,st_en_es_002_c02,st_en_es_002,u005,number,pass,number_exact,1.0,required number present (found ['5']),no más de cinco años en prisión,1.0,False
+464ae1c,st_en_es_002_c02,st_en_es_002,u006,modifier,fail,fuzzy,0.533,fuzzy miss to 'pena máxima' (ratio 0.53 < 0.85),su contra. La pena por esta,0.667,False
+464ae1c,st_en_es_002_c02,st_en_es_002,u007,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found",la posibilidad de hablar con su defensor antes de,1.0,False
+464ae1c,st_en_es_002_c02,st_en_es_002,u008,position,fail,fuzzy,0.818,fuzzy miss to 'de conformidad con el acuerdo' (ratio 0.82 < 0.85),"De conformidad con el acuerdo, el fiscal",1.0,False
+464ae1c,st_en_es_002_c03,st_en_es_002,u001,grammar,pass,grammar_feature,1.0,'librará' carries Tense=Fut,"de sentencia, se librará una orden de arresto.",1.0,True
+464ae1c,st_en_es_002_c03,st_en_es_002,u002,false_cognate,pass,lemma_set,1.0,lemma match to 'esta infracción',máxima por esta infracción es de,1.0,True
+464ae1c,st_en_es_002_c03,st_en_es_002,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'una multa',estatal y una multa de diez,1.0,True
+464ae1c,st_en_es_002_c03,st_en_es_002,u004,legal_vocabulary,pass,fuzzy,0.909,fuzzy match to 'renuncia a su derecho a un juicio por jurado' (ratio 0.91 ≥ 0.85),"declararse culpable, renuncia a su derecho a ser juzgado por un jurado y a",1.0,True
+464ae1c,st_en_es_002_c03,st_en_es_002,u005,number,fail,number_exact,0.0,"expected ['5'], candidate produced ['15']",es de hasta quince años en prisión,1.0,True
+464ae1c,st_en_es_002_c03,st_en_es_002,u006,modifier,pass,lemma_set,1.0,lemma match to 'la sanción máxima',su contra. La sanción máxima por esta,1.0,True
+464ae1c,st_en_es_002_c03,st_en_es_002,u007,register,fail,register_stanza,0.0,"register informal, required formal — tuteo: 'Puedes' (Person=2); tuteo: 'tu' (Person=2)",libertad condicional. Puedes consultar con tu abogado antes de,1.0,True
+464ae1c,st_en_es_002_c03,st_en_es_002,u008,position,pass,lemma_set,1.0,lemma match to 'con arreglo al acuerdo',"dólares. Con arreglo al acuerdo, el fiscal",1.0,True
+464ae1c,st_en_es_002_c04,st_en_es_002,u001,grammar,pass,grammar_feature,1.0,'dictará' carries Tense=Fut,"de sentencia, se dictará una orden de arresto.",1.0,False
+464ae1c,st_en_es_002_c04,st_en_es_002,u002,false_cognate,fail,fuzzy,0.55,fuzzy miss to 'este delito' (ratio 0.55 < 0.85),severo por este ilícito es de,1.0,False
+464ae1c,st_en_es_002_c04,st_en_es_002,u003,general_vocabulary,fail,fuzzy,0.5,fuzzy miss to 'una multa' (ratio 0.50 < 0.85),estatal y una tarifa de diez,1.0,False
+464ae1c,st_en_es_002_c04,st_en_es_002,u004,legal_vocabulary,fail,fuzzy,0.688,fuzzy miss to 'renuncia a su derecho a un juicio por jurado' (ratio 0.69 < 0.85),"declararse culpable, pierde su derecho a un juicio y a",0.667,False
+464ae1c,st_en_es_002_c04,st_en_es_002,u005,number,pass,number_exact,1.0,"required number present (found ['1', '5'])",un máximo de cinco años en prisión,1.0,False
+464ae1c,st_en_es_002_c04,st_en_es_002,u006,modifier,fail,fuzzy,0.308,fuzzy miss to 'la pena máxima' (ratio 0.31 < 0.85),contra. El castigo más severo por este,1.0,False
+464ae1c,st_en_es_002_c04,st_en_es_002,u007,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found",libertad condicional. Puede comunicarse con su abogado antes de,1.0,False
+464ae1c,st_en_es_002_c04,st_en_es_002,u008,position,fail,lexical_not_located,0.0,unit not located in the candidate (wrong wording or omission),,0.0,False
+464ae1c,st_en_es_002_c05,st_en_es_002,u001,grammar,fail,grammar_feature,0.0,required Tense=Fut not found in the rendered span,"de sentencia, se emitió una orden de arresto.",1.0,False
+464ae1c,st_en_es_002_c05,st_en_es_002,u002,false_cognate,fail,fuzzy,0.533,fuzzy miss to 'este delito' (ratio 0.53 < 0.85),mínima por este hecho delictivo es de,1.0,False
+464ae1c,st_en_es_002_c05,st_en_es_002,u003,general_vocabulary,fail,fuzzy,0.278,fuzzy miss to 'una multa' (ratio 0.28 < 0.85),estatal y un pago de fianza,1.0,False
+464ae1c,st_en_es_002_c05,st_en_es_002,u004,legal_vocabulary,fail,fuzzy,0.817,fuzzy miss to 'renuncia a su derecho a un juicio por jurado' (ratio 0.82 < 0.85),"declararse culpable, conserva su derecho a un juicio ante jurado y a",0.889,False
+464ae1c,st_en_es_002_c05,st_en_es_002,u005,number,pass,number_exact,1.0,required number present (found ['5']),es de cinco años exactos en,0.667,False
+464ae1c,st_en_es_002_c05,st_en_es_002,u006,modifier,fail,fuzzy,0.314,fuzzy miss to 'la pena máxima' (ratio 0.31 < 0.85),su contra. La condena mínima por este,1.0,False
+464ae1c,st_en_es_002_c05,st_en_es_002,u007,register,pass,register_stanza,1.0,"register neutral, required formal — no register cues found",condicional. Debe pedir permiso a su abogado antes de,1.0,False
+464ae1c,st_en_es_002_c05,st_en_es_002,u008,position,fail,fuzzy,0.444,fuzzy miss to 'con arreglo al acuerdo' (ratio 0.44 < 0.85),"mil dólares. Según lo acordado, el fiscal",1.0,False
+464ae1c,st_en_es_003_c01,st_en_es_003,u001,grammar,pass,grammar_feature,1.0,'deberá' carries Tense=Fut,familia inmediata. No deberá comunicarse con la parte protegida por ningún,1.0,True
+464ae1c,st_en_es_003_c01,st_en_es_003,u002,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'desacato al tribunal',orden constituye desacato al tribunal y podrá,1.0,True
+464ae1c,st_en_es_003_c01,st_en_es_003,u003,number,pass,number_exact,1.0,required number present (found ['100']),menos de cien yardas de la,1.0,True
+464ae1c,st_en_es_003_c01,st_en_es_003,u004,modifier,pass,lemma_set,1.0,lemma match to 'su familia inmediata',y de su familia inmediata. No deberá,1.0,True
+464ae1c,st_en_es_003_c01,st_en_es_003,u005,position,pass,lemma_set,1.0,lemma match to 'por la presente',"la petición, por la presente emite esta",1.0,True
+464ae1c,st_en_es_003_c01,st_en_es_003,u006,false_cognate,pass,lemma_set,1.0,lemma match to 'notificación formal',Ha recibido notificación formal sobre estos,1.0,True
+464ae1c,st_en_es_003_c01,st_en_es_003,u007,general_vocabulary,fail,fuzzy,0.4,fuzzy miss to 'por teléfono' (ratio 0.40 < 0.85),"en persona, por vía telefónica o a",1.0,True
+464ae1c,st_en_es_003_c02,st_en_es_003,u001,grammar,pass,grammar_feature,1.0,'podrá' carries Tense=Fut,familiares inmediatos. No podrá comunicarse con la parte protegida por ningún,1.0,True
+464ae1c,st_en_es_003_c02,st_en_es_003,u002,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'desacato a la corte',orden constituye desacato a la corte y podrá,1.0,True
+464ae1c,st_en_es_003_c02,st_en_es_003,u003,number,pass,number_exact,1.0,required number present (found ['100']),menos de cien metros de la,1.0,True
+464ae1c,st_en_es_003_c02,st_en_es_003,u004,modifier,pass,lemma_set,1.0,lemma match to 'sus familiares inmediatos',y de sus familiares inmediatos. No podrá,1.0,True
+464ae1c,st_en_es_003_c02,st_en_es_003,u005,position,pass,lemma_set,1.0,lemma match to 'mediante la presente',"la petición, mediante la presente emite esta",1.0,True
+464ae1c,st_en_es_003_c02,st_en_es_003,u006,false_cognate,fail,fuzzy,0.667,fuzzy miss to 'aviso formal' (ratio 0.67 < 0.85),Ha recibido noticia formal sobre estos,1.0,True
+464ae1c,st_en_es_003_c02,st_en_es_003,u007,general_vocabulary,pass,fuzzy,1.0,fuzzy match to 'por teléfono' (ratio 1.00 ≥ 0.85),"en persona, por teléfono o a",1.0,True
+464ae1c,st_en_es_003_c03,st_en_es_003,u001,grammar,pass,grammar_feature,1.0,'deberá' carries Tense=Fut,su familia. No deberá ponerse en contacto con la parte protegida por ningún,1.0,False
+464ae1c,st_en_es_003_c03,st_en_es_003,u002,legal_vocabulary,fail,fuzzy,0.71,fuzzy miss to 'desacato al tribunal' (ratio 0.71 < 0.85),orden constituye desprecio al tribunal y podrá,1.0,False
+464ae1c,st_en_es_003_c03,st_en_es_003,u003,number,pass,number_exact,1.0,required number present (found ['100']),distancia de cien yardas como mínimo,1.0,False
+464ae1c,st_en_es_003_c03,st_en_es_003,u004,modifier,fail,fuzzy,0.478,fuzzy miss to 'su familia inmediata' (ratio 0.48 < 0.85),y de su familia. No deberá,0.667,False
+464ae1c,st_en_es_003_c03,st_en_es_003,u005,position,fail,fuzzy,0.571,fuzzy miss to 'por la presente' (ratio 0.57 < 0.85),"la petición, por medio de esta resolución emite esta",1.0,False
+464ae1c,st_en_es_003_c03,st_en_es_003,u006,false_cognate,pass,lemma_set,1.0,lemma match to 'aviso formal',Ha recibido aviso formal sobre estos,1.0,False
+464ae1c,st_en_es_003_c03,st_en_es_003,u007,general_vocabulary,fail,fuzzy,0.222,fuzzy miss to 'por teléfono' (ratio 0.22 < 0.85),"persona, mediante una llamada o a",1.0,False
+464ae1c,st_en_es_003_c04,st_en_es_003,u001,grammar,pass,grammar_feature,1.0,'Podrá' carries Tense=Fut,parientes cercanos. Podrá comunicarse con la parte protegida por cualquier,0.857,False
+464ae1c,st_en_es_003_c04,st_en_es_003,u002,legal_vocabulary,fail,fuzzy,0.593,fuzzy miss to 'desacato a la corte' (ratio 0.59 < 0.85),orden constituye desacato judicial y podrá,0.667,False
+464ae1c,st_en_es_003_c04,st_en_es_003,u003,number,fail,number_exact,0.0,"expected ['100'], candidate produced ['1000']",menos de mil yardas de la,1.0,False
+464ae1c,st_en_es_003_c04,st_en_es_003,u004,modifier,fail,fuzzy,0.423,fuzzy miss to 'sus familiares inmediatos' (ratio 0.42 < 0.85),y de sus parientes cercanos. Podrá comunicarse,1.0,False
+464ae1c,st_en_es_003_c04,st_en_es_003,u005,position,fail,lexical_not_located,0.0,unit not located in the candidate (wrong wording or omission),,0.0,False
+464ae1c,st_en_es_003_c04,st_en_es_003,u006,false_cognate,fail,fuzzy,0.774,fuzzy miss to 'notificación formal' (ratio 0.77 < 0.85),Ha recibido notificación oficial sobre estos,1.0,False
+464ae1c,st_en_es_003_c04,st_en_es_003,u007,general_vocabulary,fail,fuzzy,0.4,fuzzy miss to 'por teléfono' (ratio 0.40 < 0.85),"en persona, por correo electrónico o a",1.0,False
+464ae1c,st_en_es_003_c05,st_en_es_003,u001,grammar,fail,grammar_feature,0.0,required Tense=Fut not found in the rendered span,familiar directo. Queda prohibido comunicarse con la parte protegida por ningún,1.0,False
+464ae1c,st_en_es_003_c05,st_en_es_003,u002,legal_vocabulary,fail,fuzzy,0.344,fuzzy miss to 'desacato al tribunal' (ratio 0.34 < 0.85),incumplimiento de una orden judicial y podrá,1.0,False
+464ae1c,st_en_es_003_c05,st_en_es_003,u003,number,fail,number_exact,0.0,"expected ['100'], candidate produced ['10']",menos de diez yardas de la,1.0,False
+464ae1c,st_en_es_003_c05,st_en_es_003,u004,modifier,fail,fuzzy,0.438,fuzzy miss to 'sus familiares inmediatos' (ratio 0.44 < 0.85),y de su núcleo familiar directo. Queda prohibido,1.0,False
+464ae1c,st_en_es_003_c05,st_en_es_003,u005,position,fail,fuzzy,0.407,fuzzy miss to 'mediante la presente' (ratio 0.41 < 0.85),"petición, a partir de mañana emite esta",1.0,False
+464ae1c,st_en_es_003_c05,st_en_es_003,u006,false_cognate,fail,fuzzy,0.364,fuzzy miss to 'aviso formal' (ratio 0.36 < 0.85),recibido una advertencia verbal sobre estos,1.0,False
+464ae1c,st_en_es_003_c05,st_en_es_003,u007,general_vocabulary,fail,lexical_not_located,0.0,unit not located in the candidate (wrong wording or omission),,0.0,False
+464ae1c,st_en_es_004_c01,st_en_es_004,u001,grammar,pass,grammar_feature,1.0,'podrá' carries Mood=Ind,remunerado y no podrá salir del condado sin permiso,1.0,True
+464ae1c,st_en_es_004_c01,st_en_es_004,u002,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'sustancia fiscalizada',"consumir ninguna sustancia fiscalizada, y deberá",1.0,True
+464ae1c,st_en_es_004_c01,st_en_es_004,u003,number,pass,number_exact,1.0,required number present (found ['2000']),cantidad de dos mil dólares a la,1.0,True
+464ae1c,st_en_es_004_c01,st_en_es_004,u004,modifier,pass,fuzzy,1.0,fuzzy match to 'empleo remunerado' (ratio 1.00 ≥ 0.85),mantener un empleo remunerado y no,1.0,True
+464ae1c,st_en_es_004_c01,st_en_es_004,u005,false_cognate,pass,lemma_set,1.0,lemma match to 'asistir a sesiones semanales de consejería',le ordena asistir a sesiones semanales de consejería y pagar,1.0,True
+464ae1c,st_en_es_004_c01,st_en_es_004,u006,general_vocabulary,pass,lemma_set,1.0,lemma match to 'su liberación',siguientes a su liberación. Debe mantener,1.0,True
+464ae1c,st_en_es_004_c01,st_en_es_004,u007,position,pass,lemma_set,1.0,"lemma match to 'además, se le ordena'","drogas aleatorias. Además, se le ordena asistir a",1.0,True
+464ae1c,st_en_es_004_c02,st_en_es_004,u001,grammar,pass,grammar_feature,1.0,'puede' carries Mood=Ind,remunerado y no puede salir del condado sin permiso,1.0,True
+464ae1c,st_en_es_004_c02,st_en_es_004,u002,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'sustancia controlada',"consumir ninguna sustancia controlada, y deberá",1.0,True
+464ae1c,st_en_es_004_c02,st_en_es_004,u003,number,fail,number_exact,0.0,"expected ['000', '2', '2000'], candidate produced ['20000']",cantidad de veinte mil dólares a la,1.0,True
+464ae1c,st_en_es_004_c02,st_en_es_004,u004,modifier,pass,fuzzy,1.0,fuzzy match to 'trabajo remunerado' (ratio 1.00 ≥ 0.85),mantener un trabajo remunerado y no,1.0,True
+464ae1c,st_en_es_004_c02,st_en_es_004,u005,false_cognate,pass,fuzzy,0.877,fuzzy match to 'acudir a sesiones semanales de consejería' (ratio 0.88 ≥ 0.85),le ordena atender sesiones semanales de consejería y pagar,0.833,True
+464ae1c,st_en_es_004_c02,st_en_es_004,u006,general_vocabulary,pass,lemma_set,1.0,lemma match to 'su puesta en libertad',siguientes a su puesta en libertad. Debe mantener,1.0,True
+464ae1c,st_en_es_004_c02,st_en_es_004,u007,position,pass,lemma_set,1.0,"lemma match to 'asimismo, se le ordena'","drogas aleatorias. Asimismo, se le ordena atender sesiones",1.0,True
+464ae1c,st_en_es_004_c03,st_en_es_004,u001,grammar,pass,grammar_feature,1.0,'podrá' carries Mood=Ind,empleo y podrá salir del condado sin permiso,0.8,False
+464ae1c,st_en_es_004_c03,st_en_es_004,u002,legal_vocabulary,fail,fuzzy,0.621,fuzzy miss to 'sustancia controlada' (ratio 0.62 < 0.85),"consumir ninguna sustancia sujeta a fiscalización, y deberá",1.0,False
+464ae1c,st_en_es_004_c03,st_en_es_004,u003,number,fail,number_exact,0.0,"expected ['000', '2', '2000'], candidate produced ['1000']",par de miles de dólares a la,1.0,False
+464ae1c,st_en_es_004_c03,st_en_es_004,u004,modifier,fail,fuzzy,0.558,fuzzy miss to 'empleo remunerado' (ratio 0.56 < 0.85),mantener un empleo y podrá,0.5,False
+464ae1c,st_en_es_004_c03,st_en_es_004,u005,false_cognate,pass,lemma_set,1.0,lemma match to 'acudir a sesiones semanales de consejería',le ordena acudir a sesiones semanales de consejería y pagar,1.0,False
+464ae1c,st_en_es_004_c03,st_en_es_004,u006,general_vocabulary,fail,fuzzy,0.4,fuzzy miss to 'su puesta en libertad' (ratio 0.40 < 0.85),siguientes a su excarcelación. Debe mantener,1.0,False
+464ae1c,st_en_es_004_c03,st_en_es_004,u007,position,fail,fuzzy,0.75,"fuzzy miss to 'además, se le ordena' (ratio 0.75 < 0.85)","drogas aleatorias. Adicionalmente, se le ordena acudir a",1.0,False
+464ae1c,st_en_es_004_c04,st_en_es_004,u001,grammar,pass,grammar_feature,1.0,'deberá' carries Mood=Ind,retribuido y no deberá salir del condado sin permiso,1.0,False
+464ae1c,st_en_es_004_c04,st_en_es_004,u002,legal_vocabulary,fail,fuzzy,0.621,fuzzy miss to 'sustancia controlada' (ratio 0.62 < 0.85),"consumir ninguna sustancia peligrosa, y deberá",1.0,False
+464ae1c,st_en_es_004_c04,st_en_es_004,u003,number,fail,number_exact,0.0,"expected ['000', '2', '2000'], candidate produced ['200']",cantidad de doscientos dólares a la,0.667,False
+464ae1c,st_en_es_004_c04,st_en_es_004,u004,modifier,fail,fuzzy,0.522,fuzzy miss to 'empleo remunerado' (ratio 0.52 < 0.85),mantener un empleo retribuido y no,1.0,False
+464ae1c,st_en_es_004_c04,st_en_es_004,u005,false_cognate,pass,lemma_set,1.0,lemma match to 'asistir a sesiones semanales de asesoramiento',le ordena asistir a sesiones semanales de asesoramiento y pagar,1.0,False
+464ae1c,st_en_es_004_c04,st_en_es_004,u006,general_vocabulary,fail,fuzzy,0.444,fuzzy miss to 'su puesta en libertad' (ratio 0.44 < 0.85),siguientes a su lanzamiento. Debe mantener,1.0,False
+464ae1c,st_en_es_004_c04,st_en_es_004,u007,position,fail,fuzzy,0.621,"fuzzy miss to 'además, se le ordena' (ratio 0.62 < 0.85)",drogas aleatorias. Se le ordena asistir a,0.75,False
+464ae1c,st_en_es_004_c05,st_en_es_004,u001,grammar,pass,grammar_feature,1.0,'tiene' carries Mood=Ind,voluntario y tiene prohibido salir del condado sin permiso,1.0,False
+464ae1c,st_en_es_004_c05,st_en_es_004,u002,legal_vocabulary,fail,fuzzy,0.621,fuzzy miss to 'sustancia controlada' (ratio 0.62 < 0.85),"consumir ninguna sustancia prohibida, y deberá",1.0,False
+464ae1c,st_en_es_004_c05,st_en_es_004,u003,number,fail,number_exact,0.0,"expected ['000', '2', '2000'], candidate produced ['12000']",cantidad de doce mil dólares a la,1.0,False
+464ae1c,st_en_es_004_c05,st_en_es_004,u004,modifier,fail,fuzzy,0.56,fuzzy miss to 'trabajo remunerado' (ratio 0.56 < 0.85),mantener un trabajo voluntario y tiene,1.0,False
+464ae1c,st_en_es_004_c05,st_en_es_004,u005,false_cognate,fail,fuzzy,0.652,fuzzy miss to 'asistir a sesiones semanales de asesoramiento' (ratio 0.65 < 0.85),vez al mes a sesiones de orientación y pagar,0.833,False
+464ae1c,st_en_es_004_c05,st_en_es_004,u006,general_vocabulary,fail,fuzzy,0.377,fuzzy miss to 'su puesta en libertad' (ratio 0.38 < 0.85),siguientes a su salida de prisión. Debe mantener,1.0,False
+464ae1c,st_en_es_004_c05,st_en_es_004,u007,position,fail,fuzzy,0.75,"fuzzy miss to 'además, se le ordena' (ratio 0.75 < 0.85)","drogas aleatorias. Igualmente, se le ordena acudir una",1.0,False
+464ae1c,st_en_es_005_c01,st_en_es_005,u001,grammar,pass,grammar_feature,1.0,'largado' carries VerbForm=Part,el idiota ya se había largado. Juro que,1.0,True
+464ae1c,st_en_es_005_c01,st_en_es_005,u002,false_cognate,pass,lemma_set,1.0,lemma match to 'estaba tan avergonzado',un puñetazo. Estaba tan avergonzado que me,1.0,True
+464ae1c,st_en_es_005_c01,st_en_es_005,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'un cuchillo',grande sacó un cuchillo y todos,1.0,True
+464ae1c,st_en_es_005_c01,st_en_es_005,u004,idiom,pass,lemma_set,1.0,lemma match to 'perdió los estribos',"la nada, perdió los estribos y soltó",1.0,True
+464ae1c,st_en_es_005_c01,st_en_es_005,u005,number,pass,number_exact,1.0,"required number present (found ['4', '5'])",nada. Había cuatro o cinco personas mirando. El,1.0,True
+464ae1c,st_en_es_005_c01,st_en_es_005,u006,modifier,pass,lemma_set,1.0,lemma match to 'el tipo grande',personas mirando. El tipo grande sacó un,1.0,True
+464ae1c,st_en_es_005_c01,st_en_es_005,u007,register,pass,register_stanza,1.0,"register informal, required informal — tuteo: 'te' (Person=2)",a gritarle 'te voy a partir la cara' a otro,1.0,True
+464ae1c,st_en_es_005_c01,st_en_es_005,u008,position,pass,lemma_set,1.0,lemma match to 'de inmediato',"la poli de inmediato, pero para",1.0,True
+464ae1c,st_en_es_005_c01,st_en_es_005,u009,slang,pass,lemma_set,1.0,lemma match to 'la poli',"Llamé a la poli de inmediato,",1.0,True
+464ae1c,st_en_es_005_c02,st_en_es_005,u001,grammar,pass,grammar_feature,1.0,'ido' carries VerbForm=Part,el imbécil ya se había ido. Juro que,1.0,True
+464ae1c,st_en_es_005_c02,st_en_es_005,u002,false_cognate,fail,fuzzy,0.476,fuzzy miss to 'estaba tan avergonzado' (ratio 0.48 < 0.85),un puñetazo. Estaba tan embarazado que me,1.0,True
+464ae1c,st_en_es_005_c02,st_en_es_005,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'una navaja',grande sacó una navaja y todos,1.0,True
+464ae1c,st_en_es_005_c02,st_en_es_005,u004,idiom,fail,fuzzy,0.345,fuzzy miss to 'se salió de sus casillas' (ratio 0.34 < 0.85),"nada, voló fuera del mango y soltó",1.0,True
+464ae1c,st_en_es_005_c02,st_en_es_005,u005,number,pass,number_exact,1.0,"required number present (found ['4', '5'])",Había entre cuatro y cinco personas mirando. El,1.0,True
+464ae1c,st_en_es_005_c02,st_en_es_005,u006,modifier,pass,lemma_set,1.0,lemma match to 'el hombre grande',personas mirando. El hombre grande sacó una,1.0,True
+464ae1c,st_en_es_005_c02,st_en_es_005,u007,register,pass,register_stanza,1.0,"register informal, required informal — tuteo: 'te' (Person=2)",a gritarle 'te voy a dar una paliza' a otro,1.0,True
+464ae1c,st_en_es_005_c02,st_en_es_005,u008,position,pass,lemma_set,1.0,lemma match to 'enseguida',"los polis enseguida, pero para",0.5,True
+464ae1c,st_en_es_005_c02,st_en_es_005,u009,slang,pass,lemma_set,1.0,lemma match to 'los polis',"Llamé a los polis enseguida, pero",1.0,True
+464ae1c,st_en_es_005_c03,st_en_es_005,u001,grammar,pass,grammar_feature,1.0,'desgraciado' carries VerbForm=Part,el desgraciado ya se había escapado. Juro que,1.0,False
+464ae1c,st_en_es_005_c03,st_en_es_005,u002,false_cognate,pass,lemma_set,1.0,lemma match to 'me dio tanta vergüenza',puñetazo. Me dio tanta vergüenza que me,1.0,False
+464ae1c,st_en_es_005_c03,st_en_es_005,u003,general_vocabulary,fail,fuzzy,0.462,fuzzy miss to 'una navaja' (ratio 0.46 < 0.85),grandote sacó una faca y todos,1.0,False
+464ae1c,st_en_es_005_c03,st_en_es_005,u004,idiom,pass,lemma_set,1.0,lemma match to 'se salió de sus casillas',se salió de sus casillas y soltó,1.0,False
+464ae1c,st_en_es_005_c03,st_en_es_005,u005,number,pass,number_exact,1.0,"required number present (found ['4', '5'])",nada. Había cuatro o cinco tipos mirando. El,1.0,False
+464ae1c,st_en_es_005_c03,st_en_es_005,u006,modifier,pass,lemma_set,1.0,lemma match to 'el grandote',tipos mirando. El grandote sacó una,0.667,False
+464ae1c,st_en_es_005_c03,st_en_es_005,u007,register,fail,register_stanza,0.0,"register neutral, required informal — no register cues found",a gritarle 'lo voy a golpear' a otro,0.667,False
+464ae1c,st_en_es_005_c03,st_en_es_005,u008,position,fail,fuzzy,0.333,fuzzy miss to 'de inmediato' (ratio 0.33 < 0.85),"policía sin perder tiempo, pero para",1.0,False
+464ae1c,st_en_es_005_c03,st_en_es_005,u009,slang,fail,fuzzy,0.444,fuzzy miss to 'la poli' (ratio 0.44 < 0.85),"Llamé a la policía sin perder tiempo,",1.0,False
+464ae1c,st_en_es_005_c04,st_en_es_005,u001,grammar,pass,grammar_feature,1.0,'esfumado' carries VerbForm=Part,el tipo ya se había esfumado. Juro que,1.0,False
+464ae1c,st_en_es_005_c04,st_en_es_005,u002,false_cognate,pass,fuzzy,0.9,fuzzy match to 'me dio tanta vergüenza' (ratio 0.90 ≥ 0.85),un puñetazo. Sentí tanta vergüenza que me,1.0,False
+464ae1c,st_en_es_005_c04,st_en_es_005,u003,general_vocabulary,fail,fuzzy,0.326,fuzzy miss to 'un cuchillo' (ratio 0.33 < 0.85),tipo sacó un arma blanca y todos,1.0,False
+464ae1c,st_en_es_005_c04,st_en_es_005,u004,idiom,pass,lemma_set,1.0,lemma match to 'explotó',"la nada, explotó y soltó",0.333,False
+464ae1c,st_en_es_005_c04,st_en_es_005,u005,number,fail,number_exact,0.0,"expected ['1', '4', '5'], candidate produced ['14', '15']",Había catorce o quince personas mirando. El,0.75,False
+464ae1c,st_en_es_005_c04,st_en_es_005,u006,modifier,fail,fuzzy,0.511,fuzzy miss to 'el tipo grande' (ratio 0.51 < 0.85),personas mirando. El tipo sacó un,0.667,False
+464ae1c,st_en_es_005_c04,st_en_es_005,u007,register,pass,register_stanza,1.0,"register informal, required informal — tuteo: 'te' (Person=2)",a gritarle 'te voy a romper la cara' a otro,1.0,False
+464ae1c,st_en_es_005_c04,st_en_es_005,u008,position,fail,fuzzy,0.279,fuzzy miss to 'de inmediato' (ratio 0.28 < 0.85),"la chota al instante, pero para",1.0,False
+464ae1c,st_en_es_005_c04,st_en_es_005,u009,slang,pass,lemma_set,1.0,lemma match to 'la chota',"Llamé a la chota al instante,",1.0,False
+464ae1c,st_en_es_005_c05,st_en_es_005,u001,grammar,fail,grammar_feature,0.0,required VerbForm=Part not found in the rendered span,el sinvergüenza ya se estaba yendo. Juro que,1.0,False
+464ae1c,st_en_es_005_c05,st_en_es_005,u002,false_cognate,fail,fuzzy,0.456,fuzzy miss to 'estaba tan avergonzado' (ratio 0.46 < 0.85),puñetazo. Me dio tanto apuro que me,1.0,False
+464ae1c,st_en_es_005_c05,st_en_es_005,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'un cuchillo',corpulento sacó un cuchillo de cocina,1.0,False
+464ae1c,st_en_es_005_c05,st_en_es_005,u004,idiom,fail,fuzzy,0.393,fuzzy miss to 'se salió de sus casillas' (ratio 0.39 < 0.85),"la nada, montó en cólera y soltó",1.0,False
+464ae1c,st_en_es_005_c05,st_en_es_005,u005,number,pass,number_exact,1.0,"required number present (found ['4', '5'])",nada. Había cuatro o cinco testigos mirando. El,1.0,False
+464ae1c,st_en_es_005_c05,st_en_es_005,u006,modifier,fail,fuzzy,0.444,fuzzy miss to 'el tipo grande' (ratio 0.44 < 0.85),testigos mirando. El tipo corpulento sacó un,1.0,False
+464ae1c,st_en_es_005_c05,st_en_es_005,u007,register,pass,register_stanza,1.0,"register informal, required informal — tuteo: 'te' (Person=2)",a gritarle 'te voy a moler a palos' a otro,1.0,False
+464ae1c,st_en_es_005_c05,st_en_es_005,u008,position,fail,lexical_not_located,0.0,unit not located in the candidate (wrong wording or omission),,0.0,False
+464ae1c,st_en_es_005_c05,st_en_es_005,u009,slang,fail,fuzzy,0.444,fuzzy miss to 'la poli' (ratio 0.44 < 0.85),"Llamé a la placa, pero para",1.0,False
+464ae1c,st_en_es_005_c06,st_en_es_005,u001,grammar,pass,grammar_feature,1.0,'pirado' carries VerbForm=Part,el cabrón ya se había pirado. Juro que,1.0,False
+464ae1c,st_en_es_005_c06,st_en_es_005,u002,false_cognate,fail,fuzzy,0.444,fuzzy miss to 'estaba tan avergonzado' (ratio 0.44 < 0.85),puñetazo. Me sentí tan abochornado que me,1.0,False
+464ae1c,st_en_es_005_c06,st_en_es_005,u003,general_vocabulary,fail,fuzzy,0.462,fuzzy miss to 'una navaja' (ratio 0.46 < 0.85),alto sacó una pistola y todos,1.0,False
+464ae1c,st_en_es_005_c06,st_en_es_005,u004,idiom,fail,fuzzy,0.528,fuzzy miss to 'se salió de sus casillas' (ratio 0.53 < 0.85),"la nada, se encabronó y soltó",0.667,False
+464ae1c,st_en_es_005_c06,st_en_es_005,u005,number,fail,number_exact,0.0,"expected ['1', '4', '5'], candidate produced ['1', '5']",Había unas cinco personas mirando. El,0.5,False
+464ae1c,st_en_es_005_c06,st_en_es_005,u006,modifier,fail,fuzzy,0.545,fuzzy miss to 'el hombre grande' (ratio 0.55 < 0.85),personas mirando. El hombre alto sacó una,1.0,False
+464ae1c,st_en_es_005_c06,st_en_es_005,u007,register,pass,register_stanza,1.0,"register informal, required informal — tuteo: 'te' (Person=2)",a gritarle 'te voy a partir la madre' a otro,1.0,False
+464ae1c,st_en_es_005_c06,st_en_es_005,u008,position,fail,fuzzy,0.326,fuzzy miss to 'de inmediato' (ratio 0.33 < 0.85),"en ese mismo momento, pero para",1.0,False
+464ae1c,st_en_es_005_c06,st_en_es_005,u009,slang,fail,fuzzy,0.5,fuzzy miss to 'los polis' (ratio 0.50 < 0.85),"los agentes en ese mismo momento,",1.0,False
+464ae1c,st_en_es_005_c07,st_en_es_005,u001,grammar,fail,grammar_feature,0.0,required VerbForm=Part not found in the rendered span,el sujeto todavía estaba allí. Juro que,0.75,False
+464ae1c,st_en_es_005_c07,st_en_es_005,u002,false_cognate,fail,fuzzy,0.429,fuzzy miss to 'me dio tanta vergüenza' (ratio 0.43 < 0.85),puñetazo. Me dio tanto miedo que me,1.0,False
+464ae1c,st_en_es_005_c07,st_en_es_005,u003,general_vocabulary,fail,fuzzy,0.333,fuzzy miss to 'un cuchillo' (ratio 0.33 < 0.85),dos sacó un puñal y todos,1.0,False
+464ae1c,st_en_es_005_c07,st_en_es_005,u004,idiom,fail,fuzzy,0.491,fuzzy miss to 'perdió los estribos' (ratio 0.49 < 0.85),"la nada, perdió el control y soltó",1.0,False
+464ae1c,st_en_es_005_c07,st_en_es_005,u005,number,fail,number_exact,0.0,"expected ['1', '4', '5'], candidate produced ['2', '3']",Había dos o tres personas mirando. El,0.75,False
+464ae1c,st_en_es_005_c07,st_en_es_005,u006,modifier,fail,fuzzy,0.6,fuzzy miss to 'el tipo grande' (ratio 0.60 < 0.85),personas mirando. El más grande de los,1.0,False
+464ae1c,st_en_es_005_c07,st_en_es_005,u007,register,pass,register_stanza,1.0,"register informal, required informal — tuteo: 'te' (Person=2)",a gritarle 'te voy a hacer daño' a otro,0.833,False
+464ae1c,st_en_es_005_c07,st_en_es_005,u008,position,fail,lexical_not_located,0.0,unit not located in the candidate (wrong wording or omission),,0.0,False
+464ae1c,st_en_es_005_c07,st_en_es_005,u009,slang,fail,fuzzy,0.256,fuzzy miss to 'la poli' (ratio 0.26 < 0.85),"llamé un rato después, pero para",1.0,False
+464ae1c,st_en_es_005_c08,st_en_es_005,u001,grammar,fail,grammar_feature,0.0,required VerbForm=Part not found in the rendered span,el imbécil acababa de llegar. Juro que,0.75,False
+464ae1c,st_en_es_005_c08,st_en_es_005,u002,false_cognate,fail,fuzzy,0.4,fuzzy miss to 'estaba tan avergonzado' (ratio 0.40 < 0.85),puñetazo. Me sentí tan culpable que me,1.0,False
+464ae1c,st_en_es_005_c08,st_en_es_005,u003,general_vocabulary,fail,fuzzy,0.316,fuzzy miss to 'una navaja' (ratio 0.32 < 0.85),delgado sacó un arma y todos,1.0,False
+464ae1c,st_en_es_005_c08,st_en_es_005,u004,idiom,fail,fuzzy,0.456,fuzzy miss to 'se salió de sus casillas' (ratio 0.46 < 0.85),"la nada, se puso nervioso y soltó",1.0,False
+464ae1c,st_en_es_005_c08,st_en_es_005,u005,number,fail,number_exact,0.0,"expected ['1', '4', '5'], candidate produced ['40', '50']",Había cuarenta o cincuenta personas mirando. El,0.75,False
+464ae1c,st_en_es_005_c08,st_en_es_005,u006,modifier,fail,fuzzy,0.361,fuzzy miss to 'el hombre grande' (ratio 0.36 < 0.85),personas mirando. El muchacho delgado sacó un,1.0,False
+464ae1c,st_en_es_005_c08,st_en_es_005,u007,register,fail,register_stanza,0.0,"register neutral, required informal — no register cues found",a gritarle 'me vas a dar una paliza' a otro,1.0,False
+464ae1c,st_en_es_005_c08,st_en_es_005,u008,position,fail,fuzzy,0.333,fuzzy miss to 'de una vez' (ratio 0.33 < 0.85),"autoridades antes de que pasara nada, pero para",1.0,False
+464ae1c,st_en_es_005_c08,st_en_es_005,u009,slang,fail,fuzzy,0.263,fuzzy miss to 'la chota' (ratio 0.26 < 0.85),a las autoridades antes de que,1.0,False
+464ae1c,st_en_es_006_c01,st_en_es_006,u001,grammar,pass,grammar_feature,1.0,'salga' carries Mood=Sub,cuenta nueva cuando salga. Dile a,1.0,True
+464ae1c,st_en_es_006_c01,st_en_es_006,u002,false_cognate,pass,lemma_set,1.0,lemma match to 'ahora me doy cuenta',voy llevando. Ahora me doy cuenta de que,1.0,True
+464ae1c,st_en_es_006_c01,st_en_es_006,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'un abrazo',y dale un abrazo de mi,1.0,True
+464ae1c,st_en_es_006_c01,st_en_es_006,u004,idiom,pass,lemma_set,1.0,lemma match to 'hacer borrón y cuenta nueva',voy a hacer borrón y cuenta nueva cuando salga.,1.0,True
+464ae1c,st_en_es_006_c01,st_en_es_006,u005,number,pass,number_exact,1.0,"required number present (found ['1', '8'])",me quedan unos ocho meses. Mis carnales,1.0,True
+464ae1c,st_en_es_006_c01,st_en_es_006,u006,modifier,pass,lemma_set,1.0,lemma match to 'una pesadilla total',"lugar es una pesadilla total, pero ahí",1.0,True
+464ae1c,st_en_es_006_c01,st_en_es_006,u007,register,fail,register_stanza,0.0,"register neutral, required informal — no register cues found","cuando puedas. Cuídate, y dale",1.0,True
+464ae1c,st_en_es_006_c01,st_en_es_006,u008,position,pass,lemma_set,1.0,lemma match to 'de ahora en adelante',"te estreses. De ahora en adelante, voy a",1.0,True
+464ae1c,st_en_es_006_c01,st_en_es_006,u009,slang,pass,lemma_set,1.0,lemma match to 'mis carnales',ocho meses. Mis carnales de afuera,1.0,True
+464ae1c,st_en_es_006_c02,st_en_es_006,u001,grammar,fail,grammar_feature,0.0,required Mood=Sub not found in the rendered span,de nuevo cuando salgo. Dile a,1.0,False
+464ae1c,st_en_es_006_c02,st_en_es_006,u002,false_cognate,fail,fuzzy,0.415,fuzzy miss to 'ahora me doy cuenta' (ratio 0.42 < 0.85),voy llevando. Ahora realizo que lo,0.5,False
+464ae1c,st_en_es_006_c02,st_en_es_006,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'un abrazo',y dale un fuerte abrazo de mi,1.0,False
+464ae1c,st_en_es_006_c02,st_en_es_006,u004,idiom,pass,lemma_set,1.0,lemma match to 'empezar de nuevo',voy a empezar de nuevo cuando salgo.,0.6,False
+464ae1c,st_en_es_006_c02,st_en_es_006,u005,number,pass,number_exact,1.0,required number present (found ['8']),me quedan como ocho meses. Mis compas,1.0,False
+464ae1c,st_en_es_006_c02,st_en_es_006,u006,modifier,pass,lemma_set,1.0,lemma match to 'una verdadera pesadilla',"lugar es una verdadera pesadilla, pero ahí",0.667,False
+464ae1c,st_en_es_006_c02,st_en_es_006,u007,register,fail,register_stanza,0.0,"register neutral, required informal — no register cues found","puedas. Cuida de ti, y",1.0,False
+464ae1c,st_en_es_006_c02,st_en_es_006,u008,position,pass,lemma_set,1.0,lemma match to 'a partir de ahora',"A partir de ahora, voy a",0.5,False
+464ae1c,st_en_es_006_c02,st_en_es_006,u009,slang,pass,lemma_set,1.0,lemma match to 'mis compas',ocho meses. Mis compas de afuera,1.0,False
+464ae1c,st_en_es_006_c03,st_en_es_006,u001,grammar,pass,grammar_feature,1.0,'salga' carries Mood=Sub,hoja nueva cuando salga de aquí.,1.0,False
+464ae1c,st_en_es_006_c03,st_en_es_006,u002,false_cognate,fail,fuzzy,0.392,fuzzy miss to 'ahora me doy cuenta' (ratio 0.39 < 0.85),voy llevando. Ya entiendo que lo,0.5,False
+464ae1c,st_en_es_006_c03,st_en_es_006,u003,general_vocabulary,fail,fuzzy,0.545,fuzzy miss to 'un abrazo' (ratio 0.55 < 0.85),y dale un abrazote de mi,1.0,False
+464ae1c,st_en_es_006_c03,st_en_es_006,u004,idiom,fail,fuzzy,0.5,fuzzy miss to 'hacer borrón y cuenta nueva' (ratio 0.50 < 0.85),voy a voltear una hoja nueva cuando salga,0.8,False
+464ae1c,st_en_es_006_c03,st_en_es_006,u005,number,pass,number_exact,1.0,required number present (found ['8']),me quedan ocho meses exactos. Mis,0.667,False
+464ae1c,st_en_es_006_c03,st_en_es_006,u006,modifier,fail,fuzzy,0.509,fuzzy miss to 'una pesadilla total' (ratio 0.51 < 0.85),"lugar es un infierno total, pero ahí",1.0,False
+464ae1c,st_en_es_006_c03,st_en_es_006,u007,register,pass,register_stanza,1.0,"register informal, required informal — tuteo: 'te' (Person=2)","puedas. No te descuides, y",1.0,False
+464ae1c,st_en_es_006_c03,st_en_es_006,u008,position,fail,fuzzy,0.542,fuzzy miss to 'de ahora en adelante' (ratio 0.54 < 0.85),"te estreses. De aquí en adelante, voy a",1.0,False
+464ae1c,st_en_es_006_c03,st_en_es_006,u009,slang,fail,fuzzy,0.34,fuzzy miss to 'mis carnales' (ratio 0.34 < 0.85),meses exactos. Mis amigos de afuera,1.0,False
+464ae1c,st_en_es_006_c04,st_en_es_006,u001,grammar,pass,grammar_feature,1.0,'recupere' carries Mood=Sub,recupere la libertad. Dile a,0.5,False
+464ae1c,st_en_es_006_c04,st_en_es_006,u002,false_cognate,fail,fuzzy,0.5,fuzzy miss to 'ahora me doy cuenta' (ratio 0.50 < 0.85),voy llevando. Ahora me percato de que,0.75,False
+464ae1c,st_en_es_006_c04,st_en_es_006,u003,general_vocabulary,fail,fuzzy,0.364,fuzzy miss to 'un abrazo' (ratio 0.36 < 0.85),y dale un apretón cariñoso de mi,1.0,False
+464ae1c,st_en_es_006_c04,st_en_es_006,u004,idiom,pass,lemma_set,1.0,lemma match to 'pasar página',voy a pasar página cuando recupere la libertad. Dile,1.0,False
+464ae1c,st_en_es_006_c04,st_en_es_006,u005,number,pass,number_exact,1.0,"required number present (found ['1', '8'])",me quedan unos ocho años. Mis panas,1.0,False
+464ae1c,st_en_es_006_c04,st_en_es_006,u006,modifier,fail,fuzzy,0.812,fuzzy miss to 'una pesadilla total' (ratio 0.81 < 0.85),"lugar es una pesadilla absoluta, pero ahí",1.0,False
+464ae1c,st_en_es_006_c04,st_en_es_006,u007,register,fail,register_stanza,0.0,"register neutral, required informal — no register cues found","cuando puedas. Cuídese mucho, y",1.0,False
+464ae1c,st_en_es_006_c04,st_en_es_006,u008,position,fail,fuzzy,0.51,fuzzy miss to 'de ahora en adelante' (ratio 0.51 < 0.85),"te estreses. En adelante, voy a",0.5,False
+464ae1c,st_en_es_006_c04,st_en_es_006,u009,slang,pass,lemma_set,1.0,lemma match to 'mis panas',ocho años. Mis panas de afuera,1.0,False
+464ae1c,st_en_es_006_c05,st_en_es_006,u001,grammar,pass,grammar_feature,1.0,'quede' carries Mood=Sub,cuando quede libre. Dile a,0.5,False
+464ae1c,st_en_es_006_c05,st_en_es_006,u002,false_cognate,fail,fuzzy,0.5,fuzzy miss to 'ahora me doy cuenta' (ratio 0.50 < 0.85),voy llevando. Ahora caigo en la cuenta de que,1.0,False
+464ae1c,st_en_es_006_c05,st_en_es_006,u003,general_vocabulary,fail,fuzzy,0.387,fuzzy miss to 'un abrazo' (ratio 0.39 < 0.85),y dale un saludo de mi,1.0,False
+464ae1c,st_en_es_006_c05,st_en_es_006,u004,idiom,fail,fuzzy,0.405,fuzzy miss to 'hacer borrón y cuenta nueva' (ratio 0.41 < 0.85),voy a enmendar mi vida cuando quede libre. Dile,1.0,False
+464ae1c,st_en_es_006_c05,st_en_es_006,u005,number,pass,number_exact,1.0,required number present (found ['8']),quedan alrededor de ocho meses. Mis camaradas,1.0,False
+464ae1c,st_en_es_006_c05,st_en_es_006,u006,modifier,fail,fuzzy,0.408,fuzzy miss to 'una pesadilla total' (ratio 0.41 < 0.85),"lugar es un problema, pero ahí",0.667,False
+464ae1c,st_en_es_006_c05,st_en_es_006,u007,register,pass,register_stanza,1.0,"register informal, required informal — tuteo: 'estés' (Person=2)","puedas. Que estés bien, y",1.0,False
+464ae1c,st_en_es_006_c05,st_en_es_006,u008,position,fail,lexical_not_located,0.0,unit not located in the candidate (wrong wording or omission),,0.0,False
+464ae1c,st_en_es_006_c05,st_en_es_006,u009,slang,fail,fuzzy,0.34,fuzzy miss to 'mis carnales' (ratio 0.34 < 0.85),ocho meses. Mis camaradas de afuera,1.0,False
+464ae1c,st_en_es_006_c06,st_en_es_006,u001,grammar,pass,grammar_feature,1.0,'suelten' carries Mood=Sub,vez que me suelten. Dile a,1.0,False
+464ae1c,st_en_es_006_c06,st_en_es_006,u002,false_cognate,fail,fuzzy,0.4,fuzzy miss to 'ahora me doy cuenta' (ratio 0.40 < 0.85),voy llevando. Ahora reconozco que lo,0.5,False
+464ae1c,st_en_es_006_c06,st_en_es_006,u003,general_vocabulary,pass,lemma_set,1.0,lemma match to 'un abrazo',y dale un abrazo bien fuerte,1.0,False
+464ae1c,st_en_es_006_c06,st_en_es_006,u004,idiom,fail,fuzzy,0.386,fuzzy miss to 'empezar de nuevo' (ratio 0.39 < 0.85),a cambiar de vida una vez que me suelten.,1.0,False
+464ae1c,st_en_es_006_c06,st_en_es_006,u005,number,pass,number_exact,1.0,required number present (found ['8']),quedan cerca de ocho meses. Los de,1.0,False
+464ae1c,st_en_es_006_c06,st_en_es_006,u006,modifier,fail,fuzzy,0.812,fuzzy miss to 'una pesadilla total' (ratio 0.81 < 0.85),"lugar es una pesadilla de principio a fin, pero ahí",1.0,False
+464ae1c,st_en_es_006_c06,st_en_es_006,u007,register,fail,register_stanza,0.0,"register neutral, required informal — no register cues found","cuando puedas. Cuídate mucho, y",1.0,False
+464ae1c,st_en_es_006_c06,st_en_es_006,u008,position,fail,fuzzy,0.379,fuzzy miss to 'de ahora en adelante' (ratio 0.38 < 0.85),"te estreses. Desde este momento, voy a",0.75,False
+464ae1c,st_en_es_006_c06,st_en_es_006,u009,slang,fail,fuzzy,0.4,fuzzy miss to 'mis carnales' (ratio 0.40 < 0.85),Los de mi barrio de afuera,1.0,False
+464ae1c,st_en_es_006_c07,st_en_es_006,u001,grammar,pass,grammar_feature,1.0,'liberen' carries Mood=Sub,cuando me liberen. Dile a,0.5,False
+464ae1c,st_en_es_006_c07,st_en_es_006,u002,false_cognate,fail,fuzzy,0.407,fuzzy miss to 'ahora me doy cuenta' (ratio 0.41 < 0.85),voy llevando. Ahora recuerdo que lo,0.5,False
+464ae1c,st_en_es_006_c07,st_en_es_006,u003,general_vocabulary,fail,fuzzy,0.364,fuzzy miss to 'un abrazo' (ratio 0.36 < 0.85),y dale un beso de mi,1.0,False
+464ae1c,st_en_es_006_c07,st_en_es_006,u004,idiom,fail,fuzzy,0.369,fuzzy miss to 'empezar de nuevo' (ratio 0.37 < 0.85),voy a enderezar mi camino cuando me liberen. Dile,1.0,False
+464ae1c,st_en_es_006_c07,st_en_es_006,u005,number,pass,number_exact,1.0,required number present (found ['8']),más o menos ocho semanas. Mis conocidos,1.0,False
+464ae1c,st_en_es_006_c07,st_en_es_006,u006,modifier,fail,fuzzy,0.339,fuzzy miss to 'una pesadilla total' (ratio 0.34 < 0.85),"lugar es un auténtico infierno, pero ahí",1.0,False
+464ae1c,st_en_es_006_c07,st_en_es_006,u007,register,fail,register_stanza,0.0,"register neutral, required informal — no register cues found","cuando puedas. Pórtate bien, y",1.0,False
+464ae1c,st_en_es_006_c07,st_en_es_006,u008,position,fail,fuzzy,0.786,fuzzy miss to 'a partir de ahora' (ratio 0.79 < 0.85),"te estreses. A partir de mañana, voy a",1.0,False
+464ae1c,st_en_es_006_c07,st_en_es_006,u009,slang,fail,fuzzy,0.304,fuzzy miss to 'mis panas' (ratio 0.30 < 0.85),ocho semanas. Mis conocidos de afuera,1.0,False
+464ae1c,st_en_es_006_c08,st_en_es_006,u001,grammar,fail,grammar_feature,0.0,required Mood=Sub not found in the rendered span,antes de salir. Dile a,0.5,False
+464ae1c,st_en_es_006_c08,st_en_es_006,u002,false_cognate,fail,fuzzy,0.452,fuzzy miss to 'ahora me doy cuenta' (ratio 0.45 < 0.85),voy llevando. Estoy convencido ahora de que,0.75,False
+464ae1c,st_en_es_006_c08,st_en_es_006,u003,general_vocabulary,fail,fuzzy,0.368,fuzzy miss to 'un abrazo' (ratio 0.37 < 0.85),y dale un apretón de manos de mi,1.0,False
+464ae1c,st_en_es_006_c08,st_en_es_006,u004,idiom,fail,fuzzy,0.364,fuzzy miss to 'empezar de nuevo' (ratio 0.36 < 0.85),voy a cambiar de hoja antes de salir. Dile,1.0,False
+464ae1c,st_en_es_006_c08,st_en_es_006,u005,number,fail,number_exact,0.0,"expected ['1', '8'], candidate produced ['1', '18']",me quedan unos dieciocho meses. Mis colegas,1.0,False
+464ae1c,st_en_es_006_c08,st_en_es_006,u006,modifier,fail,fuzzy,0.475,fuzzy miss to 'una pesadilla total' (ratio 0.47 < 0.85),"lugar es una situación difícil, pero ahí",1.0,False
+464ae1c,st_en_es_006_c08,st_en_es_006,u007,register,fail,register_stanza,0.0,"register neutral, required informal — no register cues found","cuando puedas. Cuídame, y dale",1.0,False
+464ae1c,st_en_es_006_c08,st_en_es_006,u008,position,fail,fuzzy,0.367,fuzzy miss to 'a partir de ahora' (ratio 0.37 < 0.85),"te estreses. Como siempre, voy a",0.5,False
+464ae1c,st_en_es_006_c08,st_en_es_006,u009,slang,fail,fuzzy,0.36,fuzzy miss to 'mis carnales' (ratio 0.36 < 0.85),dieciocho meses. Mis colegas de afuera,1.0,False
+464ae1c,st_en_es_007_c01,st_en_es_007,u001,grammar,pass,grammar_feature,1.0,'fue' carries Tense=Past,sustancia controlada. El sospechoso fue puesto bajo arresto y se,1.0,True
+464ae1c,st_en_es_007_c01,st_en_es_007,u002,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'sus derechos Miranda',informó de sus derechos Miranda. Posteriormente fue,1.0,True
+464ae1c,st_en_es_007_c01,st_en_es_007,u003,number,pass,number_exact,1.0,"required number present (found ['1', '2'])",oculta y dos gramos de una,1.0,True
+464ae1c,st_en_es_007_c01,st_en_es_007,u004,modifier,pass,lemma_set,1.0,lemma match to 'un arma oculta',agentes recuperaron un arma oculta y dos,1.0,True
+464ae1c,st_en_es_007_c01,st_en_es_007,u005,false_cognate,pass,lemma_set,1.0,lemma match to 'visiblemente ebrio',"parecía estar visiblemente ebrio, discutiendo con",1.0,True
+464ae1c,st_en_es_007_c01,st_en_es_007,u006,general_vocabulary,pass,lemma_set,1.0,lemma match to 'una botella',había arrojado una botella. Durante un,1.0,True
+464ae1c,st_en_es_007_c01,st_en_es_007,u007,idiom,pass,lemma_set,1.0,lemma match to 'se había puesto como loco',el sospechoso se había puesto como loco y había,1.0,True
+464ae1c,st_en_es_007_c01,st_en_es_007,u008,position,pass,lemma_set,1.0,lemma match to 'al llegar',"dirección señalada. Al llegar, los agentes",1.0,True
+464ae1c,st_en_es_007_c02,st_en_es_007,u001,grammar,pass,grammar_feature,1.0,'detuvo' carries Tense=Past,sustancia controlada. Se detuvo al sospechoso y se,0.667,False
+464ae1c,st_en_es_007_c02,st_en_es_007,u002,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'sus derechos constitucionales',informó de sus derechos constitucionales. Posteriormente fue,1.0,False
+464ae1c,st_en_es_007_c02,st_en_es_007,u003,number,fail,number_exact,0.0,"expected ['2'], candidate produced ['1']",un par de gramos de una,1.0,False
+464ae1c,st_en_es_007_c02,st_en_es_007,u004,modifier,pass,lemma_set,1.0,lemma match to 'un arma escondida',agentes recuperaron un arma escondida y un,1.0,False
+464ae1c,st_en_es_007_c02,st_en_es_007,u005,false_cognate,fail,fuzzy,0.8,fuzzy miss to 'visiblemente ebrio' (ratio 0.80 < 0.85),"parecía estar visiblemente intoxicado, discutiendo con",1.0,False
+464ae1c,st_en_es_007_c02,st_en_es_007,u006,general_vocabulary,fail,fuzzy,0.273,fuzzy miss to 'una botella' (ratio 0.27 < 0.85),había arrojado un envase. Durante un,1.0,False
+464ae1c,st_en_es_007_c02,st_en_es_007,u007,idiom,fail,fuzzy,0.75,fuzzy miss to 'se había puesto como loco' (ratio 0.75 < 0.85),el sospechoso se había puesto balístico y había,0.8,False
+464ae1c,st_en_es_007_c02,st_en_es_007,u008,position,pass,lemma_set,1.0,lemma match to 'a su llegada',"señalada. A su llegada, los agentes",1.0,False
+464ae1c,st_en_es_007_c03,st_en_es_007,u001,grammar,pass,grammar_feature,1.0,'quedó' carries Tense=Past,sustancia controlada. El sospechoso quedó bajo arresto y se,0.833,False
+464ae1c,st_en_es_007_c03,st_en_es_007,u002,legal_vocabulary,fail,fuzzy,0.75,fuzzy miss to 'sus derechos Miranda' (ratio 0.75 < 0.85),informó de sus derechos civiles. Posteriormente fue,1.0,False
+464ae1c,st_en_es_007_c03,st_en_es_007,u003,number,pass,number_exact,1.0,"required number present (found ['1', '2'])",arma y dos kilos de una,1.0,False
+464ae1c,st_en_es_007_c03,st_en_es_007,u004,modifier,fail,fuzzy,0.667,fuzzy miss to 'un arma oculta' (ratio 0.67 < 0.85),agentes recuperaron un arma y dos,0.667,False
+464ae1c,st_en_es_007_c03,st_en_es_007,u005,false_cognate,pass,lemma_set,1.0,lemma match to 'visiblemente borracho',"parecía estar visiblemente borracho, discutiendo con",1.0,False
+464ae1c,st_en_es_007_c03,st_en_es_007,u006,general_vocabulary,fail,fuzzy,0.273,fuzzy miss to 'una botella' (ratio 0.27 < 0.85),había arrojado un frasco. Durante un,1.0,False
+464ae1c,st_en_es_007_c03,st_en_es_007,u007,idiom,pass,lemma_set,1.0,lemma match to 'había explotado',el sospechoso había explotado y había,0.4,False
+464ae1c,st_en_es_007_c03,st_en_es_007,u008,position,pass,lemma_set,1.0,lemma match to 'al arribar',"dirección señalada. Al arribar, los agentes",1.0,False
+464ae1c,st_en_es_007_c04,st_en_es_007,u001,grammar,pass,grammar_feature,1.0,'arrestó' carries Tense=Past,sustancia controlada. El sospechoso arrestó a los agentes y se,1.0,False
+464ae1c,st_en_es_007_c04,st_en_es_007,u002,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'la advertencia Miranda',informó de la advertencia Miranda. Posteriormente fue,1.0,False
+464ae1c,st_en_es_007_c04,st_en_es_007,u003,number,fail,number_exact,0.0,"expected ['2'], candidate produced ['1', '20']",disimulada y veinte gramos de una,1.0,False
+464ae1c,st_en_es_007_c04,st_en_es_007,u004,modifier,fail,fuzzy,0.667,fuzzy miss to 'un arma oculta' (ratio 0.67 < 0.85),agentes recuperaron un arma disimulada y veinte,1.0,False
+464ae1c,st_en_es_007_c04,st_en_es_007,u005,false_cognate,fail,fuzzy,0.75,fuzzy miss to 'en evidente estado de ebriedad' (ratio 0.75 < 0.85),"evidente estado de ebriedad, discutiendo con",1.0,False
+464ae1c,st_en_es_007_c04,st_en_es_007,u006,general_vocabulary,fail,fuzzy,0.429,fuzzy miss to 'una botella' (ratio 0.43 < 0.85),había arrojado una lata. Durante un,1.0,False
+464ae1c,st_en_es_007_c04,st_en_es_007,u007,idiom,pass,lemma_set,1.0,lemma match to 'se había puesto hecho una furia',el sospechoso se había puesto hecho una furia y había,1.0,False
+464ae1c,st_en_es_007_c04,st_en_es_007,u008,position,fail,lexical_not_located,0.0,unit not located in the candidate (wrong wording or omission),,0.0,False
+464ae1c,st_en_es_007_c05,st_en_es_007,u001,grammar,pass,grammar_feature,1.0,'fue' carries Tense=Past,sustancia controlada. El sospechoso fue detenido y se,0.667,False
+464ae1c,st_en_es_007_c05,st_en_es_007,u002,legal_vocabulary,pass,lemma_set,1.0,lemma match to 'sus derechos Miranda',informó de sus derechos conforme a Miranda. Posteriormente fue,1.0,False
+464ae1c,st_en_es_007_c05,st_en_es_007,u003,number,fail,number_exact,0.0,"expected ['2'], candidate produced ['1', '200']",vista y doscientos gramos de una,1.0,False
+464ae1c,st_en_es_007_c05,st_en_es_007,u004,modifier,fail,fuzzy,0.667,fuzzy miss to 'un arma oculta' (ratio 0.67 < 0.85),agentes recuperaron un arma que llevaba a la vista y doscientos,1.0,False
+464ae1c,st_en_es_007_c05,st_en_es_007,u005,false_cognate,fail,fuzzy,0.39,fuzzy miss to 'en evidente estado de ebriedad' (ratio 0.39 < 0.85),"parecía estar claramente envenenado, discutiendo con",1.0,False
+464ae1c,st_en_es_007_c05,st_en_es_007,u006,general_vocabulary,pass,lemma_set,1.0,lemma match to 'una botella',había arrojado una botella de vidrio.,1.0,False
+464ae1c,st_en_es_007_c05,st_en_es_007,u007,idiom,fail,fuzzy,0.507,fuzzy miss to 'se había puesto como loco' (ratio 0.51 < 0.85),el sospechoso había perdido los estribos y había,0.8,False
+464ae1c,st_en_es_007_c05,st_en_es_007,u008,position,fail,fuzzy,0.432,fuzzy miss to 'al llegar' (ratio 0.43 < 0.85),"vez en el lugar, los agentes",1.0,False
