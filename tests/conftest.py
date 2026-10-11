@@ -11,7 +11,7 @@ from evaleng.schema.models import Fixture
 from evaleng.interfaces import CandidateInput, UnitLocation
 from evaleng.ingest.loader import load_fixture
 
-FIXTURE_PATH = Path(__file__).parent.parent / "fixtures" / "reference_draft.yaml"
+FIXTURE_PATH = Path(__file__).parent.parent / "data" / "fixtures" / "reference_draft.yaml"
 
 
 @pytest.fixture(scope="session")
