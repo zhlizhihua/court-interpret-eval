@@ -21,7 +21,7 @@ from evaleng.interfaces import CandidateInput
 from evaleng.pipeline import score
 from evaleng.delivery import delivery_metrics
 
-FIXTURE_DIR = os.path.join(HERE, "fixtures")
+FIXTURE_DIR = os.path.join(HERE, "data", "fixtures")
 HEADERS = ["Unit", "Type", "Verdict", "Why", "Source span", "Candidate said"]
 
 # Verdict shown as a solid colored pill (rendered in the "markdown" Verdict column).

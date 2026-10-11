@@ -22,7 +22,7 @@ Score directly from audio:
 
 ```bash
 python -m evaleng.cli \
-    --fixture fixtures/reference_draft.yaml \
+    --fixture data/fixtures/reference_draft.yaml \
     --audio path/to/candidate.mp3 \
     --verbose
 ```
@@ -31,7 +31,7 @@ Score a transcript:
 
 ```bash
 python -m evaleng.cli \
-    --fixture fixtures/reference_draft.yaml \
+    --fixture data/reference_draft.yaml \
     --transcript path/to/candidate.txt
 ```
 
@@ -39,7 +39,7 @@ Score directly from audio, specifying ASR model size, sampling extra ASR hypothe
 
 ```bash
 python -m evaleng.cli \
-    --fixture fixtures/reference_draft.yaml \
+    --fixture data/fixtures/reference_draft.yaml \
     --audio path/to/candidate.mp3 \
     --asr-model small \
     --nbest 3 \
@@ -90,7 +90,9 @@ src/evaleng/
 ├── delivery.py          delivery metrics from word timings
 ├── pipeline.py          localize → match → n-best → aggregate → feedback
 └── cli.py               command-line entry point
-fixtures/                exam fixtures (source, reference, units, threshold)
+data/                
+├── fixtures/            exam fixtures (source, reference, units, threshold)
+├── candidates/          candidate transcripts
 scripts/                 toolchain smoke test
 tests/                   pytest suite
 ```

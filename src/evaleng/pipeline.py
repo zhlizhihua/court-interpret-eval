@@ -10,6 +10,7 @@ from evaleng.match.lexical import match_lexical
 from evaleng.match.grammar import match_grammar
 from evaleng.match.register import match_register
 from evaleng.delivery import delivery_metrics, delivery_lines
+from evaleng.interfaces import CandidateInput, UnitVerdict, ScoreResult, FeedbackReport, AlignmentResult
 
 
 def _unscored_verdict(unit) -> UnitVerdict:
@@ -120,3 +121,22 @@ def _rescue_with_nbest(verdicts, candidate, fixture) -> list[UnitVerdict]:
                 failing.discard(uid)
 
     return [by_id[u.id] for u in fixture.units]   # preserve fixture order
+
+
+def score_with_alignment(candidate: CandidateInput,
+                         fixture: Fixture) -> tuple[FeedbackReport, AlignmentResult]:
+    """score(), plus where each unit was located. The validation harness needs both."""
+    alignment = localize(candidate, fixture)
+    verdicts = run_matchers(candidate, fixture, alignment)
+    verdicts = _rescue_with_nbest(verdicts, candidate, fixture)
+    result = aggregate(verdicts, fixture)
+    report = build_feedback(result, fixture)
+
+    metrics = delivery_metrics(candidate)             # None on a typed transcript (no timings)
+    if metrics:
+        report.lines.extend(delivery_lines(metrics))
+    return report, alignment
+
+
+def score(candidate: CandidateInput, fixture: Fixture) -> FeedbackReport:
+    return score_with_alignment(candidate, fixture)[0]

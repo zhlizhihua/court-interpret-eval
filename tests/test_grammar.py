@@ -14,10 +14,9 @@ from evaleng.interfaces import CandidateInput
 from evaleng.pipeline import score
 from evaleng.ingest.loader import load_fixture
 
-# Adjust if your Week 1 freezes locate the fixture differently (conftest, etc.).
-FIXTURE_PATH = Path(__file__).resolve().parent.parent / "fixtures" / "reference_draft.yaml"
+FIXTURE_PATH = Path(__file__).resolve().parent.parent / "data" / "fixtures" / "reference_draft.yaml"
 
-# Stanza (depparse) load makes this slow; align with your e2e-freeze convention.
+# Stanza (depparse) load makes this slow.
 pytestmark = pytest.mark.slow
 
 
@@ -27,8 +26,6 @@ def _load_fixture() -> Fixture:
 
 def _candidate(text: str) -> CandidateInput:
     # Mirror the CLI's transcript handling: collapse whitespace, split on it.
-    # If cli.py normalizes differently, factor that into a shared helper so the
-    # freeze exercises the exact path the CLI does.
     norm = " ".join(text.split())
     return CandidateInput(text=norm, tokens=norm.split())
 
