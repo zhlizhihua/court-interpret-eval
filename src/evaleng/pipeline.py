@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from evaleng.schema.models import Fixture, UnitType
-from evaleng.interfaces import CandidateInput, UnitVerdict, ScoreResult, FeedbackReport
 from evaleng.dispatch import matcher_for, resolve_policy, MatcherKind, DISPATCH
 from evaleng.localize import localize
 from evaleng.match.number import match_number
@@ -82,19 +81,6 @@ def build_feedback(result: ScoreResult, fixture: Fixture) -> FeedbackReport:
         lines.append(f'  {_TAG[v.status]:9}[{unit.id} {unit.type.value}] '
                      f'"{source_span[unit.id]}" {produced}· {v.reason}')
     return FeedbackReport(result=result, lines=lines)
-
-
-def score(candidate: CandidateInput, fixture: Fixture) -> FeedbackReport:
-    alignment = localize(candidate, fixture)
-    verdicts = run_matchers(candidate, fixture, alignment)
-    verdicts = _rescue_with_nbest(verdicts, candidate, fixture)
-    result = aggregate(verdicts, fixture)
-    report = build_feedback(result, fixture)
-
-    metrics = delivery_metrics(candidate)             # None on a typed transcript (no timings)
-    if metrics:
-        report.lines.extend(delivery_lines(metrics))  # append the non-scored block
-    return report
 
 
 def _rescue_with_nbest(verdicts, candidate, fixture) -> list[UnitVerdict]:
