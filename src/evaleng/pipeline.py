@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from evaleng.schema.models import Fixture, UnitType
-from evaleng.interfaces import CandidateInput, UnitVerdict, ScoreResult, FeedbackReport
 from evaleng.dispatch import matcher_for, resolve_policy, MatcherKind, DISPATCH
 from evaleng.localize import localize
 from evaleng.match.number import match_number
@@ -11,6 +10,7 @@ from evaleng.match.grammar import match_grammar
 from evaleng.match.register import match_register
 from evaleng.delivery import delivery_metrics, delivery_lines
 from evaleng.interfaces import CandidateInput, UnitVerdict, ScoreResult, FeedbackReport, AlignmentResult
+from evaleng.match.legal import match_legal
 
 
 def _unscored_verdict(unit) -> UnitVerdict:
@@ -30,6 +30,8 @@ def _judge(unit, candidate, location) -> UnitVerdict:
         return match_grammar(unit, candidate, location, resolve_policy(unit))
     if kind is MatcherKind.REGISTER:
         return match_register(unit, candidate, location, resolve_policy(unit))
+    if kind is MatcherKind.LEGAL:
+        return match_legal(unit, candidate, location, resolve_policy(unit))
     return _unscored_verdict(unit)
 
 def run_matchers(candidate, fixture, alignment) -> list[UnitVerdict]:
@@ -82,19 +84,6 @@ def build_feedback(result: ScoreResult, fixture: Fixture) -> FeedbackReport:
         lines.append(f'  {_TAG[v.status]:9}[{unit.id} {unit.type.value}] '
                      f'"{source_span[unit.id]}" {produced}· {v.reason}')
     return FeedbackReport(result=result, lines=lines)
-
-
-def score(candidate: CandidateInput, fixture: Fixture) -> FeedbackReport:
-    alignment = localize(candidate, fixture)
-    verdicts = run_matchers(candidate, fixture, alignment)
-    verdicts = _rescue_with_nbest(verdicts, candidate, fixture)
-    result = aggregate(verdicts, fixture)
-    report = build_feedback(result, fixture)
-
-    metrics = delivery_metrics(candidate)             # None on a typed transcript (no timings)
-    if metrics:
-        report.lines.extend(delivery_lines(metrics))  # append the non-scored block
-    return report
 
 
 def _rescue_with_nbest(verdicts, candidate, fixture) -> list[UnitVerdict]:
