@@ -12,10 +12,12 @@ class MatcherKind(str, Enum):
     GRAMMAR = "grammar"
     REGISTER = "register"
     DEFERRED = "deferred"
+    LEGAL = "legal"
 
 
 _LEXICAL_POLICY = MatchingPolicy(method="lemma_set+fuzzy", fuzzy_threshold=0.85)
 _NUMBER_POLICY = MatchingPolicy(method="number_exact", fuzzy_threshold=1.0)
+_LEGAL_POLICY = MatchingPolicy(method="legal_strict", fuzzy_threshold=1.0)
 
 
 class DispatchRule(BaseModel):
@@ -31,8 +33,6 @@ DISPATCH: dict[UnitType, DispatchRule] = {
                                               default_policy=_LEXICAL_POLICY),
     UnitType.GENERAL_VOCABULARY: DispatchRule(matcher=MatcherKind.LEXICAL,
                                               default_policy=_LEXICAL_POLICY),
-    UnitType.LEGAL_VOCABULARY:   DispatchRule(matcher=MatcherKind.LEXICAL,
-                                              default_policy=_LEXICAL_POLICY),
     UnitType.IDIOM:              DispatchRule(matcher=MatcherKind.LEXICAL,
                                               default_policy=_LEXICAL_POLICY),
     UnitType.MODIFIER:           DispatchRule(matcher=MatcherKind.LEXICAL,
@@ -45,6 +45,9 @@ DISPATCH: dict[UnitType, DispatchRule] = {
                                               note="each unit carries its own register_spec policy"),
     UnitType.POSITION:           DispatchRule(matcher=MatcherKind.LEXICAL,
                                               default_policy=_LEXICAL_POLICY),
+    UnitType.LEGAL_VOCABULARY:   DispatchRule(matcher=MatcherKind.LEGAL,
+                                              default_policy=_LEGAL_POLICY,
+                                              note="strict term match: fixture or glossary, no fuzzy"),
 }
 
 _missing = [t for t in UnitType if t not in DISPATCH]

@@ -10,6 +10,7 @@ from evaleng.match.grammar import match_grammar
 from evaleng.match.register import match_register
 from evaleng.delivery import delivery_metrics, delivery_lines
 from evaleng.interfaces import CandidateInput, UnitVerdict, ScoreResult, FeedbackReport, AlignmentResult
+from evaleng.match.legal import match_legal
 
 
 def _unscored_verdict(unit) -> UnitVerdict:
@@ -29,6 +30,8 @@ def _judge(unit, candidate, location) -> UnitVerdict:
         return match_grammar(unit, candidate, location, resolve_policy(unit))
     if kind is MatcherKind.REGISTER:
         return match_register(unit, candidate, location, resolve_policy(unit))
+    if kind is MatcherKind.LEGAL:
+        return match_legal(unit, candidate, location, resolve_policy(unit))
     return _unscored_verdict(unit)
 
 def run_matchers(candidate, fixture, alignment) -> list[UnitVerdict]:
