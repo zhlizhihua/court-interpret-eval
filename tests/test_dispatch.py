@@ -14,7 +14,7 @@ def test_every_unit_type_is_routed():
 @pytest.mark.parametrize("unit_type, expected_matcher", [
     (UnitType.NUMBER,             MatcherKind.NUMBER),
     (UnitType.FALSE_COGNATE,      MatcherKind.LEXICAL),
-    (UnitType.LEGAL_VOCABULARY,   MatcherKind.LEXICAL),
+    (UnitType.LEGAL_VOCABULARY,   MatcherKind.LEGAL),
     (UnitType.IDIOM,              MatcherKind.LEXICAL),
     (UnitType.GRAMMAR,            MatcherKind.GRAMMAR),
     (UnitType.REGISTER,           MatcherKind.REGISTER),
@@ -41,3 +41,18 @@ def test_policy_defaults_when_unit_has_none(unit_by_id):
 #     )
 #     with pytest.raises(ValueError):
 #         resolve_policy(unit)
+
+
+# Trap types never get the fastText soft-match backup (week 9). The flag is checked by
+# match_lexical; legal units don't reach it at all, which the routing test below freezes.
+NO_EMBEDDINGS = [UnitType.FALSE_COGNATE, UnitType.LEGAL_VOCABULARY, UnitType.MODIFIER,
+                 UnitType.IDIOM, UnitType.SLANG]
+
+
+@pytest.mark.parametrize("unit_type", NO_EMBEDDINGS)
+def test_no_fasttext_for_trap_types(unit_type):
+    assert DISPATCH[unit_type].default_policy.embedding_backup is False
+
+
+def test_legal_routes_to_strict_matcher():
+    assert DISPATCH[UnitType.LEGAL_VOCABULARY].matcher is MatcherKind.LEGAL
