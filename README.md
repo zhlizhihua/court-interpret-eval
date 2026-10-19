@@ -73,26 +73,37 @@ pytest -m "not slow"   # skip Stanza-dependent tests
 ## Repo Structure
 
 ```
-app.py                   Gradio web demo (type or speak a rendering → report)
+app.py                   Gradio web demo
 src/evaleng/
 ├── schema/models.py     Pydantic scoring-unit + fixture schema
-├── ingest/loader.py     YAML → validated fixture
+├── ingest/
+│   ├── loader.py        YAML → validated fixture
+│   └── glossary.py      legal glossary loader
 ├── interfaces.py        typed contracts passed between stages
-├── dispatch.py          unit-type → matcher routing
+├── dispatch.py          unit-type → matcher routing + default policies
 ├── localize.py          reference-projected span localization
-├── match/ 
+├── match/
 │   ├── number.py        text2num spoken-form normalization → exact compare
 │   ├── lexical.py       Stanza lemmatization + RapidFuzz fuzzy matching
+│   ├── legal.py         strict legal-term match
 │   ├── grammar.py       Universal Dependencies feature checks
 │   └── register.py      coarse classifier over Stanza morphology
+├── validate/            engine-vs-human validation
 ├── analysis.py          shared Stanza pipeline
 ├── asr.py               Whisper transcription
 ├── delivery.py          delivery metrics from word timings
 ├── pipeline.py          localize → match → n-best → aggregate → feedback
 └── cli.py               command-line entry point
-data/                
+data/
 ├── fixtures/            exam fixtures (source, reference, units, threshold)
 ├── candidates/          candidate transcripts
-scripts/                 toolchain smoke test
-tests/                   pytest suite
+├── predictions/         frozen engine predictions
+└── lexicons/            extracted legal terms and linguist overide
+scripts/
+├── verify_toolchain.py     toolchain smoke test
+├── extract_transcripts.py  review sheets → candidate transcripts
+├── make_synthetic_gold.py  fake gold sheets for rehearsing the harness
+├── extract_wa_glossary.py  WA glossary PDF → legal_wa_2008.csv
+└── check_glossary.py       legal unit → glossary concept coverage report
+tests/    
 ```
