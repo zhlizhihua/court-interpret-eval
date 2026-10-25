@@ -12,17 +12,17 @@ from __future__ import annotations
 import functools
 import hashlib
 import os
+import re
 from pathlib import Path
 
 import numpy as np
 
-from evaleng.analysis import pipeline
 
 ENV_VAR = "EVALENG_FASTTEXT"          # path to a fastText .bin; unset/empty = backup off
 COS_THRESHOLD = 0.61                  # conservative until set from position minimal pairs (W9 6b);
                                       # a forgotten placeholder can only make the backup too strict
-_DROP_UPOS = frozenset({"DET", "PUNCT"})   # keep ADP/SCONJ: for position units the connective
-                                           # (según, conforme a, de acuerdo con) IS what is tested
+# Words compared: everything except determiners (see match_words). Prepositions are kept:
+# for position units the connective (según, conforme a, de acuerdo con) IS what is tested.
 
 _MODEL = None
 
@@ -63,16 +63,24 @@ def model_id() -> str:
     return f"{Path(path).stem}:{h.hexdigest()[:8]}"
 
 
+# Spanish determiners (articles, possessives, demonstratives): a closed class, so a list is
+# exact and needs no model. Everything else, including prepositions like 'según', is compared.
+_DETERMINERS = frozenset("""
+el la los las lo un una unos unas
+mi mis tu tus su sus nuestro nuestra nuestros nuestras vuestro vuestra vuestros vuestras
+este esta estos estas ese esa esos esas aquel aquella aquellos aquellas
+""".split())
+
+
 @functools.lru_cache(maxsize=4096)
 def match_words(text: str) -> tuple[str, ...]:
-    """Lowercased surface words, determiners and punctuation dropped.
+    """Lowercased words, punctuation stripped, determiners dropped.
 
-    Surface forms, not lemmas: fastText was trained on surface text and its subword
-    n-grams already handle inflection.
+    Plain regex tokenization, not Stanza: Stanza's tokenizer splits short, punctuation-free
+    renderings badly ('de conformidad con el acuerdo' -> ... 'acuerd', 'o'), and fastText
+    works on written forms anyway. 'al' and 'del' stay whole (contractions, not determiners).
     """
-    doc = pipeline()(text)
-    return tuple(w.text.lower() for s in doc.sentences for w in s.words
-                 if w.upos not in _DROP_UPOS)
+    return tuple(w for w in re.findall(r"\w+", text.lower()) if w not in _DETERMINERS)
 
 
 @functools.lru_cache(maxsize=16384)

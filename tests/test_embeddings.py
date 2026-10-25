@@ -1,7 +1,6 @@
 """fastText soft-match backup (W9).
 
-Fast tests use a tiny fake model and a whitespace tokenizer, so they need neither the
-2 GB model nor Stanza. Model-gated tests (marked slow, skipped unless EVALENG_FASTTEXT
+Fast tests use a tiny fake model, so they don't need the 2 GB model. Nothing here needs Stanza. Model-gated tests (marked slow, skipped unless EVALENG_FASTTEXT
 points at a model) run the real thing on position minimal pairs taken from v0.1.
 
     pytest tests/test_embeddings.py -m "not slow"            # fast only
@@ -74,7 +73,16 @@ def test_nothing_to_compare_returns_none(fake):
     assert embeddings.soft_coverage("sanción", "") is None
 
 
-# ---------------------------------------------------------------- slow: real model + Stanza
+def test_match_words_keeps_acuerdo_whole():
+    """002 c02: Stanza's tokenizer split the rendering's 'acuerdo' into 'acuerd' + 'o'.
+    Regex tokenization keeps it whole; determiners and punctuation go; 'al' stays."""
+    embeddings.match_words.cache_clear()
+    assert embeddings.match_words("de conformidad con el acuerdo") == ("de", "conformidad", "con", "acuerdo")
+    assert embeddings.match_words("Conforme al acuerdo, el fiscal") == ("conforme", "al", "acuerdo", "fiscal")
+    assert embeddings.match_words("según la víctima") == ("según", "víctima")
+
+
+# ---------------------------------------------------------------- slow: real model
 
 needs_model = pytest.mark.skipif(not os.environ.get(embeddings.ENV_VAR),
                                  reason="no fastText model configured (EVALENG_FASTTEXT)")
