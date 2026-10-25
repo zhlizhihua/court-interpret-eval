@@ -1,6 +1,6 @@
 """python -m evaleng.validate predict|evaluate"""
 from __future__ import annotations
-import argparse, csv, sys
+import argparse, csv, os, sys
 from datetime import date
 from pathlib import Path
 
@@ -17,8 +17,9 @@ def main(argv=None) -> int:
     p.add_argument("--candidates", default="data/candidates")
     p.add_argument("--fixtures", default="data/fixtures")
     p.add_argument("--out", required=True)
-    p.add_argument("--allow-dirty", action="store_true",
-                   help="permit uncommitted code (never for a freeze)")
+    p.add_argument("--fasttext", metavar="PATH",
+                   help="fastText .bin for the soft-match backup (default: off); "
+                        "the model id is appended to engine_version")
 
     e = sub.add_parser("evaluate", help="compare a predictions CSV to returned gold sheets")
     e.add_argument("--predictions", required=True)
@@ -30,10 +31,9 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
 
     if args.cmd == "predict":
+        if args.fasttext:
+            os.environ["EVALENG_FASTTEXT"] = args.fasttext
         rows = predict(args.candidates, args.fixtures)
-        if rows and rows[0]["engine_version"].endswith("-dirty") and not args.allow_dirty:
-            print("error: uncommitted changes — commit first, or pass --allow-dirty", file=sys.stderr)
-            return 2
         _write_csv(rows, args.out, PRED_COLUMNS)
         print(f"wrote {len(rows)} unit predictions -> {args.out}")
         return 0

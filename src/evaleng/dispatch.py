@@ -16,6 +16,10 @@ class MatcherKind(str, Enum):
 
 
 _LEXICAL_POLICY = MatchingPolicy(method="lemma_set+fuzzy", fuzzy_threshold=0.85)
+# Same chain plus the fastText soft-match backup (fail -> pass only, and only when a model
+# path is configured). W9 probe: position only; see embeddings.py for why not general_vocabulary.
+_LEXICAL_SOFT_POLICY = MatchingPolicy(method="lemma_set+fuzzy+fasttext",
+                                      fuzzy_threshold=0.85, embedding_backup=True)
 _NUMBER_POLICY = MatchingPolicy(method="number_exact", fuzzy_threshold=1.0)
 _LEGAL_POLICY = MatchingPolicy(method="legal_strict", fuzzy_threshold=1.0)
 
@@ -30,21 +34,27 @@ DISPATCH: dict[UnitType, DispatchRule] = {
     UnitType.NUMBER:             DispatchRule(matcher=MatcherKind.NUMBER,
                                               default_policy=_NUMBER_POLICY),
     UnitType.FALSE_COGNATE:      DispatchRule(matcher=MatcherKind.LEXICAL,
-                                              default_policy=_LEXICAL_POLICY),
+                                              default_policy=_LEXICAL_POLICY,
+                                              note="no fasttext: the trap is a near neighbour"),
     UnitType.GENERAL_VOCABULARY: DispatchRule(matcher=MatcherKind.LEXICAL,
-                                              default_policy=_LEXICAL_POLICY),
+                                              default_policy=_LEXICAL_POLICY,
+                                              note="no fasttext: sister terms score above synonyms"),
     UnitType.IDIOM:              DispatchRule(matcher=MatcherKind.LEXICAL,
-                                              default_policy=_LEXICAL_POLICY),
+                                              default_policy=_LEXICAL_POLICY,
+                                              note="no fasttext: calques reuse the idiom's words"),
     UnitType.MODIFIER:           DispatchRule(matcher=MatcherKind.LEXICAL,
-                                              default_policy=_LEXICAL_POLICY),
+                                              default_policy=_LEXICAL_POLICY,
+                                              note="no fasttext: antonyms score high"),
     UnitType.SLANG:              DispatchRule(matcher=MatcherKind.LEXICAL,
-                                              default_policy=_LEXICAL_POLICY),
+                                              default_policy=_LEXICAL_POLICY,
+                                              note="no fasttext: rewards neutralized register"),
     UnitType.GRAMMAR:            DispatchRule(matcher=MatcherKind.GRAMMAR,
                                               note="each unit carries its own feature_spec policy"),
     UnitType.REGISTER:           DispatchRule(matcher=MatcherKind.REGISTER,
                                               note="each unit carries its own register_spec policy"),
     UnitType.POSITION:           DispatchRule(matcher=MatcherKind.LEXICAL,
-                                              default_policy=_LEXICAL_POLICY),
+                                              default_policy=_LEXICAL_SOFT_POLICY,
+                                              note="fasttext backup allowed (when a model is configured)"),
     UnitType.LEGAL_VOCABULARY:   DispatchRule(matcher=MatcherKind.LEGAL,
                                               default_policy=_LEGAL_POLICY,
                                               note="strict term match: fixture or glossary, no fuzzy"),

@@ -7,6 +7,7 @@ from rapidfuzz import fuzz
 from evaleng.schema.models import Unit, MatchingPolicy
 from evaleng.interfaces import CandidateInput, UnitLocation, UnitVerdict
 from evaleng.analysis import pipeline
+from evaleng import embeddings
 
 
 @functools.lru_cache(maxsize=4096)
@@ -21,6 +22,16 @@ def _region_text(candidate: CandidateInput, location: UnitLocation) -> str | Non
         return None
     start, end = location.token_span
     return " ".join(candidate.tokens[start:end])
+
+
+def _soft_match(unit: Unit, region: str):
+    """Best (cosine, rendering, pairs) over the unit's acceptable renderings, or None."""
+    best = None
+    for rendering in unit.acceptable_renderings:
+        res = embeddings.soft_coverage(region, rendering)
+        if res is not None and (best is None or res[0] > best[0]):
+            best = (res[0], rendering, res[1])
+    return best
 
 
 def match_lexical(unit: Unit, candidate: CandidateInput,
@@ -52,6 +63,22 @@ def match_lexical(unit: Unit, candidate: CandidateInput,
             best_ratio, best_rendering = ratio, rendering
 
     passed = best_ratio >= policy.fuzzy_threshold
+
+    if not passed and policy.embedding_backup and embeddings.enabled():
+        soft = _soft_match(unit, region)
+        if soft is not None:
+            cos, rendering, pairs = soft
+            if cos >= embeddings.COS_THRESHOLD:
+                shown = ", ".join(f"{c}≈{r} {s:.2f}" for r, c, s in pairs)
+                return UnitVerdict(
+                    unit_id=unit.id, unit_type=unit.type, status="pass",
+                    candidate_text=region, method="fasttext",
+                    reason=(f"soft match to {rendering!r} ({shown}; min {cos:.2f} ≥ "
+                            f"{embeddings.COS_THRESHOLD}; fuzzy {best_ratio:.2f} < "
+                            f"{policy.fuzzy_threshold}) [{embeddings.model_id()}]"),
+                    score=round(cos, 3),
+                )
+
     return UnitVerdict(
         unit_id=unit.id,
         unit_type=unit.type,
