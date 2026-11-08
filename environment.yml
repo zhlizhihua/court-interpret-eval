@@ -15,3 +15,4 @@ dependencies:
       - wn
       - text2num==3.*
       - faster-whisper
+      - fasttext-wheel==0.9.2

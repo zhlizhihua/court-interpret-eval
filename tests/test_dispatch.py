@@ -43,10 +43,11 @@ def test_policy_defaults_when_unit_has_none(unit_by_id):
 #         resolve_policy(unit)
 
 
-# Trap types never get the fastText soft-match backup (week 9). The flag is checked by
-# match_lexical; legal units don't reach it at all, which the routing test below freezes.
-NO_EMBEDDINGS = [UnitType.FALSE_COGNATE, UnitType.LEGAL_VOCABULARY, UnitType.MODIFIER,
-                 UnitType.IDIOM, UnitType.SLANG]
+# The fastText soft-match backup is opt-in per type (week 9). Probe on cc.es.100: sister terms
+# and antonyms score above synonyms, so only `position` is allowed. Widening this list is a
+# deliberate test change. Legal units never reach match_lexical (routing test below).
+NO_EMBEDDINGS = [UnitType.FALSE_COGNATE, UnitType.GENERAL_VOCABULARY, UnitType.LEGAL_VOCABULARY,
+                 UnitType.MODIFIER, UnitType.IDIOM, UnitType.SLANG]
 
 
 @pytest.mark.parametrize("unit_type", NO_EMBEDDINGS)
@@ -56,3 +57,9 @@ def test_no_fasttext_for_trap_types(unit_type):
 
 def test_legal_routes_to_strict_matcher():
     assert DISPATCH[UnitType.LEGAL_VOCABULARY].matcher is MatcherKind.LEGAL
+
+
+def test_only_position_gets_fasttext():
+    allowed = [t for t, rule in DISPATCH.items()
+               if rule.default_policy is not None and rule.default_policy.embedding_backup]
+    assert allowed == [UnitType.POSITION]

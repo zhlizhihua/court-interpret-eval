@@ -23,9 +23,14 @@ def main(argv=None) -> int:
     parser.add_argument("--nbest", type=int, default=0, metavar="N",
                         help="With --audio, sample N extra ASR hypotheses for n-best rescue "
                              "(default: 0 = 1-best only).")
+    parser.add_argument("--fasttext", metavar="PATH",
+                        help="fastText .bin for the soft-match backup on position units "
+                             "(default: off)")
     parser.add_argument("-v", "--verbose", action="store_true",
                         help="Show progress logs (model load, transcription).")
     args = parser.parse_args(argv)
+    if args.fasttext:
+        os.environ["EVALENG_FASTTEXT"] = args.fasttext   # read by evaleng.embeddings at score time
 
     logging.basicConfig(
         level=logging.INFO if args.verbose else logging.WARNING,

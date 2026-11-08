@@ -9,6 +9,7 @@ from evaleng.localize import _tokenize, _find_sublist
 from evaleng.pipeline import score_with_alignment, aggregate
 from evaleng.schema.models import UnitType
 from evaleng.validate.metrics import Pair, confusion, bootstrap_ci, METRICS
+from evaleng import embeddings
 
 TEST_FIXTURES = {"st_en_es_006", "st_en_es_007"}      # D11: held out from W7 tuning
 
@@ -56,6 +57,8 @@ PRED_COLUMNS = ["engine_version", "candidate_id", "fixture_id", "unit_id", "unit
 def predict(candidates_dir, fixtures_dir) -> list[dict]:
     fixtures = load_fixtures(fixtures_dir)
     version = engine_version()
+    if embeddings.enabled():                                  # self-describing run: which model
+        version += f"+ft:{embeddings.model_id()}"
     rows = []
     for p in sorted(Path(candidates_dir).glob("*.json")):
         rec = json.loads(p.read_text(encoding="utf-8"))

@@ -36,3 +36,32 @@ def test_lexical_not_located_fails(unit_by_id, make_candidate):
     verdict = match_lexical(unit, candidate, location, resolve_policy(unit))
     assert verdict.status == "fail"
     assert verdict.method == "lexical_not_located"
+
+# ---------------------------------------------------------------- fastText backup wiring (W9)
+# These never load a fastText model: they check the two switches (process + per-type policy).
+
+def test_fasttext_off_by_default(unit_by_id, make_candidate, monkeypatch):
+    """No model configured -> a position fuzzy fail stays a fuzzy fail."""
+    monkeypatch.delenv("EVALENG_FASTTEXT", raising=False)
+    unit = unit_by_id("u009")                       # position: "according to the victim"
+    candidate, location = make_candidate("La víctima contó que")
+    v = match_lexical(unit, candidate, location, resolve_policy(unit))
+    assert (v.status, v.method) == ("fail", "fuzzy")
+
+
+def test_ineligible_type_never_touches_the_model(unit_by_id, make_candidate, monkeypatch):
+    """false_cognate has no backup: a bogus model path must never be opened."""
+    monkeypatch.setenv("EVALENG_FASTTEXT", "/does/not/exist.bin")
+    unit = unit_by_id("u002")                       # false_cognate: "the evidence"
+    candidate, location = make_candidate("la evidencia")
+    v = match_lexical(unit, candidate, location, resolve_policy(unit))
+    assert (v.status, v.method) == ("fail", "fuzzy")
+
+
+def test_eligible_type_reaches_the_backup(unit_by_id, make_candidate, monkeypatch):
+    """position has the backup: with a bogus path, a fuzzy fail tries to load the model."""
+    monkeypatch.setenv("EVALENG_FASTTEXT", "/does/not/exist.bin")
+    unit = unit_by_id("u009")
+    candidate, location = make_candidate("La víctima contó que")
+    with pytest.raises(FileNotFoundError):
+        match_lexical(unit, candidate, location, resolve_policy(unit))
