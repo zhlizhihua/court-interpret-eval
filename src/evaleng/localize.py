@@ -2,12 +2,24 @@
 from __future__ import annotations
 import re
 
-from evaleng.schema.models import Fixture, Unit
+from evaleng.schema.models import Fixture, Unit, UnitType
 from evaleng.interfaces import CandidateInput, UnitLocation, AlignmentResult
 from rapidfuzz.distance import Levenshtein
 
 _OVERLAP_FLOOR = 0.6   # min fraction of a rendering's words a window must cover
 _SLACK = 2             # pad the located window this many tokens each side
+_EXPAND = False        # W11 (D17): grow the projected core to its phrase and clip it to its
+                       # sentence, from the transcript's Stanza parse. Off until the span sweep
+                       # (docs_local/span_sweep.py) confirms the label sets on real parses.
+_MAX_GROW = 4          # expansion never adds more than this many tokens on either side
+
+# Dependents that belong to a nominal phrase: articles, adjectives, numerals, quantifiers,
+# prepositions, multiword expressions.
+_NP_DEPS = frozenset({"det", "amod", "nummod", "advmod", "case", "fixed", "flat", "compound"})
+# Dependents that belong to a verb's core: auxiliaries, clitic se, subject, subordinator.
+_VP_DEPS = frozenset({"aux", "aux:pass", "cop", "expl:pv", "expl:pass", "expl:impers", "expl",
+                      "nsubj", "nsubj:pass", "mark"})
+_VERBAL = frozenset({"VERB", "AUX"})
 
 
 def _normalize(token: str) -> str:
@@ -92,8 +104,14 @@ def localize(candidate: CandidateInput, fixture: Fixture) -> AlignmentResult:
             locations[unit.id] = UnitLocation(unit_id=unit.id, token_span=None, confidence=0.0)
             continue
 
-        start = max(0, min(mapped) - _SLACK)
-        end = min(len(cand), max(mapped) + 1 + _SLACK)
+        core = (min(mapped), max(mapped) + 1)
+        if _EXPAND:
+            from evaleng.syntax import parse                # needs Stanza; only when expanding
+            words = parse(tuple(candidate.tokens))
+            core = _clip_to_sentence(core, mapped, words)
+            core = _grow(core, unit.type, words)
+        start = max(0, core[0] - _SLACK)
+        end = min(len(cand), core[1] + _SLACK)
         confidence = len(mapped) / (r1 - r0)                # fraction of the ref span that aligned
         locations[unit.id] = UnitLocation(
             unit_id=unit.id, token_span=(start, end), confidence=round(confidence, 3),
@@ -152,3 +170,70 @@ def _locate_by_overlap(cand: list[str], unit: Unit) -> UnitLocation:
         span = None
     return UnitLocation(unit_id=unit.id, token_span=span, confidence=round(best_score, 3))
 
+
+def _clip_to_sentence(core, mapped, words):
+    """Keep only the part of the core inside the sentence holding most of its mapped tokens."""
+    sent_of: dict[int, int] = {}
+    for w in words:
+        sent_of.setdefault(w.tok, w.sent)
+    votes = [sent_of.get(i) for i in mapped]
+    best = max(set(votes), key=votes.count)
+    inside = [i for i in range(*core) if sent_of.get(i) == best]
+    return (min(inside), max(inside) + 1) if inside else core
+
+
+def _grow(core, unit_type, words):
+    """Extend core (a token span) to the phrase(s) it heads; at most _MAX_GROW tokens per side.
+
+    The core's roots are its words whose head lies outside it. Each root absorbs its dependents
+    along a closed label set (_VP_DEPS for verbs, _NP_DEPS otherwise), recursively. Three one-step climbs handle cores that landed on a dependent of
+    the word carrying the unit: grammar -> governing verb, number -> counted noun,
+    position -> a connective head immediately before the core.
+    """
+    s, e = core
+    inside = [w for w in words if s <= w.tok < e]
+    if not inside:
+        return core
+    ids = {w.idx for w in inside}
+    roots = [w for w in inside if w.head not in ids]
+    has_verb = any(w.upos in _VERBAL for w in inside)
+
+    climbed = []
+    for r in roots:
+        h = words[r.head] if r.head is not None else None
+        if h is None:
+            continue
+        if unit_type is UnitType.GRAMMAR and not has_verb:
+            while h is not None and h.upos not in _VERBAL:
+                h = words[h.head] if h.head is not None else None
+            if h is not None:
+                climbed.append(h)
+        elif unit_type is UnitType.NUMBER and r.deprel == "nummod":
+            climbed.append(h)
+        elif unit_type is UnitType.POSITION and h.tok == s - 1:
+            climbed.append(h)
+
+    children: dict[int, list] = {}
+    for w in words:
+        if w.head is not None:
+            children.setdefault(w.head, []).append(w)
+
+    take, seen = set(ids), set()
+
+    def absorb(w, allowed):
+        # Walk down from w. A child is taken if its label is allowed; core words are walked
+        # through whatever their label, so material hanging under them is reached too.
+        for c in children.get(w.idx, []):
+            if c.idx in seen or not (c.deprel in allowed or c.idx in ids):
+                continue
+            seen.add(c.idx)
+            take.add(c.idx)
+            absorb(c, _VP_DEPS if c.upos in _VERBAL else _NP_DEPS)
+
+    for r in roots + climbed:
+        take.add(r.idx)
+        seen.add(r.idx)
+        absorb(r, _VP_DEPS if r.upos in _VERBAL else _NP_DEPS)
+
+    toks = [words[i].tok for i in take]
+    return (min(s, max(min(toks), s - _MAX_GROW)), max(e, min(max(toks) + 1, e + _MAX_GROW)))
