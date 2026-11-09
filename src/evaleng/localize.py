@@ -13,13 +13,33 @@ _EXPAND = False        # W11 (D17): grow the projected core to its phrase and cl
                        # (docs_local/span_sweep.py) confirms the label sets on real parses.
 _MAX_GROW = 4          # expansion never adds more than this many tokens on either side
 
-# Dependents that belong to a nominal phrase: articles, adjectives, numerals, quantifiers,
-# prepositions, multiword expressions.
-_NP_DEPS = frozenset({"det", "amod", "nummod", "advmod", "case", "fixed", "flat", "compound"})
-# Dependents that belong to a verb's core: auxiliaries, clitic se, subject, subordinator.
-_VP_DEPS = frozenset({"aux", "aux:pass", "cop", "expl:pv", "expl:pass", "expl:impers", "expl",
-                      "nsubj", "nsubj:pass", "mark"})
+# Labels checked against the installed Stanza Spanish model (W11 probe, runs/w11/probe.txt).
+# Dependents that belong to a nominal phrase: articles, adjectives, numerals, multiword parts.
+# 'advmod' only counts on the left (quantifiers: 'no más de cinco años', not 'carnales de afuera').
+_NP_DEPS = frozenset({"det", "amod", "nummod", "advmod", "fixed", "flat", "compound"})
+# Dependents that belong to a verb's chain: auxiliaries and clitics ('se', and 'me' in 'me dio',
+# which this model labels obl:arg).
+_VP_DEPS = frozenset({"aux", "aux:pass", "cop", "expl:pv", "expl:pass", "expl:impers", "expl"})
+_CLITIC_DEPS = frozenset({"obl:arg", "iobj"})        # only when the dependent is a pronoun
 _VERBAL = frozenset({"VERB", "AUX"})
+
+
+def _allowed(head, child, unit_type) -> bool:
+    """Does `child` belong to the phrase headed by `head`, for this unit type?"""
+    rel = child.deprel
+    if head.upos in _VERBAL:
+        if rel in _VP_DEPS or (rel in _CLITIC_DEPS and child.upos == "PRON"):
+            return True
+        if rel in ("nsubj", "nsubj:pass"):                  # the subject: grammar units only
+            return unit_type is UnitType.GRAMMAR
+        if rel == "mark":                                   # según / cuando / de acuerdo con
+            return unit_type in (UnitType.GRAMMAR, UnitType.POSITION)
+        return False
+    if rel == "case":                                       # the phrase's own preposition:
+        return unit_type is UnitType.POSITION               # only when the connective is tested
+    if rel == "advmod":
+        return child.idx < head.idx
+    return rel in _NP_DEPS
 
 
 def _normalize(token: str) -> str:
@@ -185,10 +205,11 @@ def _clip_to_sentence(core, mapped, words):
 def _grow(core, unit_type, words):
     """Extend core (a token span) to the phrase(s) it heads; at most _MAX_GROW tokens per side.
 
-    The core's roots are its words whose head lies outside it. Each root absorbs its dependents
-    along a closed label set (_VP_DEPS for verbs, _NP_DEPS otherwise), recursively. Three one-step climbs handle cores that landed on a dependent of
-    the word carrying the unit: grammar -> governing verb, number -> counted noun,
-    position -> a connective head immediately before the core.
+    The core's roots are its words whose head lies outside it. Each root absorbs, recursively,
+    the dependents _allowed() says belong to its phrase for this unit type. One-step climbs handle
+    cores that landed on a dependent of the word carrying the unit: a multiword part -> its head
+    (de acuerdo con), grammar -> governing verb, number -> counted noun, position -> a connective
+    head immediately before the core.
     """
     s, e = core
     inside = [w for w in words if s <= w.tok < e]
@@ -203,7 +224,9 @@ def _grow(core, unit_type, words):
         h = words[r.head] if r.head is not None else None
         if h is None:
             continue
-        if unit_type is UnitType.GRAMMAR and not has_verb:
+        if r.deprel in ("fixed", "flat"):                   # part of a multiword expression:
+            climbed.append(h)                               # 'acuerdo' -> its head 'De'
+        elif unit_type is UnitType.GRAMMAR and not has_verb:
             while h is not None and h.upos not in _VERBAL:
                 h = words[h.head] if h.head is not None else None
             if h is not None:
@@ -220,20 +243,20 @@ def _grow(core, unit_type, words):
 
     take, seen = set(ids), set()
 
-    def absorb(w, allowed):
-        # Walk down from w. A child is taken if its label is allowed; core words are walked
-        # through whatever their label, so material hanging under them is reached too.
+    def absorb(w):
+        # Walk down from w. A child is taken if it belongs to w's phrase (_allowed); core words
+        # are walked through whatever their label, so material hanging under them is reached too.
         for c in children.get(w.idx, []):
-            if c.idx in seen or not (c.deprel in allowed or c.idx in ids):
+            if c.idx in seen or not (c.idx in ids or _allowed(w, c, unit_type)):
                 continue
             seen.add(c.idx)
             take.add(c.idx)
-            absorb(c, _VP_DEPS if c.upos in _VERBAL else _NP_DEPS)
+            absorb(c)
 
     for r in roots + climbed:
         take.add(r.idx)
         seen.add(r.idx)
-        absorb(r, _VP_DEPS if r.upos in _VERBAL else _NP_DEPS)
+        absorb(r)
 
     toks = [words[i].tok for i in take]
     return (min(s, max(min(toks), s - _MAX_GROW)), max(e, min(max(toks) + 1, e + _MAX_GROW)))

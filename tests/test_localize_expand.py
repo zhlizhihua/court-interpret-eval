@@ -2,8 +2,8 @@
 
 Each parse is written in Universal Dependencies form: (text, upos, deprel, head) with head as a
 1-based word number in its sentence, 0 for the root. One word per whitespace token here, so the
-token index equals the word index. The labels are the standard UD-Spanish ones; the real-model
-probe (docs_local/probe_parses.py) checks them against the installed Stanza model.
+token index equals the word index. Labels follow what the installed Stanza model actually emits
+(W11 probe): 'me' in 'me dio' is obl:arg; 'de acuerdo con' is a fixed expression headed by 'De'.
 """
 import pytest
 
@@ -27,9 +27,9 @@ def span_text(words, span):
     return " ".join(w.text for w in words if span[0] <= w.tok < span[1])
 
 
-GUN = parse([("llevaba", "VERB", "root", 0), ("una", "DET", "det", 3),
-             ("pistola", "NOUN", "obj", 1), ("cargada", "ADJ", "amod", 3),
-             ("en", "ADP", "case", 6), ("mano", "NOUN", "obl", 1)])
+GUN = parse([("golpeó", "VERB", "root", 0), ("con", "ADP", "case", 4), ("una", "DET", "det", 4),
+             ("pistola", "NOUN", "obl", 1), ("cargada", "ADJ", "amod", 4),
+             ("en", "ADP", "case", 7), ("mano", "NOUN", "obl", 1)])
 
 YEARS = parse([("condenado", "VERB", "root", 0), ("a", "ADP", "case", 7),
                ("no", "ADV", "advmod", 4), ("más", "ADV", "advmod", 6),
@@ -49,19 +49,39 @@ SEGUN = parse([("según", "SCONJ", "mark", 2), ("declaró", "VERB", "advcl", 6),
                ("la", "DET", "det", 4), ("víctima", "NOUN", "nsubj", 2),
                ("él", "PRON", "nsubj", 6), ("huyó", "VERB", "root", 0)])
 
-ACUERDO = parse([("de", "ADP", "case", 2), ("acuerdo", "NOUN", "obl", 6),
-                 ("con", "ADP", "case", 5), ("el", "DET", "det", 5),
-                 ("testigo", "NOUN", "nmod", 2), ("huyó", "VERB", "root", 0)])
+ACUERDO = parse([("De", "ADP", "mark", 7), ("acuerdo", "NOUN", "fixed", 1),
+                 ("con", "ADP", "fixed", 1), ("lo", "PRON", "det", 5), ("que", "PRON", "obj", 6),
+                 ("declaró", "VERB", "root", 0), ("dijo", "VERB", "root", 0)])
+
+CONFORME = parse([("conforme", "ADV", "case", 4), ("a", "ADP", "fixed", 1),
+                  ("el", "DET", "det", 4), ("relato", "NOUN", "obl", 6),
+                  ("él", "PRON", "nsubj", 6), ("huyó", "VERB", "root", 0)])
+
+SHAME = parse([("Me", "PRON", "obl:arg", 2), ("dio", "VERB", "root", 0),
+               ("tanta", "DET", "det", 4), ("vergüenza", "NOUN", "nsubj", 2)])
+
+CRAZY = parse([("dijo", "VERB", "root", 0), ("que", "SCONJ", "mark", 7),
+               ("el", "DET", "det", 4), ("sospechoso", "NOUN", "nsubj", 7),
+               ("se", "PRON", "expl:pv", 7), ("había", "AUX", "aux", 7),
+               ("puesto", "VERB", "ccomp", 1), ("loco", "ADJ", "xcomp", 7)])
+
+HOMIES = parse([("Mis", "DET", "det", 2), ("carnales", "NOUN", "nsubj", 5),
+                ("de", "ADP", "case", 4), ("afuera", "ADV", "advmod", 2),
+                ("esperan", "VERB", "root", 0)])
 
 
 @pytest.mark.parametrize("words, core, unit_type, expected", [
-    (GUN, (2, 4), T.MODIFIER, "una pistola cargada"),            # article joins the noun
-    (YEARS, (5, 7), T.NUMBER, "a no más de cinco años"),          # quantifier chain + preposition
-    (YEARS, (5, 6), T.NUMBER, "a no más de cinco años"),          # core on the numeral: climbs to años
+    (GUN, (3, 5), T.MODIFIER, "una pistola cargada"),            # article joins; 'con' stays out
+    (YEARS, (5, 7), T.NUMBER, "no más de cinco años"),            # quantifier chain, not 'a'
+    (YEARS, (5, 6), T.NUMBER, "no más de cinco años"),            # core on the numeral: climbs to años
     (GONE, (4, 8), T.GRAMMAR, "el imbécil ya se había ido"),      # verb pulls in its subject NP
     (SENTENCED, (4, 6), T.GRAMMAR, "se dictará sentencia contra el acusado"),  # climbs to the verb
     (SEGUN, (1, 4), T.POSITION, "según declaró la víctima"),     # verb pulls in its subordinator
-    (ACUERDO, (2, 5), T.POSITION, "de acuerdo con el testigo"),  # climbs to the connective head
+    (ACUERDO, (1, 6), T.POSITION, "De acuerdo con lo que declaró"),  # 'acuerdo' climbs to fixed head 'De'
+    (CONFORME, (2, 4), T.POSITION, "conforme a el relato"),      # position keeps its preposition
+    (SHAME, (1, 4), T.FALSE_COGNATE, "Me dio tanta vergüenza"),   # clitic obl:arg joins the verb
+    (CRAZY, (4, 8), T.IDIOM, "se había puesto loco"),             # idiom: no subject, no 'que'
+    (HOMIES, (0, 2), T.SLANG, "Mis carnales"),                    # right-side advmod stays out
 ])
 def test_grow_reaches_the_phrase(words, core, unit_type, expected):
     assert span_text(words, L._grow(core, unit_type, words)) == expected
@@ -69,7 +89,11 @@ def test_grow_reaches_the_phrase(words, core, unit_type, expected):
 
 def test_grow_does_not_climb_for_vocabulary():
     # 'pistola' hangs off the verb, but a modifier unit never climbs to it.
-    assert span_text(GUN, L._grow((2, 4), T.MODIFIER, GUN)) == "una pistola cargada"
+    assert span_text(GUN, L._grow((3, 5), T.MODIFIER, GUN)) == "una pistola cargada"
+
+
+def test_grammar_unit_takes_the_subject():
+    assert span_text(CRAZY, L._grow((4, 8), T.GRAMMAR, CRAZY)) == "que el sospechoso se había puesto loco"
 
 
 def test_grammar_core_with_a_verb_does_not_climb():
@@ -83,7 +107,7 @@ def test_grow_is_capped(monkeypatch):
 
 
 def test_grow_never_shrinks_the_core():
-    assert L._grow((0, 6), T.MODIFIER, GUN) == (0, 6)
+    assert L._grow((0, 7), T.MODIFIER, GUN) == (0, 7)
 
 
 def test_clip_stops_at_the_sentence_end():
