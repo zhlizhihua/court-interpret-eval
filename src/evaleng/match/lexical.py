@@ -91,7 +91,7 @@ def match_lexical(unit: Unit, candidate: CandidateInput,
     best_ratio, best_rendering, best_pairs = 0.0, None, []
     for rendering in unit.acceptable_renderings:
         res = fuzzy_cover(region, rendering)
-        if res is not None and res[0] > best_ratio:
+        if res is not None and (best_rendering is None or res[0] > best_ratio):
             best_ratio, best_rendering, best_pairs = res[0], rendering, res[1]
 
     passed = best_ratio >= policy.fuzzy_threshold
@@ -111,8 +111,12 @@ def match_lexical(unit: Unit, candidate: CandidateInput,
                     score=round(cos, 3),
                 )
 
-    weakest = min(best_pairs, key=lambda p: p[2]) if best_pairs else None
-    shown = f"weakest {weakest[0]}≈{weakest[1]} {weakest[2]:.2f}" if weakest else "no words"
+    if passed:
+        w = min(best_pairs, key=lambda p: p[2])
+        shown = f"weakest {w[0]}≈{w[1]} {w[2]:.2f}"
+    else:   # name every word that missed, not just the weakest (often a one-letter preposition)
+        missed = [f"{r}≈{c} {s:.2f}" for r, c, s in best_pairs if s < policy.fuzzy_threshold]
+        shown = "missing " + ", ".join(missed) if missed else "no words"
     return UnitVerdict(
         unit_id=unit.id,
         unit_type=unit.type,

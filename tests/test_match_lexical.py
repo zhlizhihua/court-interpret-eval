@@ -65,3 +65,12 @@ def test_eligible_type_reaches_the_backup(unit_by_id, make_candidate, monkeypatc
     candidate, location = make_candidate("La víctima contó que")
     with pytest.raises(FileNotFoundError):
         match_lexical(unit, candidate, location, resolve_policy(unit))
+
+
+def test_fuzzy_miss_names_every_missing_word(unit_by_id, make_candidate):
+    """W10: the reason lists all words under threshold, not just the weakest one."""
+    unit = unit_by_id("u007")                       # modifier: "loaded handgun"
+    candidate, location = make_candidate("llevaba una pistola en su")
+    v = match_lexical(unit, candidate, location, resolve_policy(unit))
+    assert (v.status, v.method) == ("fail", "fuzzy_cover")
+    assert "missing" in v.reason and "cargada" in v.reason
