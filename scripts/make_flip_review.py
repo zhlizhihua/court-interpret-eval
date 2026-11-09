@@ -19,7 +19,7 @@ def main(off_csv, on_csv, out_csv):
     rows = []
     for key, o in off.items():
         # only units the backup could touch: position units that failed at fuzzy with it off
-        if o["unit_type"] != "position" or o["method"] != "fuzzy" or o["engine"] != "fail":
+        if o["unit_type"] != "position" or o["method"] not in ("fuzzy", "fuzzy_cover") or o["engine"] != "fail":
             continue
         n = on[key]
         flipped = n["engine"] != o["engine"]

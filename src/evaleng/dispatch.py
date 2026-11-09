@@ -15,6 +15,8 @@ class MatcherKind(str, Enum):
     LEGAL = "legal"
 
 
+# fuzzy_threshold for lexical units is PER WORD (W10, D16): every rendering word needs a region
+# word with Indel similarity >= 0.85 (see match.lexical.fuzzy_cover), not a whole-string ratio.
 _LEXICAL_POLICY = MatchingPolicy(method="lemma_set+fuzzy", fuzzy_threshold=0.85)
 # Same chain plus the fastText soft-match backup (fail -> pass only, and only when a model
 # path is configured). W9 probe: position only; see embeddings.py for why not general_vocabulary.

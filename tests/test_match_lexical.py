@@ -10,8 +10,8 @@ pytestmark = pytest.mark.slow   # applies the 'slow' marker to every test in thi
 @pytest.mark.parametrize("unit_id, region, expected_status", [
     ("u004", "agresión con agravantes", "pass"),   # exact
     ("u002", "la prueba",               "pass"),   # singular candidate vs plural rendering
-    ("u004", "agresion con agravantes", "pass"),   # ASR dropped an accent (lemma OR fuzzy)
-    ("u004", "asalto agravado",         "fail"),   # plausible but wrong (best fuzzy 0.667)
+    ("u004", "agresion con agravantes", "pass"),   # ASR dropped an accent (lemma OR fuzzy cover)
+    ("u004", "asalto agravado",         "fail"),   # plausible but wrong (agresión has no close match)
     ("u002", "la evidencia",            "fail"),   # the false-cognate trap
 ])
 def test_lexical_cases(unit_by_id, make_candidate, unit_id, region, expected_status):
@@ -46,7 +46,7 @@ def test_fasttext_off_by_default(unit_by_id, make_candidate, monkeypatch):
     unit = unit_by_id("u009")                       # position: "according to the victim"
     candidate, location = make_candidate("La víctima contó que")
     v = match_lexical(unit, candidate, location, resolve_policy(unit))
-    assert (v.status, v.method) == ("fail", "fuzzy")
+    assert (v.status, v.method) == ("fail", "fuzzy_cover")
 
 
 def test_ineligible_type_never_touches_the_model(unit_by_id, make_candidate, monkeypatch):
@@ -55,7 +55,7 @@ def test_ineligible_type_never_touches_the_model(unit_by_id, make_candidate, mon
     unit = unit_by_id("u002")                       # false_cognate: "the evidence"
     candidate, location = make_candidate("la evidencia")
     v = match_lexical(unit, candidate, location, resolve_policy(unit))
-    assert (v.status, v.method) == ("fail", "fuzzy")
+    assert (v.status, v.method) == ("fail", "fuzzy_cover")
 
 
 def test_eligible_type_reaches_the_backup(unit_by_id, make_candidate, monkeypatch):
@@ -65,3 +65,12 @@ def test_eligible_type_reaches_the_backup(unit_by_id, make_candidate, monkeypatc
     candidate, location = make_candidate("La víctima contó que")
     with pytest.raises(FileNotFoundError):
         match_lexical(unit, candidate, location, resolve_policy(unit))
+
+
+def test_fuzzy_miss_names_every_missing_word(unit_by_id, make_candidate):
+    """W10: the reason lists all words under threshold, not just the weakest one."""
+    unit = unit_by_id("u007")                       # modifier: "loaded handgun"
+    candidate, location = make_candidate("llevaba una pistola en su")
+    v = match_lexical(unit, candidate, location, resolve_policy(unit))
+    assert (v.status, v.method) == ("fail", "fuzzy_cover")
+    assert "missing" in v.reason and "cargada" in v.reason
