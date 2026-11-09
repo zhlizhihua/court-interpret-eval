@@ -7,11 +7,13 @@ from evaleng.interfaces import CandidateInput, UnitLocation, AlignmentResult
 from rapidfuzz.distance import Levenshtein
 
 _OVERLAP_FLOOR = 0.6   # min fraction of a rendering's words a window must cover
-_SLACK = 2             # pad the located window this many tokens each side
-_EXPAND = False        # W11 (D17): grow the projected core to its phrase and clip it to its
-                       # sentence, from the transcript's Stanza parse. Off until the span sweep
-                       # (docs_local/span_sweep.py) confirms the label sets on real parses.
+_SLACK = 2             # pad the located window this many tokens each side. W11 sweep: slack 1
+                       # contains 342/374 full spans vs 351 today, so 2 stays (D17).
+_EXPAND = True         # W11 (D17): grow the projected core to its phrase and clip it to its
+                       # sentence, from the transcript's Stanza parse. False reproduces W10 spans.
+                       # Sweep (runs/w11/span_sweep_final.md): exact 268 -> 310, too short 91 -> 36.
 _MAX_GROW = 4          # expansion never adds more than this many tokens on either side
+                       # (5 fixes one 'De acuerdo con lo que' but over-grows three grammar spans)
 
 # Labels checked against the installed Stanza Spanish model (W11 probe, runs/w11/probe.txt).
 # Dependents that belong to a nominal phrase: articles, adjectives, numerals, multiword parts.
@@ -128,7 +130,8 @@ def localize(candidate: CandidateInput, fixture: Fixture) -> AlignmentResult:
         if _EXPAND:
             from evaleng.syntax import parse                # needs Stanza; only when expanding
             words = parse(tuple(candidate.tokens))
-            core = _clip_to_sentence(core, mapped, words)
+            exact = [proj[i] for i in range(r0, r1) if i in proj and cand[proj[i]] == ref[i]]
+            core = _clip_to_sentence(core, exact or mapped, words)
             core = _grow(core, unit.type, words)
         start = max(0, core[0] - _SLACK)
         end = min(len(cand), core[1] + _SLACK)
@@ -191,13 +194,17 @@ def _locate_by_overlap(cand: list[str], unit: Unit) -> UnitLocation:
     return UnitLocation(unit_id=unit.id, token_span=span, confidence=round(best_score, 3))
 
 
-def _clip_to_sentence(core, mapped, words):
-    """Keep only the part of the core inside the sentence holding most of its mapped tokens."""
+def _clip_to_sentence(core, anchors, words):
+    """Keep only the part of the core inside the sentence holding most of its anchors.
+
+    Anchors are the exact word matches with the reference when there are any (a loose 'replace'
+    pairing can land in the next sentence); ties go to the sentence of the earliest anchor.
+    """
     sent_of: dict[int, int] = {}
     for w in words:
         sent_of.setdefault(w.tok, w.sent)
-    votes = [sent_of.get(i) for i in mapped]
-    best = max(set(votes), key=votes.count)
+    votes = [sent_of.get(i) for i in sorted(anchors)]
+    best = max(dict.fromkeys(votes), key=votes.count)     # dict keeps first-seen order for ties
     inside = [i for i in range(*core) if sent_of.get(i) == best]
     return (min(inside), max(inside) + 1) if inside else core
 

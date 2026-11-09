@@ -116,6 +116,14 @@ def test_clip_stops_at_the_sentence_end():
     assert L._clip_to_sentence((0, 4), [0, 1, 2], words) == (0, 2)
 
 
+def test_clip_votes_on_exact_anchors_and_ties_go_to_the_earliest():
+    # 'agresión agravada. De acuerdo con' : one exact anchor per sentence -> keep the first.
+    words = parse([("agresión", "NOUN", "root", 0), ("agravada.", "ADJ", "amod", 1)],
+                  [("De", "ADP", "mark", 0), ("acuerdo", "NOUN", "fixed", 1),
+                   ("con", "ADP", "fixed", 1)])
+    assert L._clip_to_sentence((0, 5), [4, 0], words) == (0, 2)
+
+
 def test_expand_off_needs_no_parse(exam_fixture, monkeypatch):
     """The default path never imports the parser, so it reproduces W10 spans exactly."""
     monkeypatch.setattr(L, "_EXPAND", False)

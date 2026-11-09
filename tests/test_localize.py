@@ -1,6 +1,15 @@
 """Freeze reference-projected localization (see week4-instructions.md, Track A)."""
+import pytest
+
+import evaleng.localize as L
 from evaleng.interfaces import CandidateInput
 from evaleng.localize import localize
+
+
+@pytest.fixture(autouse=True)
+def _projection_only(monkeypatch):
+    """These freeze the reference projection itself; phrase expansion has its own tests."""
+    monkeypatch.setattr(L, "_EXPAND", False)
 
 
 def _cand(text: str) -> CandidateInput:
