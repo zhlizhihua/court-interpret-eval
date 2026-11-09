@@ -39,7 +39,9 @@ def _best_window(cand: list[str], probe: list[str]) -> tuple[float, int, int]:
 
 def _localize_overlap(candidate: CandidateInput, fixture: Fixture) -> AlignmentResult:
     """Locate each unit's region in the candidate by naive token overlap."""
-    cand = [t for t in (_normalize(w) for w in candidate.tokens) if t]
+    # Same length as candidate.tokens: a token that normalizes to "" (a bare '—') stays as "",
+    # so spans index candidate.tokens directly. Dropping it shifted every later region by one.
+    cand = [_normalize(w) for w in candidate.tokens]
     locations: dict[str, UnitLocation] = {}
 
     for unit in fixture.units:
@@ -71,7 +73,9 @@ def localize(candidate: CandidateInput, fixture: Fixture) -> AlignmentResult:
     fall back to token-overlap.
     """
     ref = _tokenize(fixture.reference_rendering)
-    cand = [t for t in (_normalize(w) for w in candidate.tokens) if t]
+    # Same length as candidate.tokens: a token that normalizes to "" (a bare '—') stays as "",
+    # so spans index candidate.tokens directly. Dropping it shifted every later region by one.
+    cand = [_normalize(w) for w in candidate.tokens]
     ref_spans = _reference_spans(fixture)
     proj = _projection_map(ref, cand)
 

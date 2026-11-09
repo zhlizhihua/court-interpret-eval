@@ -26,3 +26,10 @@ def test_omission_reports_not_located(exam_fixture):
 def test_confidence_is_populated_on_a_hit(exam_fixture):
     ref = " ".join(exam_fixture.reference_rendering.split())
     assert localize(_cand(ref), exam_fixture).locations["u008"].confidence > 0.0
+
+def test_span_indexes_candidate_tokens_even_with_bare_punctuation(exam_fixture):
+    """W11 Step 0: a token that normalizes to '' must not shift later regions."""
+    text = "Según la víctima, García lo golpeó — con una pistola cargada y huyó."
+    cand = _cand(text)
+    s, e = localize(cand, exam_fixture).locations["u007"].token_span
+    assert "cargada" in cand.tokens[s:e] and "pistola" in cand.tokens[s:e]
