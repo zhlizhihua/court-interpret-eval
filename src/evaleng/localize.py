@@ -2,12 +2,46 @@
 from __future__ import annotations
 import re
 
-from evaleng.schema.models import Fixture, Unit
+from evaleng.schema.models import Fixture, Unit, UnitType
 from evaleng.interfaces import CandidateInput, UnitLocation, AlignmentResult
 from rapidfuzz.distance import Levenshtein
 
 _OVERLAP_FLOOR = 0.6   # min fraction of a rendering's words a window must cover
-_SLACK = 2             # pad the located window this many tokens each side
+_SLACK = 2             # pad the located window this many tokens each side. W11 sweep: slack 1
+                       # contains 342/374 full spans vs 351 today, so 2 stays (D17).
+_EXPAND = True         # W11 (D17): grow the projected core to its phrase and clip it to its
+                       # sentence, from the transcript's Stanza parse. False reproduces W10 spans.
+                       # Sweep (runs/w11/span_sweep_final.md): exact 268 -> 310, too short 91 -> 36.
+_MAX_GROW = 4          # expansion never adds more than this many tokens on either side
+                       # (5 fixes one 'De acuerdo con lo que' but over-grows three grammar spans)
+
+# Labels checked against the installed Stanza Spanish model (W11 probe, runs/w11/probe.txt).
+# Dependents that belong to a nominal phrase: articles, adjectives, numerals, multiword parts.
+# 'advmod' only counts on the left (quantifiers: 'no más de cinco años', not 'carnales de afuera').
+_NP_DEPS = frozenset({"det", "amod", "nummod", "advmod", "fixed", "flat", "compound"})
+# Dependents that belong to a verb's chain: auxiliaries and clitics ('se', and 'me' in 'me dio',
+# which this model labels obl:arg).
+_VP_DEPS = frozenset({"aux", "aux:pass", "cop", "expl:pv", "expl:pass", "expl:impers", "expl"})
+_CLITIC_DEPS = frozenset({"obl:arg", "iobj"})        # only when the dependent is a pronoun
+_VERBAL = frozenset({"VERB", "AUX"})
+
+
+def _allowed(head, child, unit_type) -> bool:
+    """Does `child` belong to the phrase headed by `head`, for this unit type?"""
+    rel = child.deprel
+    if head.upos in _VERBAL:
+        if rel in _VP_DEPS or (rel in _CLITIC_DEPS and child.upos == "PRON"):
+            return True
+        if rel in ("nsubj", "nsubj:pass"):                  # the subject: grammar units only
+            return unit_type is UnitType.GRAMMAR
+        if rel == "mark":                                   # según / cuando / de acuerdo con
+            return unit_type in (UnitType.GRAMMAR, UnitType.POSITION)
+        return False
+    if rel == "case":                                       # the phrase's own preposition:
+        return unit_type is UnitType.POSITION               # only when the connective is tested
+    if rel == "advmod":
+        return child.idx < head.idx
+    return rel in _NP_DEPS
 
 
 def _normalize(token: str) -> str:
@@ -39,7 +73,9 @@ def _best_window(cand: list[str], probe: list[str]) -> tuple[float, int, int]:
 
 def _localize_overlap(candidate: CandidateInput, fixture: Fixture) -> AlignmentResult:
     """Locate each unit's region in the candidate by naive token overlap."""
-    cand = [t for t in (_normalize(w) for w in candidate.tokens) if t]
+    # Same length as candidate.tokens: a token that normalizes to "" (a bare '—') stays as "",
+    # so spans index candidate.tokens directly. Dropping it shifted every later region by one.
+    cand = [_normalize(w) for w in candidate.tokens]
     locations: dict[str, UnitLocation] = {}
 
     for unit in fixture.units:
@@ -71,7 +107,9 @@ def localize(candidate: CandidateInput, fixture: Fixture) -> AlignmentResult:
     fall back to token-overlap.
     """
     ref = _tokenize(fixture.reference_rendering)
-    cand = [t for t in (_normalize(w) for w in candidate.tokens) if t]
+    # Same length as candidate.tokens: a token that normalizes to "" (a bare '—') stays as "",
+    # so spans index candidate.tokens directly. Dropping it shifted every later region by one.
+    cand = [_normalize(w) for w in candidate.tokens]
     ref_spans = _reference_spans(fixture)
     proj = _projection_map(ref, cand)
 
@@ -88,8 +126,15 @@ def localize(candidate: CandidateInput, fixture: Fixture) -> AlignmentResult:
             locations[unit.id] = UnitLocation(unit_id=unit.id, token_span=None, confidence=0.0)
             continue
 
-        start = max(0, min(mapped) - _SLACK)
-        end = min(len(cand), max(mapped) + 1 + _SLACK)
+        core = (min(mapped), max(mapped) + 1)
+        if _EXPAND:
+            from evaleng.syntax import parse                # needs Stanza; only when expanding
+            words = parse(tuple(candidate.tokens))
+            exact = [proj[i] for i in range(r0, r1) if i in proj and cand[proj[i]] == ref[i]]
+            core = _clip_to_sentence(core, exact or mapped, words)
+            core = _grow(core, unit.type, words)
+        start = max(0, core[0] - _SLACK)
+        end = min(len(cand), core[1] + _SLACK)
         confidence = len(mapped) / (r1 - r0)                # fraction of the ref span that aligned
         locations[unit.id] = UnitLocation(
             unit_id=unit.id, token_span=(start, end), confidence=round(confidence, 3),
@@ -148,3 +193,77 @@ def _locate_by_overlap(cand: list[str], unit: Unit) -> UnitLocation:
         span = None
     return UnitLocation(unit_id=unit.id, token_span=span, confidence=round(best_score, 3))
 
+
+def _clip_to_sentence(core, anchors, words):
+    """Keep only the part of the core inside the sentence holding most of its anchors.
+
+    Anchors are the exact word matches with the reference when there are any (a loose 'replace'
+    pairing can land in the next sentence); ties go to the sentence of the earliest anchor.
+    """
+    sent_of: dict[int, int] = {}
+    for w in words:
+        sent_of.setdefault(w.tok, w.sent)
+    votes = [sent_of.get(i) for i in sorted(anchors)]
+    best = max(dict.fromkeys(votes), key=votes.count)     # dict keeps first-seen order for ties
+    inside = [i for i in range(*core) if sent_of.get(i) == best]
+    return (min(inside), max(inside) + 1) if inside else core
+
+
+def _grow(core, unit_type, words):
+    """Extend core (a token span) to the phrase(s) it heads; at most _MAX_GROW tokens per side.
+
+    The core's roots are its words whose head lies outside it. Each root absorbs, recursively,
+    the dependents _allowed() says belong to its phrase for this unit type. One-step climbs handle
+    cores that landed on a dependent of the word carrying the unit: a multiword part -> its head
+    (de acuerdo con), grammar -> governing verb, number -> counted noun, position -> a connective
+    head immediately before the core.
+    """
+    s, e = core
+    inside = [w for w in words if s <= w.tok < e]
+    if not inside:
+        return core
+    ids = {w.idx for w in inside}
+    roots = [w for w in inside if w.head not in ids]
+    has_verb = any(w.upos in _VERBAL for w in inside)
+
+    climbed = []
+    for r in roots:
+        h = words[r.head] if r.head is not None else None
+        if h is None:
+            continue
+        if r.deprel in ("fixed", "flat"):                   # part of a multiword expression:
+            climbed.append(h)                               # 'acuerdo' -> its head 'De'
+        elif unit_type is UnitType.GRAMMAR and not has_verb:
+            while h is not None and h.upos not in _VERBAL:
+                h = words[h.head] if h.head is not None else None
+            if h is not None:
+                climbed.append(h)
+        elif unit_type is UnitType.NUMBER and r.deprel == "nummod":
+            climbed.append(h)
+        elif unit_type is UnitType.POSITION and h.tok == s - 1:
+            climbed.append(h)
+
+    children: dict[int, list] = {}
+    for w in words:
+        if w.head is not None:
+            children.setdefault(w.head, []).append(w)
+
+    take, seen = set(ids), set()
+
+    def absorb(w):
+        # Walk down from w. A child is taken if it belongs to w's phrase (_allowed); core words
+        # are walked through whatever their label, so material hanging under them is reached too.
+        for c in children.get(w.idx, []):
+            if c.idx in seen or not (c.idx in ids or _allowed(w, c, unit_type)):
+                continue
+            seen.add(c.idx)
+            take.add(c.idx)
+            absorb(c)
+
+    for r in roots + climbed:
+        take.add(r.idx)
+        seen.add(r.idx)
+        absorb(r)
+
+    toks = [words[i].tok for i in take]
+    return (min(s, max(min(toks), s - _MAX_GROW)), max(e, min(max(toks) + 1, e + _MAX_GROW)))

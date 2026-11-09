@@ -24,6 +24,7 @@ def test_number_fails_when_not_located(unit_by_id, make_candidate):
     assert verdict.status == "fail"
 
 
+@pytest.mark.slow       # localize() parses the transcript with Stanza since W11 (_EXPAND)
 def test_number_ignores_stray_number_elsewhere(exam_fixture, unit_by_id):
     """DESIRED behavior: a wrong count must fail even if '2' appears elsewhere.
     """
